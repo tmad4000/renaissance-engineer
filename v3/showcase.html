@@ -237,6 +237,111 @@
     grid-column: 1 / -1;
   }
 
+  /* Submit section */
+  .submit-section {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+  }
+  .submit-toggle {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-50);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-15);
+    padding-bottom: 0.1rem;
+    cursor: pointer;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .submit-toggle:hover { color: var(--red); border-bottom-color: var(--red); }
+
+  .submit-form {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, margin 0.3s ease;
+    margin-top: 0;
+  }
+  .submit-form.open {
+    max-height: 600px;
+    margin-top: 1.2rem;
+  }
+
+  .submit-form fieldset {
+    border: 1px solid var(--ink-08);
+    padding: 1.2rem 1.4rem;
+    background: var(--surface);
+  }
+  .submit-form legend {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-30);
+    padding: 0 0.4rem;
+  }
+  .submit-form .form-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .submit-form input,
+  .submit-form textarea {
+    font-family: var(--serif);
+    font-size: 0.82rem;
+    color: var(--ink);
+    border: none;
+    border-bottom: 1px solid var(--ink-08);
+    padding: 0.3rem 0;
+    background: transparent;
+    outline: none;
+    flex: 1;
+    min-width: 120px;
+  }
+  .submit-form textarea {
+    resize: vertical;
+    min-height: 2.5rem;
+    line-height: 1.5;
+  }
+  .submit-form input::placeholder,
+  .submit-form textarea::placeholder {
+    color: var(--ink-15);
+    font-style: italic;
+  }
+  .submit-form input:focus,
+  .submit-form textarea:focus {
+    border-bottom-color: var(--red);
+  }
+  .submit-form .form-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    margin-top: 0.8rem;
+  }
+  .submit-form button[type="submit"] {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--ink);
+    border: none;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .submit-form button[type="submit"]:hover { background: var(--red); }
+  .submit-form .form-note {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    color: var(--ink-15);
+    letter-spacing: 0.03em;
+  }
+
   footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
   .f-inner { max-width: var(--max-w); margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
   .f-inner span { font-family: var(--mono); font-size: 0.55rem; color: var(--ink-30); }
@@ -292,6 +397,40 @@
   <p class="empty-state" id="emptyState">No projects match this filter.</p>
 </section>
 
+<section class="submit-section" id="submit">
+  <button class="submit-toggle" onclick="document.getElementById('projectForm').classList.toggle('open')">
+    Submit a project
+  </button>
+
+  <div class="submit-form" id="projectForm">
+    <fieldset>
+      <legend>NEW PROJECT</legend>
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Project name" required>
+        <input type="text" name="person" placeholder="Your name" required>
+      </div>
+      <div class="form-row">
+        <input type="url" name="url" placeholder="Project URL" required>
+        <input type="url" name="personUrl" placeholder="Your website (optional)">
+      </div>
+      <div class="form-row">
+        <textarea name="desc" placeholder="One-line description of the project" rows="2" required></textarea>
+      </div>
+      <div class="form-row">
+        <input type="text" name="crosses" placeholder="Disciplines it bridges (e.g. Biology, CS, Architecture)">
+        <input type="text" name="date" placeholder="Year (e.g. 2025)">
+      </div>
+      <div class="form-row">
+        <input type="url" name="image" placeholder="Thumbnail image URL (optional)">
+      </div>
+      <div class="form-actions">
+        <button type="submit" onclick="submitProject(event)">Submit</button>
+        <span class="form-note">Opens your email client with the details pre-filled</span>
+      </div>
+    </fieldset>
+  </div>
+</section>
+
 <footer>
   <div class="f-inner">
     <span>renaissance.engineer</span>
@@ -300,6 +439,25 @@
 </footer>
 
 <script>
+function submitProject(e) {
+  e.preventDefault();
+  const form = document.getElementById('projectForm');
+  const get = (n) => form.querySelector(`[name="${n}"]`)?.value || '';
+  const subject = encodeURIComponent(`Showcase submission: ${get('name')}`);
+  const body = encodeURIComponent(
+    `Project: ${get('name')}\n` +
+    `URL: ${get('url')}\n` +
+    `Description: ${get('desc')}\n` +
+    `Disciplines: ${get('crosses')}\n` +
+    `Year: ${get('date')}\n` +
+    `Image URL: ${get('image')}\n` +
+    `---\n` +
+    `Submitted by: ${get('person')}\n` +
+    `Website: ${get('personUrl')}`
+  );
+  window.location.href = `mailto:tmad4000@gmail.com?subject=${subject}&body=${body}`;
+}
+
 const PROJECTS = [
   {
     name: "IdeaFlow",
@@ -617,7 +775,7 @@ function render() {
   document.querySelectorAll('.cross-tag').forEach(tag => {
     tag.addEventListener('click', () => {
       currentFilter = tag.dataset.cross;
-      syncFilterBtns();
+      filterSelect.value = currentFilter;
       render();
     });
   });
