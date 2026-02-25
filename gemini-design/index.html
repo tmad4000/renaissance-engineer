@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>renaissance.engineer</title>
+<meta name="description" content="A registry of polymaths and cross-disciplinary builders. The modern guild for those who refuse to specialize.">
+
+<!-- Fonts: Cormorant Garamond (historical weight) + Space Mono (technical precision) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   DESIGN SYSTEM: "Archival Brutalism"
+   Directed by Gemini 3.1 Pro — built by Claude
+
+   Philosophy: The precision of a blueprint meets the warmth of a guild ledger.
+   Strict visible grid. No rounded corners. Paper + ink. Grain overlay.
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --paper: #F2F0E9;
+  --paper-warm: #EDE8DF;
+  --ink: #111111;
+  --ink-mid: #333333;
+  --ink-light: #666666;
+  --ink-ghost: #999999;
+  --accent: #0000EE;
+  --accent-dim: #0000AA;
+  --sepia: #8B4513;
+  --rule: rgba(17, 17, 17, 0.12);
+  --rule-heavy: rgba(17, 17, 17, 0.25);
+
+  /* Typography */
+  --serif: 'Cormorant Garamond', 'Georgia', serif;
+  --mono: 'Space Mono', 'Courier New', monospace;
+
+  /* Spacing */
+  --xs: 0.4rem;
+  --sm: 0.8rem;
+  --md: 1.6rem;
+  --lg: 3.2rem;
+  --xl: 6.4rem;
+
+  /* Grid */
+  --border: 1px solid var(--rule);
+  --border-heavy: 1px solid var(--rule-heavy);
+  --max-w: 1200px;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Grain Texture --- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--paper);
+  border-bottom: var(--border-heavy);
+}
+
+.site-header__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--md) var(--md);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.wordmark__prefix {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+  margin-bottom: 2px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+}
+
+.header-count {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--ink-ghost);
+  letter-spacing: 0.05em;
+}
+
+.btn-join {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 0.55rem 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+}
+
+.btn-join:hover {
+  background: var(--accent);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.btn-join:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   DIRECTORY GRID — Bordered cells, strict structure
+   ========================================================================== */
+
+.directory {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  border-left: var(--border);
+  border-right: var(--border);
+}
+
+.directory__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ==========================================================================
+   PERSON CARD
+   ========================================================================== */
+
+.card {
+  border-bottom: var(--border);
+  border-right: var(--border);
+  padding: var(--md) var(--md) var(--md);
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+/* Remove right border on every 3rd card (last in row) */
+.card:nth-child(3n) {
+  border-right: none;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Catalog index number */
+.card__index {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--ink-ghost);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--sm);
+}
+
+.card__name {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3rem;
+}
+
+.card__name a {
+  color: var(--ink);
+  transition: color 0.2s;
+}
+.card__name a:hover {
+  color: var(--accent);
+}
+
+.card__era {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--ink-ghost);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--md);
+}
+
+.card__bio {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-mid);
+  line-height: 1.5;
+  margin-bottom: auto;
+  padding-bottom: var(--md);
+}
+
+.card__meta {
+  margin-top: auto;
+}
+
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--sm);
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--rule-heavy);
+  padding: 2px 8px;
+  color: var(--ink-light);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.card:hover .tag {
+  border-color: var(--ink-light);
+}
+
+.card__link {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-light);
+  transition: color 0.2s;
+}
+
+.card__link:hover {
+  color: var(--accent);
+}
+
+.card__link::after {
+  content: " \2197";
+  font-size: 0.8em;
+}
+
+/* Historical cards - subtle distinction */
+.card--historical {
+  background: linear-gradient(180deg, rgba(237, 232, 223, 0.3) 0%, transparent 100%);
+}
+
+.card--historical .card__index::after {
+  content: " \2022 historical";
+  color: var(--ink-ghost);
+}
+
+/* ==========================================================================
+   JOIN MODAL
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(242, 240, 233, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: var(--md);
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: var(--lg) var(--md);
+  position: relative;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--md);
+  right: var(--md);
+  background: none;
+  border: none;
+  font-family: var(--mono);
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--ink-light);
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.modal__close:hover {
+  color: var(--ink);
+}
+
+.modal__title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 0.3rem;
+}
+
+.modal__subtitle {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--ink-ghost);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--lg);
+}
+
+.form-group {
+  margin-bottom: var(--md);
+}
+
+.form-group label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mid);
+  margin-bottom: var(--xs);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--rule-heavy);
+  padding: var(--sm) 0;
+  outline: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-bottom-color: var(--accent);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--ink-ghost);
+  font-style: italic;
+}
+
+.form-group textarea {
+  border: 1px solid var(--rule-heavy);
+  padding: var(--sm);
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+.form-group textarea:focus {
+  border-color: var(--accent);
+}
+
+.form-hint {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: var(--ink-ghost);
+  margin-top: 4px;
+  letter-spacing: 0.03em;
+}
+
+.form-submit {
+  width: 100%;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: var(--sm);
+}
+
+.form-submit:hover {
+  background: var(--accent);
+}
+
+.form-submit:active {
+  transform: translateY(1px);
+}
+
+.form-response {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--sepia);
+  margin-top: var(--md);
+  text-align: center;
+  display: none;
+}
+
+.form-response.visible {
+  display: block;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.site-footer {
+  border-top: var(--border-heavy);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  border-left: var(--border);
+  border-right: var(--border);
+}
+
+.site-footer__inner {
+  padding: var(--md);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.site-footer__left {
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--ink-light);
+  max-width: 30rem;
+  line-height: 1.5;
+}
+
+.site-footer__right {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: var(--ink-ghost);
+  letter-spacing: 0.06em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  animation: fadeIn 0.4s ease both;
+  animation-play-state: paused;
+}
+
+.card:nth-child(1) { animation-delay: 0s; }
+.card:nth-child(2) { animation-delay: 0.05s; }
+.card:nth-child(3) { animation-delay: 0.1s; }
+.card:nth-child(4) { animation-delay: 0.12s; }
+.card:nth-child(5) { animation-delay: 0.14s; }
+.card:nth-child(6) { animation-delay: 0.16s; }
+.card:nth-child(7) { animation-delay: 0.18s; }
+.card:nth-child(8) { animation-delay: 0.2s; }
+
+/* Modal animation */
+.modal-overlay.active .modal {
+  animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .directory__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card:nth-child(3n) {
+    border-right: var(--border);
+  }
+  .card:nth-child(2n) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 600px) {
+  html { font-size: 15px; }
+
+  .site-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sm);
+    padding: var(--sm) var(--sm);
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .wordmark { font-size: 1.6rem; }
+
+  .directory {
+    border-left: none;
+    border-right: none;
+  }
+
+  .directory__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card:nth-child(2n),
+  .card:nth-child(3n) {
+    border-right: none;
+  }
+
+  .card {
+    min-height: auto;
+    padding: var(--md) var(--sm);
+  }
+
+  .card__name { font-size: 1.5rem; }
+  .card__bio { font-size: 1.05rem; }
+
+  .modal {
+    padding: var(--md) var(--sm);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .site-footer {
+    border-left: none;
+    border-right: none;
+  }
+
+  .site-footer__inner {
+    flex-direction: column;
+    gap: var(--sm);
+    padding: var(--md) var(--sm);
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  body::before { display: none; }
+  .site-header, .site-footer, .btn-join, .modal-overlay { display: none; }
+  .card { break-inside: avoid; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <div class="wordmark">
+      <span class="wordmark__prefix">The Registry of</span>
+      Renaissance.Engineer
+    </div>
+    <div class="header-actions">
+      <span class="header-count" id="memberCount"></span>
+      <button class="btn-join" id="openModal">Join Registry</button>
+    </div>
+  </div>
+</header>
+
+<!-- ====== DIRECTORY ====== -->
+<section class="directory">
+  <div class="directory__grid" id="directoryGrid">
+    <!-- Rendered by JS -->
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__left">
+      &ldquo;Realize that everything connects to everything else.&rdquo; &mdash; Leonardo da Vinci
+    </p>
+    <span class="site-footer__right">renaissance.engineer &middot; est. MMXXVI</span>
+  </div>
+</footer>
+
+<!-- ====== JOIN MODAL ====== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal__close" id="closeModal">&times;</button>
+    <h2 class="modal__title">Registry Entry</h2>
+    <p class="modal__subtitle">Submit your credentials for the archive</p>
+
+    <form id="joinForm">
+      <div class="form-group">
+        <label for="f-name">Full Name</label>
+        <input type="text" id="f-name" name="name" required placeholder="As you wish to be known">
+      </div>
+
+      <div class="form-group">
+        <label for="f-bio">One-line Bio</label>
+        <input type="text" id="f-bio" name="bio" required placeholder="What you build across disciplines">
+        <p class="form-hint">A single sentence that captures what makes you a renaissance engineer</p>
+      </div>
+
+      <div class="form-group">
+        <label for="f-url">Website</label>
+        <input type="url" id="f-url" name="url" placeholder="https://yoursite.com">
+      </div>
+
+      <div class="form-group">
+        <label for="f-disciplines">Disciplines / Tags</label>
+        <input type="text" id="f-disciplines" name="disciplines" required placeholder="e.g. Robotics, Painting, Philosophy">
+        <p class="form-hint">Comma-separated fields you work in seriously</p>
+      </div>
+
+      <div class="form-group">
+        <label for="f-email">Email</label>
+        <input type="email" id="f-email" name="email" required placeholder="you@example.com">
+        <p class="form-hint">For verification only. Never displayed.</p>
+      </div>
+
+      <button type="submit" class="form-submit">Submit Entry</button>
+      <p class="form-response" id="formResponse">
+        Entry recorded. You will be inscribed in the registry upon review.
+      </p>
+    </form>
+  </div>
+</div>
+
+<script>
+// ==========================================================================
+// SEED DATA — Historical + Contemporary Renaissance Engineers
+// ==========================================================================
+
+const registry = [
+  {
+    name: "Leonardo da Vinci",
+    era: "1452\u20131519",
+    bio: "Designed flying machines between masterpieces. Mapped the human body with the same hand that painted the Last Supper.",
+    url: "https://en.wikipedia.org/wiki/Leonardo_da_Vinci",
+    tags: ["Painting", "Engineering", "Anatomy", "Optics", "Hydraulics"],
+    historical: true
+  },
+  {
+    name: "Ada Lovelace",
+    era: "1815\u20131852",
+    bio: "Wrote the first computer program and called her method \u2018poetical science\u2019\u2014the intersection of imagination and analysis.",
+    url: "https://en.wikipedia.org/wiki/Ada_Lovelace",
+    tags: ["Mathematics", "Computing", "Poetry", "Music"],
+    historical: true
+  },
+  {
+    name: "Buckminster Fuller",
+    era: "1895\u20131983",
+    bio: "Architect, systems theorist, inventor. Spent his life doing more with less and designed the geodesic dome.",
+    url: "https://en.wikipedia.org/wiki/Buckminster_Fuller",
+    tags: ["Architecture", "Systems Theory", "Design", "Futurism"],
+    historical: true
+  },
+  {
+    name: "Hedy Lamarr",
+    era: "1914\u20132000",
+    bio: "Hollywood star who co-invented frequency-hopping spread spectrum\u2014the technology underlying WiFi and Bluetooth.",
+    url: "https://en.wikipedia.org/wiki/Hedy_Lamarr",
+    tags: ["Film", "Radio Frequency", "Invention", "Signal Processing"],
+    historical: true
+  },
+  {
+    name: "Shen Kuo",
+    era: "1031\u20131095",
+    bio: "Discovered true north, hypothesized climate change, and served as a diplomat\u2014all in the 11th century Song Dynasty.",
+    url: "https://en.wikipedia.org/wiki/Shen_Kuo",
+    tags: ["Astronomy", "Geology", "Diplomacy", "Mathematics", "Pharmacology"],
+    historical: true
+  },
+  {
+    name: "Benjamin Franklin",
+    era: "1706\u20131790",
+    bio: "Tamed lightning, founded the first public library, invented bifocals, and wrote prose sharp enough to start a revolution.",
+    url: "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+    tags: ["Physics", "Diplomacy", "Publishing", "Invention"],
+    historical: true
+  },
+  {
+    name: "Hildegard von Bingen",
+    era: "1098\u20131179",
+    bio: "Composed symphonies, wrote medical texts, painted cosmological visions, and ran a monastery\u2014in the 12th century.",
+    url: "https://en.wikipedia.org/wiki/Hildegard_of_Bingen",
+    tags: ["Music", "Medicine", "Theology", "Natural History", "Art"],
+    historical: true
+  },
+  {
+    name: "Nikola Tesla",
+    era: "1856\u20131943",
+    bio: "Invented alternating current, dreamed of wireless energy, and held 300 patents across electrical and mechanical engineering.",
+    url: "https://en.wikipedia.org/wiki/Nikola_Tesla",
+    tags: ["Electrical Engineering", "Physics", "Invention", "Mechanical Engineering"],
+    historical: true
+  }
+];
+
+// ==========================================================================
+// RENDER
+// ==========================================================================
+
+const grid = document.getElementById('directoryGrid');
+const countEl = document.getElementById('memberCount');
+
+function toRoman(n) {
+  const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+  const syms = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+  let result = '';
+  for (let i = 0; i < vals.length; i++) {
+    while (n >= vals[i]) { result += syms[i]; n -= vals[i]; }
+  }
+  return result;
+}
+
+function render(data) {
+  grid.innerHTML = '';
+  countEl.textContent = data.length + ' entries indexed';
+
+  data.forEach((person, i) => {
+    const card = document.createElement('article');
+    card.className = 'card' + (person.historical ? ' card--historical' : '');
+
+    const tagsHTML = person.tags
+      .map(t => `<span class="tag">${t}</span>`)
+      .join('');
+
+    const linkHTML = person.url
+      ? `<a href="${person.url}" target="_blank" rel="noopener" class="card__link">${person.historical ? 'Reference' : 'Portfolio'}</a>`
+      : '';
+
+    card.innerHTML = `
+      <span class="card__index">No. ${toRoman(i + 1)}</span>
+      <h2 class="card__name"><a href="${person.url || '#'}" target="_blank" rel="noopener">${person.name}</a></h2>
+      <span class="card__era">${person.era}</span>
+      <p class="card__bio">${person.bio}</p>
+      <div class="card__meta">
+        <div class="card__tags">${tagsHTML}</div>
+        ${linkHTML}
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  // Re-observe for animations
+  document.querySelectorAll('.card').forEach(c => observer.observe(c));
+}
+
+// ==========================================================================
+// SCROLL ANIMATIONS
+// ==========================================================================
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+// ==========================================================================
+// MODAL
+// ==========================================================================
+
+const modal = document.getElementById('modal');
+const openBtn = document.getElementById('openModal');
+const closeBtn = document.getElementById('closeModal');
+const form = document.getElementById('joinForm');
+
+openBtn.addEventListener('click', () => modal.classList.add('active'));
+closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.classList.remove('active');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('active')) {
+    modal.classList.remove('active');
+  }
+});
+
+// ==========================================================================
+// FORM SUBMISSION
+// ==========================================================================
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const fd = new FormData(form);
+  const entry = {
+    name: fd.get('name'),
+    era: 'b. ' + new Date().getFullYear(),
+    bio: fd.get('bio'),
+    url: fd.get('url') || '',
+    tags: fd.get('disciplines').split(',').map(t => t.trim()).filter(Boolean),
+    historical: false
+  };
+
+  // Prepend new entry
+  registry.unshift(entry);
+  render(registry);
+
+  // Show confirmation
+  const resp = document.getElementById('formResponse');
+  resp.classList.add('visible');
+  form.reset();
+
+  setTimeout(() => {
+    modal.classList.remove('active');
+    resp.classList.remove('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 2000);
+});
+
+// ==========================================================================
+// INIT
+// ==========================================================================
+
+render(registry);
+</script>
+
+</body>
+</html>
