@@ -41,52 +41,123 @@
 
   #graph-canvas {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
     cursor: grab;
   }
   #graph-canvas:active { cursor: grabbing; }
 
+  /* ===== VIEW SWITCHER ===== */
+  .view-bar {
+    position: fixed;
+    top: 58px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 90;
+    display: flex;
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--ink-08);
+    border-top: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .view-btn {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+    color: var(--ink-30);
+    background: none;
+    border: none;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-right: 1px solid var(--ink-08);
+    white-space: nowrap;
+  }
+  .view-btn:last-child { border-right: none; }
+  .view-btn:hover { color: var(--ink); }
+  .view-btn.active { color: var(--red); background: var(--red-light); }
+
+  /* ===== FILTER PANEL ===== */
+  .filter-panel {
+    position: fixed;
+    top: 58px;
+    right: 0;
+    z-index: 80;
+    background: var(--surface);
+    border-left: 1px solid var(--ink-08);
+    border-bottom: 1px solid var(--ink-08);
+    padding: 0.6rem 0.8rem;
+    max-height: calc(100vh - 58px);
+    overflow-y: auto;
+    width: 180px;
+    transform: translateX(100%);
+    transition: transform 0.2s ease;
+  }
+  .filter-panel.open { transform: translateX(0); }
+  .filter-panel__title {
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-30);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .filter-panel__group {
+    margin-bottom: 0.5rem;
+  }
+  .filter-panel__group-title {
+    font-family: var(--mono);
+    font-size: 0.4rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-15);
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  .filter-check {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.12rem 0;
+    cursor: pointer;
+  }
+  .filter-check input {
+    accent-color: var(--red);
+    width: 10px;
+    height: 10px;
+  }
+  .filter-check label {
+    font-family: var(--mono);
+    font-size: 0.42rem;
+    color: var(--ink-50);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  .filter-check:hover label { color: var(--ink); }
+
+  /* ===== TOOLTIP ===== */
   .tooltip {
     position: fixed;
     pointer-events: none;
     background: var(--surface);
     border: 1px solid var(--ink-08);
     padding: 0.6rem 0.8rem;
-    max-width: 320px;
+    max-width: 340px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     opacity: 0;
     transition: opacity 0.15s;
     z-index: 50;
   }
   .tooltip.visible { opacity: 1; }
-  .tooltip__name {
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.15rem;
-  }
-  .tooltip__vision {
-    font-size: 0.78rem;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--ink-50);
-    line-height: 1.45;
-    margin-bottom: 0.2rem;
-  }
-  .tooltip__disciplines {
-    font-family: var(--mono);
-    font-size: 0.42rem;
-    color: var(--ink-30);
-    letter-spacing: 0.03em;
-  }
+  .tooltip__name { font-size: 0.9rem; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 0.1rem; }
+  .tooltip__vision { font-size: 0.78rem; font-weight: 300; font-style: italic; color: var(--ink-50); line-height: 1.45; margin-bottom: 0.15rem; }
+  .tooltip__disciplines { font-family: var(--mono); font-size: 0.42rem; color: var(--ink-30); letter-spacing: 0.03em; }
+  .tooltip__theme { font-family: var(--mono); font-size: 0.4rem; color: var(--red); letter-spacing: 0.02em; margin-top: 0.1rem; }
 
+  /* ===== LEGEND ===== */
   .legend {
     position: fixed;
-    bottom: 1.5rem;
-    left: 2rem;
+    bottom: 1.5rem; left: 2rem;
     z-index: 50;
     font-family: var(--mono);
     font-size: 0.48rem;
@@ -94,26 +165,17 @@
     letter-spacing: 0.03em;
     line-height: 1.8;
   }
-  .legend__title {
-    font-size: 0.52rem;
-    color: var(--ink-50);
-    margin-bottom: 0.2rem;
-  }
+  .legend__title { font-size: 0.52rem; color: var(--ink-50); margin-bottom: 0.2rem; }
   .legend__item { display: flex; align-items: center; gap: 0.35rem; }
-  .legend__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+  .legend__dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .legend__rect { width: 8px; height: 5px; flex-shrink: 0; }
 
+  /* ===== CONTROLS ===== */
   .controls {
     position: fixed;
-    bottom: 1.5rem;
-    right: 2rem;
+    bottom: 1.5rem; right: 2rem;
     z-index: 50;
-    display: flex;
-    gap: 0.4rem;
+    display: flex; gap: 0.4rem;
   }
   .controls button {
     font-family: var(--mono);
@@ -127,11 +189,14 @@
     transition: all 0.15s;
   }
   .controls button:hover { color: var(--red); border-color: var(--red); }
+  .controls button.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
 
   @media (max-width: 600px) {
     .h-inner { flex-direction: column; gap: 0.4rem; }
+    .view-bar { top: 80px; }
     .legend { bottom: 0.8rem; left: 1rem; font-size: 0.4rem; }
     .controls { bottom: 0.8rem; right: 1rem; }
+    .filter-panel { width: 150px; }
   }
 </style>
 </head>
@@ -151,224 +216,501 @@
   </div>
 </header>
 
+<div class="view-bar">
+  <button class="view-btn" data-view="visions" onclick="setView('visions')">Visions</button>
+  <button class="view-btn" data-view="people" onclick="setView('people')">People</button>
+  <button class="view-btn" data-view="everything" onclick="setView('everything')">Everything</button>
+</div>
+
+<div class="filter-panel" id="filterPanel"></div>
+
 <canvas id="graph-canvas"></canvas>
 
 <div class="tooltip" id="tooltip">
   <div class="tooltip__name" id="tipName"></div>
   <div class="tooltip__vision" id="tipVision"></div>
   <div class="tooltip__disciplines" id="tipDisc"></div>
+  <div class="tooltip__theme" id="tipTheme"></div>
 </div>
 
-<div class="legend">
-  <div class="legend__title">Connected visions</div>
-  <div class="legend__item"><span class="legend__dot" style="background:#b33a2b"></span> Person</div>
-  <div class="legend__item"><span class="legend__dot" style="background:#ccc"></span> Shared discipline</div>
-  <div class="legend__item"><span class="legend__dot" style="background:rgba(179,58,43,0.2);border:1px solid var(--ink-08)"></span> Vision theme</div>
-</div>
+<div class="legend" id="legend"></div>
 
 <div class="controls">
   <button onclick="resetView()">Reset</button>
-  <button onclick="toggleLabels()">Labels</button>
+  <button id="labelBtn" onclick="toggleLabels()">Labels</button>
+  <button id="filterBtn" onclick="toggleFilters()">Filters</button>
 </div>
 
 <script>
-// ===== DATA =====
-const PEOPLE = [
-  {
-    id: "jacob-cole",
-    name: "Jacob Cole",
-    vision: "Knowledge tools that augment intelligence as you think \u2014 notebooks that become thinking partners.",
-    disciplines: ["CS", "Philosophy", "Knowledge Graphs"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "daanish-shabbir",
-    name: "Daanish Shabbir",
-    vision: "A general gateway to all known physics for autonomous agents.",
-    disciplines: ["EE", "Physics", "AI", "Fiction"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "bret-victor",
-    name: "Bret Victor",
-    vision: "Immediate connection between thinking and seeing \u2014 inventing on principle.",
-    disciplines: ["Interface Design", "EE", "CS"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "neri-oxman",
-    name: "Neri Oxman",
-    vision: "Where the natural and artificial are indistinguishable \u2014 nature-centric design.",
-    disciplines: ["Architecture", "Biology", "Computing", "Materials"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "saad-bhamla",
-    name: "Saad Bhamla",
-    vision: "Democratize knowledge and tools for billions, at planetary scale.",
-    disciplines: ["ChemE", "Biophysics", "Frugal Science", "Global Health"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "renaise-kim",
-    name: "Renaise Kim",
-    vision: "Where art and technology converge through speculative thinking.",
-    disciplines: ["Product Design", "Visual Identity", "Sci-Fi"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "stephanie-zhang",
-    name: "Stephanie Zhang",
-    vision: "The unsayable aliveness underneath phenomena \u2014 poetry transfigured into proteins.",
-    disciplines: ["Bioengineering", "Media", "Painting"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "nicole-hsing",
-    name: "Nicole Hsing",
-    vision: "Inner monologue architectures for AI \u2014 code meets creative expression.",
-    disciplines: ["Cognitive Science", "AI", "Philosophy"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "tom-currier",
-    name: "Tom Currier",
-    vision: "Transportation reimagined \u2014 what if the ride itself could be restorative?",
-    disciplines: ["Engineering", "Robotics", "Design", "Sleep Science"],
-    color: "#b33a2b",
-    url: "index.html#directory"
-  },
-  {
-    id: "jacob-cole-2",
-    name: "Jacob Cole",
-    vision: "Get everyone to touch the profound state of consciousness that cascades wisdom and joy.",
-    disciplines: ["Healing Arts", "Consciousness", "Well-being"],
-    color: "#b33a2b",
-    url: "index.html#directory",
-    subVision: true
-  },
-  {
-    id: "kat-woods",
-    name: "Kat Woods",
-    vision: "What would happen if superintelligent AI was aligned with your values?",
-    disciplines: ["AI Safety", "Effective Altruism"],
-    color: "#b33a2b",
-    url: "#"
-  },
-  {
-    id: "douglas-adams",
-    name: "Douglas Adams",
-    vision: "Look at where we want to go, not just where we are afraid we might end up.",
-    disciplines: ["Writing", "Technology", "Natural History"],
-    color: "#b33a2b",
-    url: "#"
-  },
-  {
-    id: "nathan-goldwag",
-    name: "Nathan Goldwag",
-    vision: "Post-scarcity through fusion and nanoforges \u2014 but at what cost to the Global South?",
-    disciplines: ["Fiction", "Political Science", "Futurism"],
-    color: "#b33a2b",
-    url: "https://nathangoldwag.wordpress.com/2024/04/"
-  },
-  {
-    id: "tom-schulz",
-    name: "Tom Schulz",
-    vision: "How few people could be working to get everyone\u2019s needs met?",
-    disciplines: ["Labor", "Community", "Post-Scarcity"],
-    color: "#b33a2b",
-    url: "#"
-  }
+// ============================================================
+// DATA
+// ============================================================
+
+const VISIONS = [
+  { id: "v-knowledge-tools", person: "Jacob Cole", personId: "jacob-cole",
+    text: "Knowledge tools that augment intelligence as you think \u2014 notebooks that become thinking partners.",
+    short: "Thinking partners",
+    themes: ["tools", "cognition", "augmentation"],
+    link: "https://ideaflow.io" },
+  { id: "v-physics-gateway", person: "Daanish Shabbir", personId: "daanish-shabbir",
+    text: "A general gateway to all known physics for autonomous agents.",
+    short: "Physics for agents",
+    themes: ["ai", "physics", "knowledge"],
+    link: "https://equisystems.github.io" },
+  { id: "v-feedback-loops", person: "Bret Victor", personId: "bret-victor",
+    text: "Immediate connection between thinking and seeing \u2014 inventing on principle.",
+    short: "Inventing on principle",
+    themes: ["tools", "feedback", "creation"],
+    link: "https://dynamicland.org" },
+  { id: "v-nature-design", person: "Neri Oxman", personId: "neri-oxman",
+    text: "Where the natural and artificial are indistinguishable \u2014 nature-centric design.",
+    short: "Nature-centric design",
+    themes: ["biology", "design", "materiality"],
+    link: "https://oxman.com/projects/eden" },
+  { id: "v-frugal-science", person: "Saad Bhamla", personId: "saad-bhamla",
+    text: "Democratize knowledge and tools for billions, at planetary scale.",
+    short: "Frugal science",
+    themes: ["access", "planetary", "democratization"],
+    link: "https://bhamla.gatech.edu" },
+  { id: "v-speculative-design", person: "Renaise Kim", personId: "renaise-kim",
+    text: "Where art and technology converge through speculative thinking.",
+    short: "Speculative design",
+    themes: ["design", "speculation", "fiction"],
+    link: "https://renaise.com" },
+  { id: "v-bioprinting", person: "Stephanie Zhang", personId: "stephanie-zhang",
+    text: "The unsayable aliveness underneath phenomena \u2014 poetry transfigured into proteins.",
+    short: "Poetry into proteins",
+    themes: ["biology", "creation", "emergence"],
+    link: null },
+  { id: "v-inner-monologue", person: "Nicole Hsing", personId: "nicole-hsing",
+    text: "Inner monologue architectures for AI \u2014 code meets creative expression.",
+    short: "AI inner monologue",
+    themes: ["ai", "cognition", "expression"],
+    link: "https://arxiv.org/abs/2506.00430" },
+  { id: "v-restorative-transport", person: "Tom Currier", personId: "tom-currier",
+    text: "Transportation reimagined \u2014 what if the ride itself could be restorative?",
+    short: "Restorative transport",
+    themes: ["design", "wellbeing", "first-principles"],
+    link: "https://www.ridecabin.com" },
+  { id: "v-consciousness", person: "Jacob Cole", personId: "jacob-cole",
+    text: "Get everyone to touch the profound state of consciousness that cascades wisdom and joy.",
+    short: "Consciousness for all",
+    themes: ["consciousness", "access", "wellbeing"],
+    link: "http://healingartsgrant.jacobcole.net" },
+  { id: "v-aligned-ai", person: "Kat Woods", personId: "kat-woods",
+    text: "What would happen if superintelligent AI was aligned with your values?",
+    short: "Aligned superintelligence",
+    themes: ["ai", "alignment", "values"],
+    link: null },
+  { id: "v-direction", person: "Douglas Adams", personId: "douglas-adams",
+    text: "Look at where we want to go, not just where we are afraid we might end up.",
+    short: "Choose direction",
+    themes: ["consciousness", "values", "futures"],
+    link: null },
+  { id: "v-post-scarcity", person: "Nathan Goldwag", personId: "nathan-goldwag",
+    text: "Post-scarcity through fusion and nanoforges \u2014 but at what cost to the Global South?",
+    short: "Post-scarcity costs",
+    themes: ["futures", "justice", "planetary"],
+    link: "https://nathangoldwag.wordpress.com/2024/04/" },
+  { id: "v-fewer-workers", person: "Tom Schulz", personId: "tom-schulz",
+    text: "How few people could be working to get everyone\u2019s needs met?",
+    short: "Minimal labor",
+    themes: ["futures", "access", "planetary"],
+    link: null },
 ];
 
-// ===== BUILD GRAPH =====
-const nodes = [];
-const edges = [];
-const disciplineNodes = {};
+// Thematic connections between visions (content-based)
+const VISION_LINKS = [
+  { a: "v-knowledge-tools", b: "v-feedback-loops", theme: "Tools for thought", why: "Both envision tools that collapse the gap between thinking and creating" },
+  { a: "v-knowledge-tools", b: "v-physics-gateway", theme: "Knowledge systems", why: "Structuring and surfacing knowledge for human and machine intelligence" },
+  { a: "v-feedback-loops", b: "v-inner-monologue", theme: "Cognition \u2192 code", why: "Bridging internal cognitive processes with computational interfaces" },
+  { a: "v-nature-design", b: "v-bioprinting", theme: "Living design", why: "Dissolving the boundary between biological processes and creative production" },
+  { a: "v-nature-design", b: "v-speculative-design", theme: "Design futures", why: "Design as a vehicle for speculative and transformative thinking" },
+  { a: "v-speculative-design", b: "v-post-scarcity", theme: "Speculative futures", why: "Using fiction and imagination to explore possible worlds" },
+  { a: "v-frugal-science", b: "v-fewer-workers", theme: "Abundance for all", why: "Reducing what\u2019s needed so everyone\u2019s needs can be met" },
+  { a: "v-frugal-science", b: "v-consciousness", theme: "Universal access", why: "Making transformative experiences accessible to billions" },
+  { a: "v-post-scarcity", b: "v-fewer-workers", theme: "Post-scarcity", why: "Imagining economic systems beyond the need for mass labor" },
+  { a: "v-inner-monologue", b: "v-aligned-ai", theme: "AI alignment", why: "Architecture and values of artificial minds" },
+  { a: "v-physics-gateway", b: "v-inner-monologue", theme: "AI architectures", why: "Building cognitive and physical models for autonomous agents" },
+  { a: "v-aligned-ai", b: "v-direction", theme: "Intentional futures", why: "Choosing what kind of future we want, not just avoiding bad ones" },
+  { a: "v-consciousness", b: "v-direction", theme: "Choosing wisely", why: "Wisdom and intentionality as foundations for direction" },
+  { a: "v-restorative-transport", b: "v-nature-design", theme: "First-principles design", why: "Reimagining physical systems from fundamental human needs" },
+  { a: "v-bioprinting", b: "v-frugal-science", theme: "Science as creation", why: "Scientific discovery as a creative, transformative act" },
+  { a: "v-consciousness", b: "v-restorative-transport", theme: "Wellbeing", why: "Designing for human restoration and flourishing" },
+  { a: "v-fewer-workers", b: "v-post-scarcity", theme: "Post-work", why: "Imagining societies where basic needs are met with minimal toil" },
+  { a: "v-direction", b: "v-speculative-design", theme: "Imagining forward", why: "Speculation and intentionality as design methods" },
+];
 
-// Create person nodes
-PEOPLE.forEach((p, i) => {
-  nodes.push({
-    id: p.id,
-    label: p.name,
-    type: 'person',
-    vision: p.vision,
-    disciplines: p.disciplines,
-    url: p.url,
-    radius: p.subVision ? 5 : 8,
-    color: p.color,
-    x: 0, y: 0, vx: 0, vy: 0
+const PEOPLE_DATA = [
+  { id: "jacob-cole", name: "Jacob Cole", disciplines: ["CS", "Philosophy", "Knowledge Graphs"] },
+  { id: "daanish-shabbir", name: "Daanish Shabbir", disciplines: ["EE", "Physics", "AI", "Fiction"] },
+  { id: "bret-victor", name: "Bret Victor", disciplines: ["Interface Design", "EE", "CS"] },
+  { id: "neri-oxman", name: "Neri Oxman", disciplines: ["Architecture", "Biology", "Computing", "Materials"] },
+  { id: "saad-bhamla", name: "Saad Bhamla", disciplines: ["ChemE", "Biophysics", "Frugal Science", "Global Health"] },
+  { id: "renaise-kim", name: "Renaise Kim", disciplines: ["Product Design", "Visual Identity", "Sci-Fi"] },
+  { id: "stephanie-zhang", name: "Stephanie Zhang", disciplines: ["Bioengineering", "Media", "Painting"] },
+  { id: "nicole-hsing", name: "Nicole Hsing", disciplines: ["Cognitive Science", "AI", "Philosophy"] },
+  { id: "tom-currier", name: "Tom Currier", disciplines: ["Engineering", "Robotics", "Design", "Sleep Science"] },
+  { id: "kat-woods", name: "Kat Woods", disciplines: ["AI Safety", "Effective Altruism"] },
+  { id: "douglas-adams", name: "Douglas Adams", disciplines: ["Writing", "Technology", "Natural History"] },
+  { id: "nathan-goldwag", name: "Nathan Goldwag", disciplines: ["Fiction", "Political Science", "Futurism"] },
+  { id: "tom-schulz", name: "Tom Schulz", disciplines: ["Labor", "Community", "Post-Scarcity"] },
+];
+
+const PROJECTS = [
+  { id: "p-ideaflow", person: "Jacob Cole", personId: "jacob-cole", name: "IdeaFlow", type: "project",
+    desc: "Knowledge graph notebook for thinking", visionId: "v-knowledge-tools" },
+  { id: "p-dynamicland", person: "Bret Victor", personId: "bret-victor", name: "Dynamicland", type: "project",
+    desc: "Communal computing in physical space", visionId: "v-feedback-loops" },
+  { id: "p-eden", person: "Neri Oxman", personId: "neri-oxman", name: "Eden", type: "project",
+    desc: "Ecological programming for architecture", visionId: "v-nature-design" },
+  { id: "p-paperfuge", person: "Saad Bhamla", personId: "saad-bhamla", name: "Paperfuge", type: "project",
+    desc: "20-cent paper centrifuge for malaria diagnosis", visionId: "v-frugal-science" },
+  { id: "p-cabin", person: "Tom Currier", personId: "tom-currier", name: "Cabin", type: "project",
+    desc: "The sleep bus \u2014 restorative travel", visionId: "v-restorative-transport" },
+  { id: "p-mirror", person: "Nicole Hsing", personId: "nicole-hsing", name: "MIRROR", type: "project",
+    desc: "Dual-process inner monologue for LLM safety", visionId: "v-inner-monologue" },
+  { id: "p-artifice", person: "Renaise Kim", personId: "renaise-kim", name: "ARTIFICE Studio", type: "project",
+    desc: "Design studio shaped by science fiction", visionId: "v-speculative-design" },
+  { id: "p-bioprint", person: "Stephanie Zhang", personId: "stephanie-zhang", name: "Living Sculptures", type: "project",
+    desc: "3D-bioprinted self-assembling organisms", visionId: "v-bioprinting" },
+  { id: "p-mannahata", person: "Neri Oxman", personId: "neri-oxman", name: "Man-Nahata", type: "project",
+    desc: "Architectural vision for Megalopolis", visionId: "v-nature-design" },
+  { id: "p-fermi", person: "Daanish Shabbir", personId: "daanish-shabbir", name: "Fermi", type: "project",
+    desc: "Equivariant physics runtime for agents", visionId: "v-physics-gateway" },
+  { id: "p-ripple", person: "Saad Bhamla", personId: "saad-bhamla", name: "Ripple Bug Robots", type: "project",
+    desc: "Surface-tension propulsion for micro-robots", visionId: "v-frugal-science" },
+  { id: "p-healingarts", person: "Jacob Cole", personId: "jacob-cole", name: "Healing Arts Grant", type: "project",
+    desc: "Equal access to transformative experiences", visionId: "v-consciousness" },
+];
+
+// ============================================================
+// GRAPH STATE
+// ============================================================
+let currentView = 'visions';
+let nodes = [];
+let edges = [];
+let nodeMap = {};
+let showLabels = true;
+let filtersOpen = false;
+let filters = {
+  showPeople: true,
+  showVisions: true,
+  showProjects: true,
+  showDisciplines: true,
+  themes: {},  // theme -> bool
+  people: {},  // personId -> bool
+};
+
+// Initialize all filters to true
+const allThemes = [...new Set(VISIONS.flatMap(v => v.themes))].sort();
+allThemes.forEach(t => filters.themes[t] = true);
+PEOPLE_DATA.forEach(p => filters.people[p.id] = true);
+
+// ============================================================
+// BUILD GRAPH FOR EACH VIEW
+// ============================================================
+
+function buildGraph() {
+  nodes = [];
+  edges = [];
+  nodeMap = {};
+
+  const cx = W / 2, cy = H / 2;
+
+  if (currentView === 'visions') {
+    buildVisionsView(cx, cy);
+  } else if (currentView === 'people') {
+    buildPeopleView(cx, cy);
+  } else {
+    buildEverythingView(cx, cy);
+  }
+
+  nodes.forEach(n => nodeMap[n.id] = n);
+  updateLegend();
+  updateFilterPanel();
+}
+
+function buildVisionsView(cx, cy) {
+  // Vision nodes as primary
+  const visibleVisions = VISIONS.filter(v => filters.people[v.personId] !== false);
+
+  visibleVisions.forEach((v, i) => {
+    const angle = (i / visibleVisions.length) * Math.PI * 2;
+    const r = 140 + Math.random() * 60;
+    nodes.push({
+      id: v.id, type: 'vision',
+      label: v.short, fullText: v.text,
+      person: v.person, personId: v.personId,
+      themes: v.themes, link: v.link,
+      radius: 7,
+      x: cx + Math.cos(angle) * r,
+      y: cy + Math.sin(angle) * r,
+      vx: 0, vy: 0
+    });
   });
-});
 
-// Create discipline nodes and edges
-PEOPLE.forEach(p => {
-  p.disciplines.forEach(d => {
-    if (!disciplineNodes[d]) {
-      disciplineNodes[d] = {
-        id: 'disc-' + d.toLowerCase().replace(/\s+/g, '-'),
-        label: d,
-        type: 'discipline',
-        radius: 3,
-        color: '#ccc',
-        x: 0, y: 0, vx: 0, vy: 0
-      };
-      nodes.push(disciplineNodes[d]);
-    }
-    edges.push({ source: p.id, target: disciplineNodes[d].id, strength: 0.3 });
-  });
-});
-
-// Create thematic connections between people who share disciplines
-const personIds = PEOPLE.map(p => p.id);
-for (let i = 0; i < PEOPLE.length; i++) {
-  for (let j = i + 1; j < PEOPLE.length; j++) {
-    const shared = PEOPLE[i].disciplines.filter(d => PEOPLE[j].disciplines.includes(d));
-    if (shared.length > 0) {
+  // Thematic connections
+  VISION_LINKS.forEach(link => {
+    const hasA = visibleVisions.find(v => v.id === link.a);
+    const hasB = visibleVisions.find(v => v.id === link.b);
+    if (hasA && hasB) {
       edges.push({
-        source: PEOPLE[i].id,
-        target: PEOPLE[j].id,
-        strength: 0.08 * shared.length,
-        thematic: true,
-        shared: shared
+        source: link.a, target: link.b,
+        theme: link.theme, why: link.why,
+        strength: 0.12, type: 'thematic'
       });
+    }
+  });
+
+  // Person labels as small satellite nodes
+  if (filters.showPeople) {
+    const personVisions = {};
+    visibleVisions.forEach(v => {
+      if (!personVisions[v.personId]) personVisions[v.personId] = [];
+      personVisions[v.personId].push(v.id);
+    });
+    Object.entries(personVisions).forEach(([pid, vids]) => {
+      const p = PEOPLE_DATA.find(d => d.id === pid);
+      if (!p) return;
+      // Position near the average of their visions
+      const vNodes = vids.map(vid => nodes.find(n => n.id === vid)).filter(Boolean);
+      const avgX = vNodes.reduce((s, n) => s + n.x, 0) / vNodes.length;
+      const avgY = vNodes.reduce((s, n) => s + n.y, 0) / vNodes.length;
+      nodes.push({
+        id: 'person-' + pid, type: 'person-label',
+        label: p.name, personId: pid,
+        radius: 3,
+        x: avgX + (Math.random() - 0.5) * 40,
+        y: avgY - 25,
+        vx: 0, vy: 0
+      });
+      vids.forEach(vid => {
+        edges.push({ source: 'person-' + pid, target: vid, strength: 0.4, type: 'authorship' });
+      });
+    });
+  }
+}
+
+function buildPeopleView(cx, cy) {
+  const visiblePeople = PEOPLE_DATA.filter(p => filters.people[p.id] !== false);
+
+  visiblePeople.forEach((p, i) => {
+    const angle = (i / visiblePeople.length) * Math.PI * 2;
+    const r = 120 + Math.random() * 80;
+    nodes.push({
+      id: p.id, type: 'person',
+      label: p.name, disciplines: p.disciplines,
+      vision: VISIONS.filter(v => v.personId === p.id).map(v => v.short).join(', '),
+      radius: 8,
+      x: cx + Math.cos(angle) * r,
+      y: cy + Math.sin(angle) * r,
+      vx: 0, vy: 0
+    });
+  });
+
+  // Discipline nodes
+  if (filters.showDisciplines) {
+    const discMap = {};
+    visiblePeople.forEach(p => {
+      p.disciplines.forEach(d => {
+        if (!discMap[d]) {
+          discMap[d] = { id: 'disc-' + d.toLowerCase().replace(/\s+/g, '-'), label: d, people: [] };
+        }
+        discMap[d].people.push(p.id);
+      });
+    });
+    Object.values(discMap).forEach((d, i) => {
+      const angle = (i / Object.keys(discMap).length) * Math.PI * 2;
+      nodes.push({
+        id: d.id, type: 'discipline',
+        label: d.label, radius: 3,
+        x: cx + Math.cos(angle) * (200 + Math.random() * 80),
+        y: cy + Math.sin(angle) * (200 + Math.random() * 80),
+        vx: 0, vy: 0
+      });
+      d.people.forEach(pid => {
+        edges.push({ source: pid, target: d.id, strength: 0.25, type: 'discipline' });
+      });
+    });
+  }
+
+  // Shared-discipline connections between people
+  for (let i = 0; i < visiblePeople.length; i++) {
+    for (let j = i + 1; j < visiblePeople.length; j++) {
+      const shared = visiblePeople[i].disciplines.filter(d => visiblePeople[j].disciplines.includes(d));
+      if (shared.length > 0) {
+        edges.push({
+          source: visiblePeople[i].id, target: visiblePeople[j].id,
+          strength: 0.06 * shared.length, type: 'shared-disc',
+          theme: shared.join(', ')
+        });
+      }
     }
   }
 }
 
-// Also connect people whose visions mention related themes
-const thematicPairs = [
-  ["jacob-cole", "bret-victor", "tools & feedback loops"],
-  ["neri-oxman", "stephanie-zhang", "biology & design"],
-  ["saad-bhamla", "tom-schulz", "planetary access"],
-  ["nathan-goldwag", "tom-schulz", "post-scarcity futures"],
-  ["nicole-hsing", "daanish-shabbir", "AI & agents"],
-  ["kat-woods", "nicole-hsing", "AI alignment"],
-  ["jacob-cole-2", "douglas-adams", "consciousness & direction"],
-  ["renaise-kim", "neri-oxman", "design & speculation"],
-];
+function buildEverythingView(cx, cy) {
+  const visiblePeople = PEOPLE_DATA.filter(p => filters.people[p.id] !== false);
+  const pids = new Set(visiblePeople.map(p => p.id));
 
-thematicPairs.forEach(([a, b, theme]) => {
-  // Avoid duplicate edges
-  if (!edges.find(e => (e.source === a && e.target === b) || (e.source === b && e.target === a && e.thematic))) {
-    edges.push({ source: a, target: b, strength: 0.05, thematic: true, theme: theme });
+  // People as primary anchors
+  visiblePeople.forEach((p, i) => {
+    const angle = (i / visiblePeople.length) * Math.PI * 2;
+    const r = 180 + Math.random() * 40;
+    nodes.push({
+      id: p.id, type: 'person',
+      label: p.name, disciplines: p.disciplines,
+      vision: VISIONS.filter(v => v.personId === p.id).map(v => v.short).join(', '),
+      radius: 9,
+      x: cx + Math.cos(angle) * r,
+      y: cy + Math.sin(angle) * r,
+      vx: 0, vy: 0
+    });
+  });
+
+  // Visions
+  if (filters.showVisions) {
+    VISIONS.filter(v => pids.has(v.personId)).forEach(v => {
+      const pNode = nodes.find(n => n.id === v.personId);
+      nodes.push({
+        id: v.id, type: 'vision',
+        label: v.short, fullText: v.text,
+        person: v.person, personId: v.personId,
+        themes: v.themes, link: v.link,
+        radius: 5,
+        x: (pNode ? pNode.x : cx) + (Math.random() - 0.5) * 60,
+        y: (pNode ? pNode.y : cy) + (Math.random() - 0.5) * 60,
+        vx: 0, vy: 0
+      });
+      edges.push({ source: v.personId, target: v.id, strength: 0.5, type: 'authorship' });
+    });
+
+    // Vision-to-vision thematic links
+    VISION_LINKS.forEach(link => {
+      if (pids.has(VISIONS.find(v => v.id === link.a)?.personId) &&
+          pids.has(VISIONS.find(v => v.id === link.b)?.personId)) {
+        edges.push({
+          source: link.a, target: link.b,
+          theme: link.theme, why: link.why,
+          strength: 0.06, type: 'thematic'
+        });
+      }
+    });
   }
-});
 
-// ===== CANVAS SETUP =====
+  // Projects
+  if (filters.showProjects) {
+    PROJECTS.filter(p => pids.has(p.personId)).forEach(p => {
+      const pNode = nodes.find(n => n.id === p.personId);
+      nodes.push({
+        id: p.id, type: 'project',
+        label: p.name, desc: p.desc,
+        person: p.person, personId: p.personId,
+        radius: 4,
+        x: (pNode ? pNode.x : cx) + (Math.random() - 0.5) * 80,
+        y: (pNode ? pNode.y : cy) + (Math.random() - 0.5) * 80,
+        vx: 0, vy: 0
+      });
+      // Connect project to its vision
+      if (p.visionId && nodes.find(n => n.id === p.visionId)) {
+        edges.push({ source: p.visionId, target: p.id, strength: 0.35, type: 'manifests' });
+      }
+      // Connect to person
+      edges.push({ source: p.personId, target: p.id, strength: 0.3, type: 'authorship' });
+    });
+  }
+}
+
+// ============================================================
+// UI UPDATES
+// ============================================================
+
+function updateLegend() {
+  const el = document.getElementById('legend');
+  if (currentView === 'visions') {
+    el.innerHTML = `
+      <div class="legend__title">Connected visions</div>
+      <div class="legend__item"><span class="legend__dot" style="background:#b33a2b"></span> Vision</div>
+      <div class="legend__item"><span class="legend__dot" style="background:#999"></span> Person</div>
+      <div class="legend__item"><span class="legend__dot" style="background:transparent;border:1px dashed rgba(179,58,43,0.3)"></span> Thematic link</div>`;
+  } else if (currentView === 'people') {
+    el.innerHTML = `
+      <div class="legend__title">Connected people</div>
+      <div class="legend__item"><span class="legend__dot" style="background:#111"></span> Person</div>
+      <div class="legend__item"><span class="legend__dot" style="background:#ddd"></span> Discipline</div>
+      <div class="legend__item"><span class="legend__dot" style="background:transparent;border:1px dashed rgba(0,0,0,0.1)"></span> Shared discipline</div>`;
+  } else {
+    el.innerHTML = `
+      <div class="legend__title">Everything</div>
+      <div class="legend__item"><span class="legend__dot" style="background:#111"></span> Person</div>
+      <div class="legend__item"><span class="legend__dot" style="background:#b33a2b"></span> Vision</div>
+      <div class="legend__item"><span class="legend__rect" style="background:#5a7a4a;border-radius:1px"></span> Project</div>
+      <div class="legend__item"><span class="legend__dot" style="background:transparent;border:1px dashed rgba(179,58,43,0.3)"></span> Thematic link</div>`;
+  }
+}
+
+function updateFilterPanel() {
+  const panel = document.getElementById('filterPanel');
+  let html = '<div class="filter-panel__title">Filters</div>';
+
+  // Node type filters (only in Everything view)
+  if (currentView === 'everything') {
+    html += '<div class="filter-panel__group"><div class="filter-panel__group-title">Show</div>';
+    html += filterCheckbox('showVisions', 'Visions', filters.showVisions);
+    html += filterCheckbox('showProjects', 'Projects', filters.showProjects);
+    html += '</div>';
+  }
+  if (currentView === 'people') {
+    html += '<div class="filter-panel__group"><div class="filter-panel__group-title">Show</div>';
+    html += filterCheckbox('showDisciplines', 'Disciplines', filters.showDisciplines);
+    html += '</div>';
+  }
+
+  // People filter
+  html += '<div class="filter-panel__group"><div class="filter-panel__group-title">People</div>';
+  PEOPLE_DATA.forEach(p => {
+    html += filterCheckbox('person-' + p.id, p.name, filters.people[p.id] !== false);
+  });
+  html += '</div>';
+
+  panel.innerHTML = html;
+}
+
+function filterCheckbox(id, label, checked) {
+  return `<div class="filter-check">
+    <input type="checkbox" id="f-${id}" ${checked ? 'checked' : ''} onchange="handleFilter('${id}', this.checked)">
+    <label for="f-${id}">${label}</label>
+  </div>`;
+}
+
+function handleFilter(id, value) {
+  if (id === 'showVisions') filters.showVisions = value;
+  else if (id === 'showProjects') filters.showProjects = value;
+  else if (id === 'showDisciplines') filters.showDisciplines = value;
+  else if (id.startsWith('person-')) filters.people[id.replace('person-', '')] = value;
+  buildGraph();
+}
+
+function setView(view) {
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  buildGraph();
+}
+
+function toggleFilters() {
+  filtersOpen = !filtersOpen;
+  document.getElementById('filterPanel').classList.toggle('open', filtersOpen);
+  document.getElementById('filterBtn').classList.toggle('active', filtersOpen);
+}
+
+// ============================================================
+// CANVAS
+// ============================================================
 const canvas = document.getElementById('graph-canvas');
 const ctx = canvas.getContext('2d');
 const tooltip = document.getElementById('tooltip');
 let W, H, dpr;
-let showLabels = true;
 
 function resize() {
   dpr = window.devicePixelRatio || 1;
@@ -383,32 +725,19 @@ function resize() {
 resize();
 window.addEventListener('resize', resize);
 
-// Initialize positions
-const centerX = W / 2;
-const centerY = H / 2;
-nodes.forEach((n, i) => {
-  const angle = (i / nodes.length) * Math.PI * 2;
-  const r = n.type === 'person' ? 120 + Math.random() * 80 : 200 + Math.random() * 100;
-  n.x = centerX + Math.cos(angle) * r;
-  n.y = centerY + Math.sin(angle) * r;
-});
-
-// ===== PHYSICS =====
-const nodeMap = {};
-nodes.forEach(n => nodeMap[n.id] = n);
+// ============================================================
+// PHYSICS
+// ============================================================
 
 function simulate() {
-  const alpha = 0.15;
-  const repulsion = 800;
-  const edgeLength = 100;
+  const alpha = 0.12;
+  const repulsion = currentView === 'everything' ? 600 : 800;
 
-  // Repulsion between all nodes
   for (let i = 0; i < nodes.length; i++) {
     for (let j = i + 1; j < nodes.length; j++) {
       const a = nodes[i], b = nodes[j];
       let dx = b.x - a.x, dy = b.y - a.y;
       let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-      const minDist = (a.type === 'person' && b.type === 'person') ? 60 : 30;
       const force = repulsion / (dist * dist);
       const fx = (dx / dist) * force;
       const fy = (dy / dist) * force;
@@ -417,13 +746,12 @@ function simulate() {
     }
   }
 
-  // Edge attraction
   edges.forEach(e => {
     const a = nodeMap[e.source], b = nodeMap[e.target];
     if (!a || !b) return;
     let dx = b.x - a.x, dy = b.y - a.y;
     let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    const targetDist = e.thematic ? 160 : edgeLength;
+    const targetDist = e.type === 'thematic' ? 150 : e.type === 'authorship' ? 50 : e.type === 'manifests' ? 40 : 90;
     const strength = (e.strength || 0.1) * 0.5;
     const force = (dist - targetDist) * strength;
     const fx = (dx / dist) * force;
@@ -432,16 +760,10 @@ function simulate() {
     b.vx -= fx; b.vy -= fy;
   });
 
-  // Center gravity
+  const cx = W / 2, cy = H / 2;
   nodes.forEach(n => {
-    const dx = centerX - n.x, dy = centerY - n.y;
-    const gravity = n.type === 'person' ? 0.01 : 0.005;
-    n.vx += dx * gravity;
-    n.vy += dy * gravity;
-  });
-
-  // Apply velocity with damping
-  nodes.forEach(n => {
+    n.vx += (cx - n.x) * 0.008;
+    n.vy += (cy - n.y) * 0.008;
     n.vx *= 0.85;
     n.vy *= 0.85;
     n.x += n.vx * alpha;
@@ -449,21 +771,48 @@ function simulate() {
   });
 }
 
-// ===== RENDERING =====
+// ============================================================
+// RENDERING
+// ============================================================
+
+const NODE_COLORS = {
+  'vision': { fill: '#b33a2b', glow: 'rgba(179,58,43,0.08)', hover: '#d44a38', label: '#b33a2b' },
+  'person': { fill: '#111', glow: 'rgba(0,0,0,0.04)', hover: '#b33a2b', label: '#3a3a3a' },
+  'person-label': { fill: '#999', glow: null, hover: '#666', label: '#999' },
+  'discipline': { fill: '#ddd', glow: null, hover: '#999', label: '#bbb' },
+  'project': { fill: '#5a7a4a', glow: 'rgba(90,122,74,0.06)', hover: '#6d9458', label: '#5a7a4a' },
+};
+
 function draw() {
   ctx.clearRect(0, 0, W, H);
 
-  // Draw edges
+  // Edges
   edges.forEach(e => {
     const a = nodeMap[e.source], b = nodeMap[e.target];
     if (!a || !b) return;
+    const ax = a.x + panX, ay = a.y + panY;
+    const bx = b.x + panX, by = b.y + panY;
+
     ctx.beginPath();
-    ctx.moveTo(a.x + panX, a.y + panY);
-    ctx.lineTo(b.x + panX, b.y + panY);
-    if (e.thematic) {
-      ctx.strokeStyle = 'rgba(179, 58, 43, 0.08)';
-      ctx.lineWidth = 1;
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(bx, by);
+
+    if (e.type === 'thematic') {
+      ctx.strokeStyle = hoveredEdge === e ? 'rgba(179,58,43,0.35)' : 'rgba(179,58,43,0.1)';
+      ctx.lineWidth = hoveredEdge === e ? 1.5 : 1;
       ctx.setLineDash([3, 4]);
+    } else if (e.type === 'manifests') {
+      ctx.strokeStyle = 'rgba(90,122,74,0.15)';
+      ctx.lineWidth = 0.7;
+      ctx.setLineDash([2, 3]);
+    } else if (e.type === 'authorship') {
+      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+      ctx.lineWidth = 0.5;
+      ctx.setLineDash([]);
+    } else if (e.type === 'shared-disc') {
+      ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+      ctx.lineWidth = 0.5;
+      ctx.setLineDash([2, 5]);
     } else {
       ctx.strokeStyle = 'rgba(0,0,0,0.04)';
       ctx.lineWidth = 0.5;
@@ -471,42 +820,72 @@ function draw() {
     }
     ctx.stroke();
     ctx.setLineDash([]);
+
+    // Edge label for thematic connections
+    if (e.type === 'thematic' && showLabels && e.theme) {
+      const mx = (ax + bx) / 2, my = (ay + by) / 2;
+      ctx.font = '300 7.5px DM Mono, monospace';
+      ctx.fillStyle = hoveredEdge === e ? 'rgba(179,58,43,0.6)' : 'rgba(179,58,43,0.2)';
+      ctx.textAlign = 'center';
+      ctx.fillText(e.theme, mx, my - 3);
+    }
   });
 
-  // Draw nodes
+  // Nodes
   nodes.forEach(n => {
     const x = n.x + panX, y = n.y + panY;
+    const colors = NODE_COLORS[n.type] || NODE_COLORS['discipline'];
+    const isHovered = hoveredNode === n;
 
-    if (n.type === 'person') {
-      // Outer glow
+    // Glow
+    if (colors.glow) {
       ctx.beginPath();
       ctx.arc(x, y, n.radius + 3, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(179, 58, 43, 0.06)';
+      ctx.fillStyle = colors.glow;
       ctx.fill();
+    }
 
-      // Node
+    // Shape
+    if (n.type === 'project') {
+      // Rounded rect for projects
+      const s = n.radius * 1.6;
+      ctx.beginPath();
+      ctx.roundRect(x - s/2, y - s/3, s, s * 0.65, 2);
+      ctx.fillStyle = isHovered ? colors.hover : colors.fill;
+      ctx.fill();
+    } else {
       ctx.beginPath();
       ctx.arc(x, y, n.radius, 0, Math.PI * 2);
-      ctx.fillStyle = hoveredNode === n ? '#b33a2b' : '#111';
+      ctx.fillStyle = isHovered ? colors.hover : colors.fill;
       ctx.fill();
+    }
 
-      // Label
-      if (showLabels) {
-        ctx.font = '500 11px Newsreader, Georgia, serif';
-        ctx.fillStyle = hoveredNode === n ? '#b33a2b' : '#3a3a3a';
+    // Label
+    if (showLabels) {
+      if (n.type === 'person' || n.type === 'vision') {
+        ctx.font = n.type === 'person' ? '500 11px Newsreader, Georgia, serif' : 'italic 300 10px Newsreader, Georgia, serif';
+        ctx.fillStyle = isHovered ? (colors.hover || colors.label) : colors.label;
         ctx.textAlign = 'center';
         ctx.fillText(n.label, x, y - n.radius - 6);
-      }
-    } else {
-      // Discipline node
-      ctx.beginPath();
-      ctx.arc(x, y, n.radius, 0, Math.PI * 2);
-      ctx.fillStyle = hoveredNode === n ? '#999' : '#ddd';
-      ctx.fill();
-
-      if (showLabels) {
-        ctx.font = '300 8.5px DM Mono, Courier New, monospace';
-        ctx.fillStyle = hoveredNode === n ? '#666' : '#bbb';
+        // Person subtitle on vision nodes
+        if (n.type === 'vision' && n.person) {
+          ctx.font = '300 7.5px DM Mono, monospace';
+          ctx.fillStyle = '#bbb';
+          ctx.fillText(n.person, x, y + n.radius + 10);
+        }
+      } else if (n.type === 'project') {
+        ctx.font = '400 8px DM Mono, monospace';
+        ctx.fillStyle = isHovered ? colors.hover : '#8aa67d';
+        ctx.textAlign = 'center';
+        ctx.fillText(n.label, x, y - n.radius - 5);
+      } else if (n.type === 'person-label') {
+        ctx.font = '500 9px Newsreader, Georgia, serif';
+        ctx.fillStyle = '#aaa';
+        ctx.textAlign = 'center';
+        ctx.fillText(n.label, x, y - n.radius - 4);
+      } else {
+        ctx.font = '300 8px DM Mono, monospace';
+        ctx.fillStyle = isHovered ? '#666' : '#bbb';
         ctx.textAlign = 'center';
         ctx.fillText(n.label, x, y - n.radius - 4);
       }
@@ -514,20 +893,38 @@ function draw() {
   });
 }
 
-// ===== INTERACTION =====
+// ============================================================
+// INTERACTION
+// ============================================================
 let panX = 0, panY = 0;
-let isPanning = false;
-let panStartX, panStartY;
-let hoveredNode = null;
-let draggedNode = null;
+let isPanning = false, panStartX, panStartY;
+let hoveredNode = null, hoveredEdge = null, draggedNode = null;
 
 function getNodeAt(mx, my) {
-  // Check person nodes first (larger hit target)
   for (let i = nodes.length - 1; i >= 0; i--) {
     const n = nodes[i];
     const dx = mx - (n.x + panX), dy = my - (n.y + panY);
-    const hitR = n.type === 'person' ? n.radius + 8 : n.radius + 4;
+    const hitR = n.radius + 6;
     if (dx * dx + dy * dy < hitR * hitR) return n;
+  }
+  return null;
+}
+
+function getEdgeAt(mx, my) {
+  for (const e of edges) {
+    if (e.type !== 'thematic') continue;
+    const a = nodeMap[e.source], b = nodeMap[e.target];
+    if (!a || !b) continue;
+    const ax = a.x + panX, ay = a.y + panY;
+    const bx = b.x + panX, by = b.y + panY;
+    // Point-to-line distance
+    const len2 = (bx-ax)*(bx-ax) + (by-ay)*(by-ay);
+    if (len2 === 0) continue;
+    let t = ((mx-ax)*(bx-ax) + (my-ay)*(by-ay)) / len2;
+    t = Math.max(0, Math.min(1, t));
+    const px = ax + t*(bx-ax), py = ay + t*(by-ay);
+    const d = Math.sqrt((mx-px)*(mx-px) + (my-py)*(my-py));
+    if (d < 8) return e;
   }
   return null;
 }
@@ -538,11 +935,9 @@ canvas.addEventListener('mousemove', (e) => {
   if (draggedNode) {
     draggedNode.x = mx - panX;
     draggedNode.y = my - panY;
-    draggedNode.vx = 0;
-    draggedNode.vy = 0;
+    draggedNode.vx = 0; draggedNode.vy = 0;
     return;
   }
-
   if (isPanning) {
     panX = mx - panStartX;
     panY = my - panStartY;
@@ -550,19 +945,51 @@ canvas.addEventListener('mousemove', (e) => {
   }
 
   const node = getNodeAt(mx, my);
+  const edge = node ? null : getEdgeAt(mx, my);
   hoveredNode = node;
-  canvas.style.cursor = node ? 'pointer' : 'grab';
+  hoveredEdge = edge;
+  canvas.style.cursor = (node || edge) ? 'pointer' : 'grab';
 
-  if (node && node.type === 'person') {
-    tooltip.querySelector('#tipName').textContent = node.label;
-    tooltip.querySelector('#tipVision').textContent = node.vision;
-    tooltip.querySelector('#tipDisc').textContent = node.disciplines.join(' \u00b7 ');
+  const tipName = document.getElementById('tipName');
+  const tipVision = document.getElementById('tipVision');
+  const tipDisc = document.getElementById('tipDisc');
+  const tipTheme = document.getElementById('tipTheme');
+
+  if (node) {
+    if (node.type === 'vision') {
+      tipName.textContent = node.label;
+      tipVision.textContent = node.fullText || node.label;
+      tipDisc.textContent = node.person;
+      tipTheme.textContent = node.themes ? node.themes.join(' \u00b7 ') : '';
+    } else if (node.type === 'person') {
+      tipName.textContent = node.label;
+      tipVision.textContent = node.vision || '';
+      tipDisc.textContent = (node.disciplines || []).join(' \u00b7 ');
+      tipTheme.textContent = '';
+    } else if (node.type === 'project') {
+      tipName.textContent = node.label;
+      tipVision.textContent = node.desc || '';
+      tipDisc.textContent = node.person;
+      tipTheme.textContent = '';
+    } else {
+      tipName.textContent = node.label;
+      tipVision.textContent = '';
+      tipDisc.textContent = '';
+      tipTheme.textContent = '';
+    }
     tooltip.style.left = (mx + 16) + 'px';
     tooltip.style.top = (my - 10) + 'px';
-    // Keep tooltip on screen
     const rect = tooltip.getBoundingClientRect();
     if (rect.right > W) tooltip.style.left = (mx - rect.width - 16) + 'px';
     if (rect.bottom > H) tooltip.style.top = (my - rect.height - 10) + 'px';
+    tooltip.classList.add('visible');
+  } else if (edge) {
+    tipName.textContent = edge.theme || '';
+    tipVision.textContent = edge.why || '';
+    tipDisc.textContent = '';
+    tipTheme.textContent = '';
+    tooltip.style.left = (mx + 16) + 'px';
+    tooltip.style.top = (my - 10) + 'px';
     tooltip.classList.add('visible');
   } else {
     tooltip.classList.remove('visible');
@@ -583,9 +1010,7 @@ canvas.addEventListener('mousedown', (e) => {
 });
 
 canvas.addEventListener('mouseup', () => {
-  if (draggedNode) {
-    draggedNode = null;
-  }
+  draggedNode = null;
   isPanning = false;
   canvas.style.cursor = 'grab';
 });
@@ -594,71 +1019,46 @@ canvas.addEventListener('mouseleave', () => {
   isPanning = false;
   draggedNode = null;
   hoveredNode = null;
+  hoveredEdge = null;
   tooltip.classList.remove('visible');
 });
 
-canvas.addEventListener('click', (e) => {
-  const node = getNodeAt(e.clientX, e.clientY);
-  if (node && node.type === 'person' && node.url && node.url !== '#') {
-    window.location.href = node.url;
-  }
-});
-
-// Touch support
-let touchNode = null;
+// Touch
 canvas.addEventListener('touchstart', (e) => {
   const t = e.touches[0];
   const node = getNodeAt(t.clientX, t.clientY);
-  if (node) {
-    touchNode = node;
-    draggedNode = node;
-    e.preventDefault();
-  } else {
-    isPanning = true;
-    panStartX = t.clientX - panX;
-    panStartY = t.clientY - panY;
-  }
+  if (node) { draggedNode = node; e.preventDefault(); }
+  else { isPanning = true; panStartX = t.clientX - panX; panStartY = t.clientY - panY; }
 }, { passive: false });
 
 canvas.addEventListener('touchmove', (e) => {
   const t = e.touches[0];
-  if (draggedNode) {
-    draggedNode.x = t.clientX - panX;
-    draggedNode.y = t.clientY - panY;
-    draggedNode.vx = 0;
-    draggedNode.vy = 0;
-    e.preventDefault();
-  } else if (isPanning) {
-    panX = t.clientX - panStartX;
-    panY = t.clientY - panStartY;
-    e.preventDefault();
-  }
+  if (draggedNode) { draggedNode.x = t.clientX - panX; draggedNode.y = t.clientY - panY; draggedNode.vx = 0; draggedNode.vy = 0; e.preventDefault(); }
+  else if (isPanning) { panX = t.clientX - panStartX; panY = t.clientY - panStartY; e.preventDefault(); }
 }, { passive: false });
 
-canvas.addEventListener('touchend', () => {
-  draggedNode = null;
-  isPanning = false;
-  touchNode = null;
-});
+canvas.addEventListener('touchend', () => { draggedNode = null; isPanning = false; });
 
-// Controls
+// ============================================================
+// CONTROLS
+// ============================================================
+
 function resetView() {
   panX = 0; panY = 0;
-  const cx = W / 2, cy = H / 2;
-  nodes.forEach((n, i) => {
-    const angle = (i / nodes.length) * Math.PI * 2;
-    const r = n.type === 'person' ? 120 + Math.random() * 80 : 200 + Math.random() * 100;
-    n.x = cx + Math.cos(angle) * r;
-    n.y = cy + Math.sin(angle) * r;
-    n.vx = 0; n.vy = 0;
-  });
+  buildGraph();
 }
 
 function toggleLabels() {
   showLabels = !showLabels;
+  document.getElementById('labelBtn').classList.toggle('active', !showLabels);
 }
 
-// ===== ANIMATION LOOP =====
+// ============================================================
+// INIT & LOOP
+// ============================================================
+
+setView('visions');
+
 function tick() {
   simulate();
   draw();
