@@ -330,10 +330,43 @@
   @media (max-width: 700px) {
     html { font-size: 16px; }
     .h-inner { flex-direction: column; gap: 0.4rem; }
-    .person__row { flex-wrap: wrap; gap: 0.3rem 0.5rem; }
-    .person__tagline { white-space: normal; }
+
+    /* Directory rows on mobile */
+    .person__row {
+      flex-wrap: wrap;
+      gap: 0.2rem 0.5rem;
+      padding: 0.65rem 0.3rem;
+      background-size: 50% 1px;
+    }
+    .person__name { font-size: 1rem; }
+    .person__dash { display: none; }
+    .person__tagline {
+      white-space: normal;
+      flex-basis: 100%;
+      font-size: 0.82rem;
+      margin-top: -0.1rem;
+    }
     .person__tags { display: none; }
+    .person__membership {
+      font-size: 0.38rem;
+      order: 2;
+    }
+    .person__toggle { order: 3; }
+
+    /* Expanded detail on mobile */
+    .person.open .person__detail { padding: 0.3rem 0.3rem 1rem; }
+    .detail__vision {
+      font-size: 0.85rem;
+      padding-left: 0.7rem;
+    }
+    .detail__links { gap: 0.7rem; flex-wrap: wrap; }
+    .detail__stats { gap: 0.6rem; }
+
+    /* Forms */
     .form-grid { grid-template-columns: 1fr; }
+    .join { padding: 2rem 1.5rem 3rem; }
+    .join h2 { font-size: 1.3rem; }
+
     .f-inner { flex-direction: column; gap: 0.3rem; }
   }
 </style>
@@ -348,6 +381,7 @@
       <a href="visions.html">Visions</a>
       <a href="showcase.html">Showcase</a>
       <a href="feed.html">Feed</a>
+      <a href="graph.html">Graph</a>
       <a href="manifesto.html">Manifesto</a>
       <a href="#join">Join</a>
     </nav>

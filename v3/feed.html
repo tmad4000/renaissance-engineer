@@ -397,6 +397,7 @@
       <a href="visions.html">Visions</a>
       <a href="showcase.html">Showcase</a>
       <a href="feed.html" class="active">Feed</a>
+      <a href="graph.html">Graph</a>
       <a href="manifesto.html">Manifesto</a>
     </nav>
   </div>
@@ -457,7 +458,7 @@ function openPreview(url, title) {
   // Fallback: if iframe blocks (X-Frame-Options), show link after 3s
   setTimeout(() => {
     if (loading.style.display !== 'none') {
-      loading.innerHTML = 'This site doesn\\'t allow embedding. <a href="' + url + '" target="_blank" style="color:var(--red);text-decoration:none;margin-left:0.3rem;">Open in new tab &rarr;</a>';
+      loading.innerHTML = 'This site does not allow embedding. <a href="' + url + '" target="_blank" style="color:var(--red);text-decoration:none;margin-left:0.3rem;">Open in new tab &rarr;</a>';
     }
   }, 3500);
   overlay.classList.add('open');

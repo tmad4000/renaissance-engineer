@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vision Graph &mdash; Renaissance.Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --ink-70: #3a3a3a;
+    --ink-50: #666;
+    --ink-30: #999;
+    --ink-15: #ccc;
+    --ink-08: #e4e4e4;
+    --bg: #fafafa;
+    --surface: #fff;
+    --red: #b33a2b;
+    --red-light: rgba(179, 58, 43, 0.06);
+    --serif: 'Newsreader', 'Georgia', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --max-w: 700px;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--serif); color: var(--ink); background: var(--bg); overflow: hidden; }
+  ::selection { background: var(--red); color: #fff; }
+  a { color: var(--ink); }
+  a:hover { color: var(--red); }
+
+  header { border-bottom: 1px solid var(--ink-08); background: var(--surface); position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+  .h-inner { max-width: var(--max-w); margin: 0 auto; padding: 0.85rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .wm { font-size: 1.05rem; font-weight: 500; text-decoration: none; color: var(--ink); letter-spacing: -0.02em; }
+  .wm:hover { color: var(--red); }
+  nav { display: flex; gap: 1.4rem; }
+  nav a { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-decoration: none; color: var(--ink-50); }
+  nav a:hover { color: var(--red); }
+  nav a.active { color: var(--red); }
+
+  #graph-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    cursor: grab;
+  }
+  #graph-canvas:active { cursor: grabbing; }
+
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: var(--surface);
+    border: 1px solid var(--ink-08);
+    padding: 0.6rem 0.8rem;
+    max-width: 320px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 50;
+  }
+  .tooltip.visible { opacity: 1; }
+  .tooltip__name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.15rem;
+  }
+  .tooltip__vision {
+    font-size: 0.78rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-50);
+    line-height: 1.45;
+    margin-bottom: 0.2rem;
+  }
+  .tooltip__disciplines {
+    font-family: var(--mono);
+    font-size: 0.42rem;
+    color: var(--ink-30);
+    letter-spacing: 0.03em;
+  }
+
+  .legend {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 2rem;
+    z-index: 50;
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    color: var(--ink-30);
+    letter-spacing: 0.03em;
+    line-height: 1.8;
+  }
+  .legend__title {
+    font-size: 0.52rem;
+    color: var(--ink-50);
+    margin-bottom: 0.2rem;
+  }
+  .legend__item { display: flex; align-items: center; gap: 0.35rem; }
+  .legend__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .controls {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 2rem;
+    z-index: 50;
+    display: flex;
+    gap: 0.4rem;
+  }
+  .controls button {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-50);
+    background: var(--surface);
+    border: 1px solid var(--ink-08);
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .controls button:hover { color: var(--red); border-color: var(--red); }
+
+  @media (max-width: 600px) {
+    .h-inner { flex-direction: column; gap: 0.4rem; }
+    .legend { bottom: 0.8rem; left: 1rem; font-size: 0.4rem; }
+    .controls { bottom: 0.8rem; right: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="index.html" class="wm">Renaissance.Engineer</a>
+    <nav>
+      <a href="index.html#directory">Directory</a>
+      <a href="visions.html">Visions</a>
+      <a href="showcase.html">Showcase</a>
+      <a href="feed.html">Feed</a>
+      <a href="graph.html" class="active">Graph</a>
+      <a href="manifesto.html">Manifesto</a>
+    </nav>
+  </div>
+</header>
+
+<canvas id="graph-canvas"></canvas>
+
+<div class="tooltip" id="tooltip">
+  <div class="tooltip__name" id="tipName"></div>
+  <div class="tooltip__vision" id="tipVision"></div>
+  <div class="tooltip__disciplines" id="tipDisc"></div>
+</div>
+
+<div class="legend">
+  <div class="legend__title">Connected visions</div>
+  <div class="legend__item"><span class="legend__dot" style="background:#b33a2b"></span> Person</div>
+  <div class="legend__item"><span class="legend__dot" style="background:#ccc"></span> Shared discipline</div>
+  <div class="legend__item"><span class="legend__dot" style="background:rgba(179,58,43,0.2);border:1px solid var(--ink-08)"></span> Vision theme</div>
+</div>
+
+<div class="controls">
+  <button onclick="resetView()">Reset</button>
+  <button onclick="toggleLabels()">Labels</button>
+</div>
+
+<script>
+// ===== DATA =====
+const PEOPLE = [
+  {
+    id: "jacob-cole",
+    name: "Jacob Cole",
+    vision: "Knowledge tools that augment intelligence as you think \u2014 notebooks that become thinking partners.",
+    disciplines: ["CS", "Philosophy", "Knowledge Graphs"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "daanish-shabbir",
+    name: "Daanish Shabbir",
+    vision: "A general gateway to all known physics for autonomous agents.",
+    disciplines: ["EE", "Physics", "AI", "Fiction"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "bret-victor",
+    name: "Bret Victor",
+    vision: "Immediate connection between thinking and seeing \u2014 inventing on principle.",
+    disciplines: ["Interface Design", "EE", "CS"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "neri-oxman",
+    name: "Neri Oxman",
+    vision: "Where the natural and artificial are indistinguishable \u2014 nature-centric design.",
+    disciplines: ["Architecture", "Biology", "Computing", "Materials"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "saad-bhamla",
+    name: "Saad Bhamla",
+    vision: "Democratize knowledge and tools for billions, at planetary scale.",
+    disciplines: ["ChemE", "Biophysics", "Frugal Science", "Global Health"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "renaise-kim",
+    name: "Renaise Kim",
+    vision: "Where art and technology converge through speculative thinking.",
+    disciplines: ["Product Design", "Visual Identity", "Sci-Fi"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "stephanie-zhang",
+    name: "Stephanie Zhang",
+    vision: "The unsayable aliveness underneath phenomena \u2014 poetry transfigured into proteins.",
+    disciplines: ["Bioengineering", "Media", "Painting"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "nicole-hsing",
+    name: "Nicole Hsing",
+    vision: "Inner monologue architectures for AI \u2014 code meets creative expression.",
+    disciplines: ["Cognitive Science", "AI", "Philosophy"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "tom-currier",
+    name: "Tom Currier",
+    vision: "Transportation reimagined \u2014 what if the ride itself could be restorative?",
+    disciplines: ["Engineering", "Robotics", "Design", "Sleep Science"],
+    color: "#b33a2b",
+    url: "index.html#directory"
+  },
+  {
+    id: "jacob-cole-2",
+    name: "Jacob Cole",
+    vision: "Get everyone to touch the profound state of consciousness that cascades wisdom and joy.",
+    disciplines: ["Healing Arts", "Consciousness", "Well-being"],
+    color: "#b33a2b",
+    url: "index.html#directory",
+    subVision: true
+  },
+  {
+    id: "kat-woods",
+    name: "Kat Woods",
+    vision: "What would happen if superintelligent AI was aligned with your values?",
+    disciplines: ["AI Safety", "Effective Altruism"],
+    color: "#b33a2b",
+    url: "#"
+  },
+  {
+    id: "douglas-adams",
+    name: "Douglas Adams",
+    vision: "Look at where we want to go, not just where we are afraid we might end up.",
+    disciplines: ["Writing", "Technology", "Natural History"],
+    color: "#b33a2b",
+    url: "#"
+  },
+  {
+    id: "nathan-goldwag",
+    name: "Nathan Goldwag",
+    vision: "Post-scarcity through fusion and nanoforges \u2014 but at what cost to the Global South?",
+    disciplines: ["Fiction", "Political Science", "Futurism"],
+    color: "#b33a2b",
+    url: "https://nathangoldwag.wordpress.com/2024/04/"
+  },
+  {
+    id: "tom-schulz",
+    name: "Tom Schulz",
+    vision: "How few people could be working to get everyone\u2019s needs met?",
+    disciplines: ["Labor", "Community", "Post-Scarcity"],
+    color: "#b33a2b",
+    url: "#"
+  }
+];
+
+// ===== BUILD GRAPH =====
+const nodes = [];
+const edges = [];
+const disciplineNodes = {};
+
+// Create person nodes
+PEOPLE.forEach((p, i) => {
+  nodes.push({
+    id: p.id,
+    label: p.name,
+    type: 'person',
+    vision: p.vision,
+    disciplines: p.disciplines,
+    url: p.url,
+    radius: p.subVision ? 5 : 8,
+    color: p.color,
+    x: 0, y: 0, vx: 0, vy: 0
+  });
+});
+
+// Create discipline nodes and edges
+PEOPLE.forEach(p => {
+  p.disciplines.forEach(d => {
+    if (!disciplineNodes[d]) {
+      disciplineNodes[d] = {
+        id: 'disc-' + d.toLowerCase().replace(/\s+/g, '-'),
+        label: d,
+        type: 'discipline',
+        radius: 3,
+        color: '#ccc',
+        x: 0, y: 0, vx: 0, vy: 0
+      };
+      nodes.push(disciplineNodes[d]);
+    }
+    edges.push({ source: p.id, target: disciplineNodes[d].id, strength: 0.3 });
+  });
+});
+
+// Create thematic connections between people who share disciplines
+const personIds = PEOPLE.map(p => p.id);
+for (let i = 0; i < PEOPLE.length; i++) {
+  for (let j = i + 1; j < PEOPLE.length; j++) {
+    const shared = PEOPLE[i].disciplines.filter(d => PEOPLE[j].disciplines.includes(d));
+    if (shared.length > 0) {
+      edges.push({
+        source: PEOPLE[i].id,
+        target: PEOPLE[j].id,
+        strength: 0.08 * shared.length,
+        thematic: true,
+        shared: shared
+      });
+    }
+  }
+}
+
+// Also connect people whose visions mention related themes
+const thematicPairs = [
+  ["jacob-cole", "bret-victor", "tools & feedback loops"],
+  ["neri-oxman", "stephanie-zhang", "biology & design"],
+  ["saad-bhamla", "tom-schulz", "planetary access"],
+  ["nathan-goldwag", "tom-schulz", "post-scarcity futures"],
+  ["nicole-hsing", "daanish-shabbir", "AI & agents"],
+  ["kat-woods", "nicole-hsing", "AI alignment"],
+  ["jacob-cole-2", "douglas-adams", "consciousness & direction"],
+  ["renaise-kim", "neri-oxman", "design & speculation"],
+];
+
+thematicPairs.forEach(([a, b, theme]) => {
+  // Avoid duplicate edges
+  if (!edges.find(e => (e.source === a && e.target === b) || (e.source === b && e.target === a && e.thematic))) {
+    edges.push({ source: a, target: b, strength: 0.05, thematic: true, theme: theme });
+  }
+});
+
+// ===== CANVAS SETUP =====
+const canvas = document.getElementById('graph-canvas');
+const ctx = canvas.getContext('2d');
+const tooltip = document.getElementById('tooltip');
+let W, H, dpr;
+let showLabels = true;
+
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  W = window.innerWidth;
+  H = window.innerHeight;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Initialize positions
+const centerX = W / 2;
+const centerY = H / 2;
+nodes.forEach((n, i) => {
+  const angle = (i / nodes.length) * Math.PI * 2;
+  const r = n.type === 'person' ? 120 + Math.random() * 80 : 200 + Math.random() * 100;
+  n.x = centerX + Math.cos(angle) * r;
+  n.y = centerY + Math.sin(angle) * r;
+});
+
+// ===== PHYSICS =====
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.id] = n);
+
+function simulate() {
+  const alpha = 0.15;
+  const repulsion = 800;
+  const edgeLength = 100;
+
+  // Repulsion between all nodes
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const a = nodes[i], b = nodes[j];
+      let dx = b.x - a.x, dy = b.y - a.y;
+      let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const minDist = (a.type === 'person' && b.type === 'person') ? 60 : 30;
+      const force = repulsion / (dist * dist);
+      const fx = (dx / dist) * force;
+      const fy = (dy / dist) * force;
+      a.vx -= fx; a.vy -= fy;
+      b.vx += fx; b.vy += fy;
+    }
+  }
+
+  // Edge attraction
+  edges.forEach(e => {
+    const a = nodeMap[e.source], b = nodeMap[e.target];
+    if (!a || !b) return;
+    let dx = b.x - a.x, dy = b.y - a.y;
+    let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const targetDist = e.thematic ? 160 : edgeLength;
+    const strength = (e.strength || 0.1) * 0.5;
+    const force = (dist - targetDist) * strength;
+    const fx = (dx / dist) * force;
+    const fy = (dy / dist) * force;
+    a.vx += fx; a.vy += fy;
+    b.vx -= fx; b.vy -= fy;
+  });
+
+  // Center gravity
+  nodes.forEach(n => {
+    const dx = centerX - n.x, dy = centerY - n.y;
+    const gravity = n.type === 'person' ? 0.01 : 0.005;
+    n.vx += dx * gravity;
+    n.vy += dy * gravity;
+  });
+
+  // Apply velocity with damping
+  nodes.forEach(n => {
+    n.vx *= 0.85;
+    n.vy *= 0.85;
+    n.x += n.vx * alpha;
+    n.y += n.vy * alpha;
+  });
+}
+
+// ===== RENDERING =====
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Draw edges
+  edges.forEach(e => {
+    const a = nodeMap[e.source], b = nodeMap[e.target];
+    if (!a || !b) return;
+    ctx.beginPath();
+    ctx.moveTo(a.x + panX, a.y + panY);
+    ctx.lineTo(b.x + panX, b.y + panY);
+    if (e.thematic) {
+      ctx.strokeStyle = 'rgba(179, 58, 43, 0.08)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 4]);
+    } else {
+      ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+      ctx.lineWidth = 0.5;
+      ctx.setLineDash([]);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+
+  // Draw nodes
+  nodes.forEach(n => {
+    const x = n.x + panX, y = n.y + panY;
+
+    if (n.type === 'person') {
+      // Outer glow
+      ctx.beginPath();
+      ctx.arc(x, y, n.radius + 3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(179, 58, 43, 0.06)';
+      ctx.fill();
+
+      // Node
+      ctx.beginPath();
+      ctx.arc(x, y, n.radius, 0, Math.PI * 2);
+      ctx.fillStyle = hoveredNode === n ? '#b33a2b' : '#111';
+      ctx.fill();
+
+      // Label
+      if (showLabels) {
+        ctx.font = '500 11px Newsreader, Georgia, serif';
+        ctx.fillStyle = hoveredNode === n ? '#b33a2b' : '#3a3a3a';
+        ctx.textAlign = 'center';
+        ctx.fillText(n.label, x, y - n.radius - 6);
+      }
+    } else {
+      // Discipline node
+      ctx.beginPath();
+      ctx.arc(x, y, n.radius, 0, Math.PI * 2);
+      ctx.fillStyle = hoveredNode === n ? '#999' : '#ddd';
+      ctx.fill();
+
+      if (showLabels) {
+        ctx.font = '300 8.5px DM Mono, Courier New, monospace';
+        ctx.fillStyle = hoveredNode === n ? '#666' : '#bbb';
+        ctx.textAlign = 'center';
+        ctx.fillText(n.label, x, y - n.radius - 4);
+      }
+    }
+  });
+}
+
+// ===== INTERACTION =====
+let panX = 0, panY = 0;
+let isPanning = false;
+let panStartX, panStartY;
+let hoveredNode = null;
+let draggedNode = null;
+
+function getNodeAt(mx, my) {
+  // Check person nodes first (larger hit target)
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    const n = nodes[i];
+    const dx = mx - (n.x + panX), dy = my - (n.y + panY);
+    const hitR = n.type === 'person' ? n.radius + 8 : n.radius + 4;
+    if (dx * dx + dy * dy < hitR * hitR) return n;
+  }
+  return null;
+}
+
+canvas.addEventListener('mousemove', (e) => {
+  const mx = e.clientX, my = e.clientY;
+
+  if (draggedNode) {
+    draggedNode.x = mx - panX;
+    draggedNode.y = my - panY;
+    draggedNode.vx = 0;
+    draggedNode.vy = 0;
+    return;
+  }
+
+  if (isPanning) {
+    panX = mx - panStartX;
+    panY = my - panStartY;
+    return;
+  }
+
+  const node = getNodeAt(mx, my);
+  hoveredNode = node;
+  canvas.style.cursor = node ? 'pointer' : 'grab';
+
+  if (node && node.type === 'person') {
+    tooltip.querySelector('#tipName').textContent = node.label;
+    tooltip.querySelector('#tipVision').textContent = node.vision;
+    tooltip.querySelector('#tipDisc').textContent = node.disciplines.join(' \u00b7 ');
+    tooltip.style.left = (mx + 16) + 'px';
+    tooltip.style.top = (my - 10) + 'px';
+    // Keep tooltip on screen
+    const rect = tooltip.getBoundingClientRect();
+    if (rect.right > W) tooltip.style.left = (mx - rect.width - 16) + 'px';
+    if (rect.bottom > H) tooltip.style.top = (my - rect.height - 10) + 'px';
+    tooltip.classList.add('visible');
+  } else {
+    tooltip.classList.remove('visible');
+  }
+});
+
+canvas.addEventListener('mousedown', (e) => {
+  const node = getNodeAt(e.clientX, e.clientY);
+  if (node) {
+    draggedNode = node;
+    canvas.style.cursor = 'grabbing';
+  } else {
+    isPanning = true;
+    panStartX = e.clientX - panX;
+    panStartY = e.clientY - panY;
+    canvas.style.cursor = 'grabbing';
+  }
+});
+
+canvas.addEventListener('mouseup', () => {
+  if (draggedNode) {
+    draggedNode = null;
+  }
+  isPanning = false;
+  canvas.style.cursor = 'grab';
+});
+
+canvas.addEventListener('mouseleave', () => {
+  isPanning = false;
+  draggedNode = null;
+  hoveredNode = null;
+  tooltip.classList.remove('visible');
+});
+
+canvas.addEventListener('click', (e) => {
+  const node = getNodeAt(e.clientX, e.clientY);
+  if (node && node.type === 'person' && node.url && node.url !== '#') {
+    window.location.href = node.url;
+  }
+});
+
+// Touch support
+let touchNode = null;
+canvas.addEventListener('touchstart', (e) => {
+  const t = e.touches[0];
+  const node = getNodeAt(t.clientX, t.clientY);
+  if (node) {
+    touchNode = node;
+    draggedNode = node;
+    e.preventDefault();
+  } else {
+    isPanning = true;
+    panStartX = t.clientX - panX;
+    panStartY = t.clientY - panY;
+  }
+}, { passive: false });
+
+canvas.addEventListener('touchmove', (e) => {
+  const t = e.touches[0];
+  if (draggedNode) {
+    draggedNode.x = t.clientX - panX;
+    draggedNode.y = t.clientY - panY;
+    draggedNode.vx = 0;
+    draggedNode.vy = 0;
+    e.preventDefault();
+  } else if (isPanning) {
+    panX = t.clientX - panStartX;
+    panY = t.clientY - panStartY;
+    e.preventDefault();
+  }
+}, { passive: false });
+
+canvas.addEventListener('touchend', () => {
+  draggedNode = null;
+  isPanning = false;
+  touchNode = null;
+});
+
+// Controls
+function resetView() {
+  panX = 0; panY = 0;
+  const cx = W / 2, cy = H / 2;
+  nodes.forEach((n, i) => {
+    const angle = (i / nodes.length) * Math.PI * 2;
+    const r = n.type === 'person' ? 120 + Math.random() * 80 : 200 + Math.random() * 100;
+    n.x = cx + Math.cos(angle) * r;
+    n.y = cy + Math.sin(angle) * r;
+    n.vx = 0; n.vy = 0;
+  });
+}
+
+function toggleLabels() {
+  showLabels = !showLabels;
+}
+
+// ===== ANIMATION LOOP =====
+function tick() {
+  simulate();
+  draw();
+  requestAnimationFrame(tick);
+}
+tick();
+</script>
+
+</body>
+</html>
