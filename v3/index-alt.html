@@ -60,7 +60,7 @@
     margin-top: 0.35rem;
   }
 
-  /* ===== COMPACT DIRECTORY ===== */
+  /* ===== AIRY DIRECTORY — no lines, just breath ===== */
   .directory {
     max-width: var(--max-w);
     margin: 0 auto;
@@ -71,16 +71,16 @@
     display: flex;
     align-items: baseline;
     gap: 0.6rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--ink-08);
+    padding: 0.6rem 0.5rem;
+    margin: 0.15rem 0;
+    border-radius: 4px;
     text-decoration: none;
-    transition: padding-left 0.15s, background 0.15s;
+    transition: background 0.2s;
     opacity: 0;
     animation: fadeIn 0.3s ease forwards;
   }
   .row:hover {
-    padding-left: 0.35rem;
-    background: linear-gradient(90deg, var(--red-light), transparent 60%);
+    background: var(--red-light);
   }
   @keyframes fadeIn { to { opacity: 1; } }
 
@@ -104,50 +104,38 @@
   }
   .row:hover .row__name { color: var(--red); }
 
-  .row__dash {
-    color: var(--ink-15);
-    flex-shrink: 0;
-  }
-
   .row__tagline {
     font-size: 0.88rem;
     font-weight: 300;
     font-style: italic;
-    color: var(--ink-50);
+    color: var(--ink-30);
     flex: 1;
     min-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .row:hover .row__tagline { color: var(--ink-50); }
 
   .row__tags {
     display: flex;
-    gap: 0.2rem;
+    gap: 0.3rem;
     flex-shrink: 0;
   }
   .row__tag {
     font-family: var(--mono);
     font-size: 0.45rem;
     letter-spacing: 0.03em;
-    color: var(--ink-30);
-    border: 1px solid var(--ink-08);
-    padding: 0.1rem 0.3rem;
+    color: var(--ink-15);
     white-space: nowrap;
+    transition: color 0.15s;
   }
-  .row:hover .row__tag {
-    color: var(--red);
-    border-color: rgba(179, 58, 43, 0.2);
-    background: var(--red-light);
-  }
-
-  .row__arrow {
-    font-size: 0.75rem;
+  .row__tag::before { content: ''; }
+  .row__tag + .row__tag::before {
+    content: '\00b7\00a0';
     color: var(--ink-08);
-    flex-shrink: 0;
-    transition: color 0.15s, transform 0.15s;
   }
-  .row:hover .row__arrow { color: var(--red); transform: translateX(2px); }
+  .row:hover .row__tag { color: var(--ink-30); }
 
   /* ===== JOIN ===== */
   .join {
@@ -277,98 +265,82 @@
 
   <a href="https://jacobcole.net" target="_blank" class="row">
     <span class="row__name">Jacob Cole</span>
-    <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Notebooks that think with you</span>
     <span class="row__tags">
       <span class="row__tag">CS</span>
       <span class="row__tag">Philosophy</span>
       <span class="row__tag">Knowledge Graphs</span>
     </span>
-    <span class="row__arrow">&rarr;</span>
   </a>
 
   <a href="https://www.daanish.life" target="_blank" class="row">
     <span class="row__name">Daanish Shabbir</span>
-    <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Physics runtimes for autonomous agents</span>
     <span class="row__tags">
       <span class="row__tag">EE</span>
       <span class="row__tag">Physics</span>
       <span class="row__tag">Fiction</span>
     </span>
-    <span class="row__arrow">&rarr;</span>
   </a>
 
   <a href="https://worrydream.com" target="_blank" class="row">
     <span class="row__name">Bret Victor</span>
-    <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Computing as a communal, physical medium</span>
     <span class="row__tags">
       <span class="row__tag">Interface Design</span>
       <span class="row__tag">EE</span>
       <span class="row__tag">CS</span>
     </span>
-    <span class="row__arrow">&rarr;</span>
   </a>
 
   <a href="https://oxman.com" target="_blank" class="row">
     <span class="row__name">Neri Oxman</span>
-    <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Where the natural and artificial are indistinguishable</span>
     <span class="row__tags">
       <span class="row__tag">Architecture</span>
       <span class="row__tag">Biology</span>
       <span class="row__tag">Materials</span>
     </span>
-    <span class="row__arrow">&rarr;</span>
   </a>
 
   <a href="https://bhamla.gatech.edu" target="_blank" class="row">
     <span class="row__name">Saad Bhamla</span>
-    <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Frugal science for billions</span>
     <span class="row__tags">
       <span class="row__tag">ChemE</span>
       <span class="row__tag">Biophysics</span>
       <span class="row__tag">Global Health</span>
     </span>
-    <span class="row__arrow">&rarr;</span>
   </a>
 
   <a href="https://renaise.com" target="_blank" class="row">
     <span class="row__name">Renaise Kim</span>
-    <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Design shaped by science fiction</span>
     <span class="row__tags">
       <span class="row__tag">Product Design</span>
       <span class="row__tag">Visual Identity</span>
       <span class="row__tag">Sci-Fi</span>
     </span>
-    <span class="row__arrow">&rarr;</span>
   </a>
 
   <a href="https://s-z.carrd.co" target="_blank" class="row">
     <span class="row__name">Stephanie Zhang</span>
-    <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Poetry transfigured into proteins</span>
     <span class="row__tags">
       <span class="row__tag">Bioengineering</span>
       <span class="row__tag">Media</span>
       <span class="row__tag">Painting</span>
     </span>
-    <span class="row__arrow">&rarr;</span>
   </a>
 
   <a href="https://nicolehsing.com" target="_blank" class="row">
     <span class="row__name">Nicole Hsing</span>
-    <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Inner monologue architectures for AI</span>
     <span class="row__tags">
       <span class="row__tag">Cognitive Science</span>
       <span class="row__tag">AI</span>
       <span class="row__tag">Philosophy</span>
     </span>
-    <span class="row__arrow">&rarr;</span>
   </a>
 
 </section>
