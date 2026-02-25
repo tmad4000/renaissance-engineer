@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renaissance Engineer</title>
+<meta name="description" content="A directory of polymaths and cross-disciplinary builders working across art, science, technology, and philosophy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Caveat:wght@400;500;600&family=JetBrains+Mono:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-mid: #3d3530;
+    --ink-light: #5c4f45;
+    --ink-faint: #8b7f72;
+    --ink-ghost: #b5a99a;
+    --paper: #f6f1ea;
+    --paper-warm: #f0e8dc;
+    --paper-deep: #e8ddd0;
+    --parchment-edge: #d4c4a0;
+    --accent: #8b2500;
+    --accent-hover: #a53000;
+    --sepia: #704214;
+    --gold: #b8860b;
+    --blue-ink: #2c4a6e;
+    --rule: #d4cfc5;
+    --rule-light: #e5e0d6;
+    --serif: 'Cormorant Garamond', 'Georgia', serif;
+    --hand: 'Caveat', cursive;
+    --sans: 'Inter', 'Helvetica Neue', sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --max-w: 1100px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 17px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: var(--serif);
+    color: var(--ink);
+    background: var(--paper-deep);
+    line-height: 1.7;
+  }
+
+  /* Parchment grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  a {
+    color: var(--blue-ink);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  a:hover { color: var(--accent); }
+
+  /* ========== HEADER ========== */
+
+  .site-header {
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .site-header__inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 1.1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .wordmark {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .wordmark span {
+    font-weight: 300;
+    color: var(--ink-faint);
+  }
+  .wordmark:hover { color: var(--accent); }
+
+  .site-nav {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .site-nav a {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .site-nav a:hover { color: var(--accent); }
+
+  /* ========== INTRO ========== */
+
+  .intro {
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .intro__inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 3.5rem 2rem 3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .intro__left {}
+
+  .intro__tagline {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+    margin-bottom: 0.8rem;
+  }
+
+  .intro__title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+  .intro__title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--sepia);
+  }
+
+  .intro__right {
+    flex-shrink: 0;
+  }
+
+  .intro__note {
+    font-family: var(--hand);
+    font-size: 1rem;
+    color: var(--ink-faint);
+    transform: rotate(-1.5deg);
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  /* Vitruvian emblem - small, decorative */
+  .intro__emblem {
+    width: 80px;
+    height: 80px;
+    opacity: 0.35;
+    margin-left: auto;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ========== DIRECTORY ========== */
+
+  .directory {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  .directory__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2.5rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .directory__label {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+  }
+
+  .directory__count {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    font-weight: 300;
+    color: var(--ink-ghost);
+    letter-spacing: 0.04em;
+  }
+
+  /* Card grid */
+  .directory__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 2rem;
+  }
+
+  /* ========== PERSON CARD ========== */
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.8rem 1.8rem 1.5rem;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Ruled lines */
+    background-image:
+      repeating-linear-gradient(
+        transparent, transparent 30px,
+        rgba(44, 24, 16, 0.03) 30px,
+        rgba(44, 24, 16, 0.03) 31px
+      );
+    background-position: 0 1.5rem;
+  }
+
+  /* Margin line */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 50px;
+    width: 1px;
+    background: rgba(139, 37, 0, 0.08);
+  }
+
+  .card:hover {
+    transform: translateY(-3px) rotate(0.2deg);
+    box-shadow:
+      0 8px 24px rgba(44, 24, 16, 0.08),
+      0 2px 6px rgba(44, 24, 16, 0.05);
+  }
+
+  .card--historical { opacity: 0.78; }
+  .card--historical:hover { opacity: 1; }
+
+  .card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.2rem;
+  }
+
+  .card__era {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    font-weight: 300;
+    color: var(--ink-ghost);
+    letter-spacing: 0.03em;
+  }
+
+  .card__tag {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    font-weight: 300;
+    color: var(--ink-ghost);
+    border: 1px solid var(--rule);
+    padding: 0.05rem 0.35rem;
+    letter-spacing: 0.04em;
+  }
+
+  .card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .card__portrait {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--paper-warm);
+  }
+  .card__portrait svg {
+    width: 32px;
+    height: 32px;
+    opacity: 0.5;
+  }
+
+  .card__name {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .card__name a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .card__name a:hover { color: var(--accent); }
+
+  .card__epithet {
+    font-family: var(--hand);
+    font-size: 0.95rem;
+    color: var(--sepia);
+    margin-top: 0.1rem;
+  }
+
+  .card__disciplines {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 400;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .card__bio {
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    font-weight: 400;
+    color: var(--ink-light);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .card__discipline {
+    font-family: var(--hand);
+    font-size: 0.85rem;
+    padding: 0.1rem 0.55rem;
+    border: 1px dashed var(--rule);
+    color: var(--sepia);
+    background: rgba(244, 232, 209, 0.3);
+  }
+
+  .card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule-light);
+    padding-top: 0.7rem;
+  }
+
+  .card__link {
+    font-family: var(--serif);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--blue-ink);
+  }
+  .card__link:hover { color: var(--accent); }
+  .card__link::after { content: ' \2192'; }
+
+  .card__number {
+    font-family: var(--hand);
+    font-size: 0.8rem;
+    color: var(--ink-ghost);
+  }
+
+  /* ========== ORNAMENT ========== */
+
+  .ornament {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ornament svg {
+    width: 240px;
+    height: 30px;
+    opacity: 0.35;
+  }
+
+  /* ========== JOIN SECTION ========== */
+
+  .join {
+    background: var(--paper);
+    border-top: 1px solid var(--rule);
+  }
+
+  .join__inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .join__heading {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  .join__heading em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--sepia);
+  }
+
+  .join__desc {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--ink-light);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .join__criteria {
+    list-style: none;
+    padding: 0;
+  }
+  .join__criteria li {
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    color: var(--ink-light);
+    line-height: 1.6;
+    padding: 0.25rem 0 0.25rem 1.2rem;
+    position: relative;
+  }
+  .join__criteria li::before {
+    content: '\2014';
+    position: absolute;
+    left: 0;
+    color: var(--ink-ghost);
+  }
+
+  .join__note {
+    font-family: var(--hand);
+    font-size: 1rem;
+    color: var(--ink-faint);
+    margin-top: 1.5rem;
+    transform: rotate(-0.8deg);
+    line-height: 1.4;
+  }
+
+  /* Notebook-styled form */
+  .notebook-form {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    padding: 2rem 2.2rem 2rem 2.8rem;
+    position: relative;
+    background-image:
+      repeating-linear-gradient(
+        transparent, transparent 33px,
+        rgba(44, 24, 16, 0.03) 33px,
+        rgba(44, 24, 16, 0.03) 34px
+      );
+    background-position: 0 0.5rem;
+  }
+  .notebook-form::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 42px;
+    width: 1px;
+    background: rgba(139, 37, 0, 0.08);
+  }
+  /* Spiral holes */
+  .notebook-form::after {
+    content: '';
+    position: absolute;
+    top: 16px; left: 14px;
+    width: 10px;
+    height: calc(100% - 32px);
+    background-image:
+      radial-gradient(circle 4px at center, rgba(44, 24, 16, 0.1) 3px, transparent 3px);
+    background-size: 10px 34px;
+    background-repeat: repeat-y;
+  }
+
+  .form-group { margin-bottom: 1.4rem; }
+
+  .form-group label {
+    display: block;
+    font-family: var(--hand);
+    font-size: 1.05rem;
+    color: var(--sepia);
+    margin-bottom: 0.25rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    padding: 0.45rem 0.2rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-bottom-color: var(--sepia);
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--ink-ghost);
+    font-style: italic;
+    opacity: 0.7;
+  }
+  .form-group textarea {
+    border: 1px solid var(--rule);
+    padding: 0.45rem;
+    resize: vertical;
+    min-height: 4.5rem;
+    line-height: 1.6;
+  }
+  .form-group textarea:focus {
+    border-color: var(--sepia);
+  }
+  .form-hint {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    color: var(--ink-ghost);
+    margin-top: 0.25rem;
+  }
+
+  .form-submit {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: none;
+    padding: 0.85rem 2.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--accent); }
+
+  .form-response {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--sepia);
+    margin-top: 1rem;
+    display: none;
+  }
+  .form-response.visible { display: block; }
+
+  /* ========== FOOTER ========== */
+
+  .site-footer {
+    border-top: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .site-footer__inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 2rem 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .site-footer__quote {
+    font-family: var(--serif);
+    font-size: 0.82rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-faint);
+    max-width: 32rem;
+  }
+  .site-footer__right {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    color: var(--ink-ghost);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  /* ========== ANIMATIONS ========== */
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    animation: fadeUp 0.5s ease both;
+    animation-play-state: paused;
+  }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.2s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.3s; }
+  .card:nth-child(7) { animation-delay: 0.35s; }
+  .card:nth-child(8) { animation-delay: 0.4s; }
+
+  /* ========== RESPONSIVE ========== */
+
+  @media (max-width: 768px) {
+    html { font-size: 16px; }
+    .site-header__inner { flex-direction: column; gap: 0.6rem; }
+    .site-nav { gap: 1.5rem; }
+    .intro__inner {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 2.5rem 1.5rem 2rem;
+    }
+    .intro__right { display: none; }
+    .directory { padding: 2rem 1.5rem 3rem; }
+    .directory__grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .join__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 3rem 1.5rem;
+    }
+    .site-footer__inner {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  @media print {
+    body::after, .site-header, .join, .site-footer { display: none; }
+    .card--historical { opacity: 1; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="#" class="wordmark">Renaissance <span>Engineer</span></a>
+    <ul class="site-nav">
+      <li><a href="#directory">Directory</a></li>
+      <li><a href="#join">Join</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ====== INTRO ====== -->
+<section class="intro">
+  <div class="intro__inner">
+    <div class="intro__left">
+      <p class="intro__tagline">Est. MMXXVI &middot; An open directory</p>
+      <h1 class="intro__title">Those who build across <em>boundaries</em></h1>
+    </div>
+    <div class="intro__right">
+      <svg class="intro__emblem" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" stroke="#5c3a28" stroke-width="0.6" opacity="0.4"/>
+        <circle cx="100" cy="100" r="58" stroke="#5c3a28" stroke-width="0.4" opacity="0.3"/>
+        <rect x="32" y="32" width="136" height="136" stroke="#5c3a28" stroke-width="0.5" opacity="0.25"/>
+        <line x1="100" y1="12" x2="100" y2="188" stroke="#5c3a28" stroke-width="0.2" opacity="0.15"/>
+        <line x1="12" y1="100" x2="188" y2="100" stroke="#5c3a28" stroke-width="0.2" opacity="0.15"/>
+        <circle cx="100" cy="52" r="9" stroke="#2c1810" stroke-width="0.8" opacity="0.35"/>
+        <line x1="100" y1="61" x2="100" y2="112" stroke="#2c1810" stroke-width="0.8" opacity="0.35"/>
+        <line x1="100" y1="76" x2="60" y2="70" stroke="#2c1810" stroke-width="0.6" opacity="0.3"/>
+        <line x1="100" y1="76" x2="140" y2="70" stroke="#2c1810" stroke-width="0.6" opacity="0.3"/>
+        <line x1="100" y1="112" x2="78" y2="155" stroke="#2c1810" stroke-width="0.6" opacity="0.3"/>
+        <line x1="100" y1="112" x2="122" y2="155" stroke="#2c1810" stroke-width="0.6" opacity="0.3"/>
+        <path d="M100,100 Q118,82 128,100 Q138,118 118,128 Q100,138 90,118 Q82,100 96,92" stroke="#b8860b" stroke-width="0.4" opacity="0.2" fill="none"/>
+      </svg>
+      <p class="intro__note">a catalog of remarkable<br>cross-disciplinary minds</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== DIRECTORY ====== -->
+<section class="directory" id="directory">
+  <div class="directory__meta">
+    <span class="directory__label">Directory</span>
+    <span class="directory__count">8 members</span>
+  </div>
+
+  <div class="directory__grid">
+
+    <article class="card card--historical" style="transform: rotate(-0.3deg);">
+      <div class="card__top">
+        <span class="card__era">1452 &ndash; 1519</span>
+        <span class="card__tag">historical</span>
+      </div>
+      <div class="card__header">
+        <div class="card__portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M12,10 Q16,4 20,6 Q24,4 28,10" stroke="#5c3a28" stroke-width="0.6" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="card__name"><a href="https://en.wikipedia.org/wiki/Leonardo_da_Vinci">Leonardo da Vinci</a></h3>
+          <p class="card__epithet">"The Universal Man"</p>
+        </div>
+      </div>
+      <p class="card__disciplines">Painting &middot; Engineering &middot; Anatomy &middot; Hydraulics &middot; Optics</p>
+      <p class="card__bio">
+        Designed flying machines, mapped the human body, painted the Mona Lisa,
+        and engineered canal systems&mdash;seeing no boundary between observation,
+        beauty, and mechanism.
+      </p>
+      <div class="card__tags">
+        <span class="card__discipline">Painting</span>
+        <span class="card__discipline">Engineering</span>
+        <span class="card__discipline">Anatomy</span>
+        <span class="card__discipline">Architecture</span>
+      </div>
+      <div class="card__footer">
+        <a href="https://en.wikipedia.org/wiki/Leonardo_da_Vinci" class="card__link" target="_blank">Explore works</a>
+        <span class="card__number">No. I</span>
+      </div>
+    </article>
+
+    <article class="card card--historical" style="transform: rotate(0.4deg);">
+      <div class="card__top">
+        <span class="card__era">1706 &ndash; 1790</span>
+        <span class="card__tag">historical</span>
+      </div>
+      <div class="card__header">
+        <div class="card__portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="card__name"><a href="https://en.wikipedia.org/wiki/Benjamin_Franklin">Benjamin Franklin</a></h3>
+          <p class="card__epithet">"The First American"</p>
+        </div>
+      </div>
+      <p class="card__disciplines">Physics &middot; Diplomacy &middot; Publishing &middot; Invention &middot; Political Philosophy</p>
+      <p class="card__bio">
+        Proved lightning is electricity, founded the first public library,
+        negotiated the French alliance, invented bifocals, and wrote prose sharp
+        enough to start a revolution.
+      </p>
+      <div class="card__tags">
+        <span class="card__discipline">Physics</span>
+        <span class="card__discipline">Diplomacy</span>
+        <span class="card__discipline">Publishing</span>
+        <span class="card__discipline">Invention</span>
+      </div>
+      <div class="card__footer">
+        <a href="https://en.wikipedia.org/wiki/Benjamin_Franklin" class="card__link" target="_blank">Explore works</a>
+        <span class="card__number">No. II</span>
+      </div>
+    </article>
+
+    <article class="card card--historical" style="transform: rotate(-0.2deg);">
+      <div class="card__top">
+        <span class="card__era">1815 &ndash; 1852</span>
+        <span class="card__tag">historical</span>
+      </div>
+      <div class="card__header">
+        <div class="card__portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M13,14 Q17,8 20,9 Q23,8 27,14" stroke="#5c3a28" stroke-width="0.6" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="card__name"><a href="https://en.wikipedia.org/wiki/Ada_Lovelace">Ada Lovelace</a></h3>
+          <p class="card__epithet">"Enchantress of Numbers"</p>
+        </div>
+      </div>
+      <p class="card__disciplines">Mathematics &middot; Computing &middot; Poetry &middot; Music &middot; Philosophy of Mind</p>
+      <p class="card__bio">
+        Wrote the first computer program and saw that a computing machine could
+        manipulate symbols of any kind. Called her approach &ldquo;poetical science&rdquo;:
+        the intersection of imagination and analysis.
+      </p>
+      <div class="card__tags">
+        <span class="card__discipline">Mathematics</span>
+        <span class="card__discipline">Computing</span>
+        <span class="card__discipline">Poetry</span>
+        <span class="card__discipline">Music</span>
+      </div>
+      <div class="card__footer">
+        <a href="https://en.wikipedia.org/wiki/Ada_Lovelace" class="card__link" target="_blank">Explore works</a>
+        <span class="card__number">No. III</span>
+      </div>
+    </article>
+
+    <article class="card" style="transform: rotate(0.3deg);">
+      <div class="card__top">
+        <span class="card__era">b. 1991</span>
+      </div>
+      <div class="card__header">
+        <div class="card__portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M14,12 Q18,6 22,8 Q26,6 28,12" stroke="#5c3a28" stroke-width="0.5" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="card__name"><a href="#">Maya Okonkwo</a></h3>
+          <p class="card__epithet">"Neural Sculptor"</p>
+        </div>
+      </div>
+      <p class="card__disciplines">Computational Neuroscience &middot; Sculpture &middot; Music Production</p>
+      <p class="card__bio">
+        Builds neural network architectures inspired by the brain's visual cortex,
+        then translates those patterns into large-scale steel sculptures. Releases
+        ambient electronic albums that sonify neural spike trains.
+      </p>
+      <div class="card__tags">
+        <span class="card__discipline">Neuroscience</span>
+        <span class="card__discipline">Sculpture</span>
+        <span class="card__discipline">Music</span>
+      </div>
+      <div class="card__footer">
+        <a href="#" class="card__link">View portfolio</a>
+        <span class="card__number">No. IV</span>
+      </div>
+    </article>
+
+    <article class="card" style="transform: rotate(-0.4deg);">
+      <div class="card__top">
+        <span class="card__era">b. 1987</span>
+      </div>
+      <div class="card__header">
+        <div class="card__portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="card__name"><a href="#">Rafael Mendes</a></h3>
+          <p class="card__epithet">"Living Architecture"</p>
+        </div>
+      </div>
+      <p class="card__disciplines">Architecture &middot; Distributed Systems &middot; Urban Agriculture</p>
+      <p class="card__bio">
+        Designs buildings that grow food. Licensed architect who learned to code to
+        build sensor networks for vertical farms embedded in facades. Ships both
+        concrete and software.
+      </p>
+      <div class="card__tags">
+        <span class="card__discipline">Architecture</span>
+        <span class="card__discipline">Engineering</span>
+        <span class="card__discipline">Agriculture</span>
+      </div>
+      <div class="card__footer">
+        <a href="#" class="card__link">View portfolio</a>
+        <span class="card__number">No. V</span>
+      </div>
+    </article>
+
+    <article class="card" style="transform: rotate(0.2deg);">
+      <div class="card__top">
+        <span class="card__era">b. 1984</span>
+      </div>
+      <div class="card__header">
+        <div class="card__portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M12,11 Q14,6 20,7 Q26,6 28,11" stroke="#5c3a28" stroke-width="0.4" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="card__name"><a href="#">Lena Johansson</a></h3>
+          <p class="card__epithet">"Thread Alchemist"</p>
+        </div>
+      </div>
+      <p class="card__disciplines">Materials Science &middot; Textile Design &middot; Climate Policy</p>
+      <p class="card__bio">
+        Developed a biodegradable polymer thread now used by three major fashion
+        houses. Splits time between a chemistry lab in Stockholm and advising the
+        EU Commission on circular economy regulation.
+      </p>
+      <div class="card__tags">
+        <span class="card__discipline">Materials</span>
+        <span class="card__discipline">Textiles</span>
+        <span class="card__discipline">Policy</span>
+      </div>
+      <div class="card__footer">
+        <a href="#" class="card__link">View portfolio</a>
+        <span class="card__number">No. VI</span>
+      </div>
+    </article>
+
+    <article class="card" style="transform: rotate(-0.5deg);">
+      <div class="card__top">
+        <span class="card__era">b. 1979</span>
+      </div>
+      <div class="card__header">
+        <div class="card__portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="card__name"><a href="#">James Whitfield-Chen</a></h3>
+          <p class="card__epithet">"Calligraphic Compiler"</p>
+        </div>
+      </div>
+      <p class="card__disciplines">Compiler Design &middot; Calligraphy &middot; Cognitive Science &middot; Education</p>
+      <p class="card__bio">
+        Built a programming language whose syntax is informed by Chinese calligraphic
+        stroke order. Runs a school that teaches children to code, draw, and reason
+        about formal systems simultaneously.
+      </p>
+      <div class="card__tags">
+        <span class="card__discipline">Computing</span>
+        <span class="card__discipline">Calligraphy</span>
+        <span class="card__discipline">Education</span>
+      </div>
+      <div class="card__footer">
+        <a href="#" class="card__link">View portfolio</a>
+        <span class="card__number">No. VII</span>
+      </div>
+    </article>
+
+    <article class="card" style="transform: rotate(0.4deg);">
+      <div class="card__top">
+        <span class="card__era">b. 1993</span>
+      </div>
+      <div class="card__header">
+        <div class="card__portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M14,12 Q18,6 22,8 Q26,6 28,12" stroke="#5c3a28" stroke-width="0.5" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="card__name"><a href="#">Priya Raghavan</a></h3>
+          <p class="card__epithet">"Dancing Machines"</p>
+        </div>
+      </div>
+      <p class="card__disciplines">Robotics &middot; Bharatanatyam Dance &middot; Philosophy of Embodiment</p>
+      <p class="card__bio">
+        Builds soft robotics systems whose movement vocabularies are derived from
+        classical Indian dance. Leading a lab in Bangalore building prosthetics that
+        move with human grace.
+      </p>
+      <div class="card__tags">
+        <span class="card__discipline">Robotics</span>
+        <span class="card__discipline">Dance</span>
+        <span class="card__discipline">Philosophy</span>
+      </div>
+      <div class="card__footer">
+        <a href="#" class="card__link">View portfolio</a>
+        <span class="card__number">No. VIII</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ====== ORNAMENT ====== -->
+<div class="ornament" aria-hidden="true">
+  <svg viewBox="0 0 300 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="15" x2="125" y2="15" stroke="#8b6f5c" stroke-width="0.5"/>
+    <circle cx="137" cy="15" r="2.5" stroke="#8b6f5c" stroke-width="0.5"/>
+    <circle cx="150" cy="15" r="4" stroke="#8b6f5c" stroke-width="0.6"/>
+    <circle cx="163" cy="15" r="2.5" stroke="#8b6f5c" stroke-width="0.5"/>
+    <line x1="175" y1="15" x2="300" y2="15" stroke="#8b6f5c" stroke-width="0.5"/>
+  </svg>
+</div>
+
+<!-- ====== JOIN ====== -->
+<section class="join" id="join">
+  <div class="join__inner">
+    <div>
+      <h2 class="join__heading">Inscribe yourself in the <em>codex</em></h2>
+      <p class="join__desc">
+        This is not a credential check. If you work seriously across multiple
+        disciplines and want to be visible to others who do the same, you belong here.
+      </p>
+      <ul class="join__criteria">
+        <li>Depth (not just interest) in two or more distinct fields</li>
+        <li>You actively build, create, or research</li>
+        <li>You believe cross-disciplinary work produces better outcomes</li>
+        <li>You want to connect with others who think this way</li>
+      </ul>
+      <p class="join__note">The directory is open to all who<br>build across boundaries &mdash; no gatekeeping.</p>
+    </div>
+
+    <form class="notebook-form" id="joinForm" onsubmit="return handleSubmit(event)">
+      <div id="formFields">
+        <div class="form-group">
+          <label for="f-name">Full Name</label>
+          <input type="text" id="f-name" name="name" required placeholder="As you wish to be known...">
+        </div>
+        <div class="form-group">
+          <label for="f-epithet">Your Epithet</label>
+          <input type="text" id="f-epithet" name="epithet" placeholder='e.g. "Builder of Bridges Between Worlds"'>
+          <p class="form-hint">A short title or descriptor. Optional.</p>
+        </div>
+        <div class="form-group">
+          <label for="f-disciplines">Disciplines</label>
+          <input type="text" id="f-disciplines" name="disciplines" required placeholder="e.g. Robotics, Painting, Philosophy">
+          <p class="form-hint">Two or more fields you work in seriously</p>
+        </div>
+        <div class="form-group">
+          <label for="f-bio">What you build across</label>
+          <textarea id="f-bio" name="bio" required placeholder="What do you bridge? What connections do you see that others miss?"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="f-url">Link to your work</label>
+          <input type="url" id="f-url" name="url" placeholder="https://yoursite.com">
+          <p class="form-hint">Website, portfolio, or profile. Optional.</p>
+        </div>
+        <div class="form-group">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" name="email" required placeholder="you@example.com">
+          <p class="form-hint">For verification only. Never displayed.</p>
+        </div>
+        <button type="submit" class="form-submit">Submit Entry</button>
+        <p class="form-response" id="formResponse">
+          Your page has been inscribed. We'll review and add you to the codex.
+        </p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__quote">
+      &ldquo;Realize that everything connects to everything else.&rdquo; &mdash; Leonardo da Vinci
+    </p>
+    <span class="site-footer__right">renaissance.engineer &middot; MMXXVI</span>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const resp = document.getElementById('formResponse');
+  resp.classList.add('visible');
+  setTimeout(() => e.target.reset(), 300);
+  setTimeout(() => resp.classList.remove('visible'), 6000);
+  return false;
+}
+
+// Card fade-in on scroll
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.animationPlayState = 'running';
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.card').forEach(c => obs.observe(c));
+</script>
+
+</body>
+</html>
