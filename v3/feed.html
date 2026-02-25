@@ -42,206 +42,237 @@
 
   .page { max-width: var(--max-w); margin: 0 auto; padding: 2rem 2rem 3rem; }
 
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.8rem;
+  }
+  .page-header-left {}
   .page h1 {
     font-size: 1.6rem;
     font-weight: 300;
     line-height: 1.25;
     letter-spacing: -0.025em;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.15rem;
   }
   .page h1 em { font-weight: 500; font-style: italic; color: var(--red); }
-  .page > .sub {
+  .page .sub {
     font-family: var(--mono);
     font-size: 0.6rem;
     color: var(--ink-30);
-    margin-bottom: 1.8rem;
     letter-spacing: 0.03em;
   }
 
-  /* Filter pills */
-  .filters {
+  /* Filter as inline text links */
+  .filter-row {
     display: flex;
     gap: 0.25rem;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    align-items: baseline;
+  }
+  .filter-label {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    color: var(--ink-15);
+    letter-spacing: 0.04em;
+    margin-right: 0.15rem;
   }
   .filter-pill {
     font-family: var(--mono);
-    font-size: 0.5rem;
+    font-size: 0.48rem;
     letter-spacing: 0.03em;
     color: var(--ink-30);
     background: none;
-    border: 1px solid var(--ink-08);
-    padding: 0.15rem 0.45rem;
+    border: none;
+    padding: 0.1rem 0.25rem;
     cursor: pointer;
     transition: all 0.15s;
+    border-radius: 2px;
   }
-  .filter-pill:hover { color: var(--ink); border-color: var(--ink-15); }
-  .filter-pill.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
+  .filter-pill:hover { color: var(--ink); }
+  .filter-pill.active { color: var(--red); background: var(--red-light); }
 
-  /* Feed entries */
-  .feed-item {
-    padding: 1.2rem 0;
+  /* ===== THE FEED: Newspaper/journal column ===== */
+  .feed-stream {}
+
+  .entry {
+    padding: 1.1rem 0;
     opacity: 0;
     animation: fadeUp 0.3s ease forwards;
-    background-image: linear-gradient(var(--ink-08), var(--ink-08));
-    background-size: 90% 1px;
-    background-repeat: no-repeat;
-    background-position: center bottom;
+    display: grid;
+    grid-template-columns: 3.2rem 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 0 0.9rem;
   }
-  .feed-item:last-child { background-image: none; }
+  .entry + .entry {
+    border-top: 1px solid var(--ink-08);
+  }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .feed-item__source {
-    display: flex;
-    align-items: baseline;
-    gap: 0.4rem;
-    margin-bottom: 0.3rem;
-  }
-  .feed-item__author {
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  .feed-item__author a { text-decoration: none; }
-  .feed-item__author a:hover { color: var(--red); }
-  .feed-item__origin {
-    font-family: var(--mono);
-    font-size: 0.48rem;
-    color: var(--ink-30);
-    letter-spacing: 0.02em;
-  }
-  .feed-item__origin a { color: var(--ink-30); text-decoration: none; }
-  .feed-item__origin a:hover { color: var(--red); }
-  .feed-item__date {
+  /* Left column: date badge */
+  .entry__date {
+    grid-row: 1 / -1;
     font-family: var(--mono);
     font-size: 0.48rem;
     color: var(--ink-15);
-    margin-left: auto;
+    letter-spacing: 0.02em;
+    text-align: right;
+    padding-top: 0.2rem;
+    line-height: 1.35;
+  }
+  .entry__date .date-year {
+    display: block;
+    font-size: 0.42rem;
+    color: var(--ink-08);
+    margin-top: -0.05rem;
   }
 
-  .feed-item__title {
-    font-size: 1.05rem;
+  /* Right column: content */
+  .entry__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    margin-bottom: 0.15rem;
+    flex-wrap: wrap;
+  }
+  .entry__author {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .entry__author a { text-decoration: none; }
+  .entry__author a:hover { color: var(--red); }
+  .entry__via {
+    font-family: var(--mono);
+    font-size: 0.42rem;
+    color: var(--ink-15);
+    letter-spacing: 0.02em;
+  }
+  .entry__via a { color: var(--ink-15); text-decoration: none; }
+  .entry__via a:hover { color: var(--red); }
+  .entry__type {
+    font-family: var(--mono);
+    font-size: 0.38rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--ink-15);
+    padding: 0.06rem 0.28rem;
+    border-radius: 1px;
+    vertical-align: 1px;
+  }
+  .entry__type--paper { background: var(--red); }
+  .entry__type--talk { background: #5a7a4a; }
+  .entry__type--essay { background: var(--ink-50); }
+  .entry__type--award { background: #8b6914; }
+
+  .entry__title {
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: -0.01em;
-    line-height: 1.35;
-    margin-bottom: 0.25rem;
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
   }
-  .feed-item__title a { text-decoration: none; }
-  .feed-item__title a:hover { color: var(--red); }
+  .entry__title a { text-decoration: none; }
+  .entry__title a:hover { color: var(--red); }
 
-  .feed-item__excerpt {
-    font-size: 0.85rem;
+  .entry__body {
+    grid-column: 2;
+  }
+  .entry__excerpt {
+    font-size: 0.82rem;
     font-weight: 300;
     color: var(--ink-50);
-    line-height: 1.55;
-    margin-bottom: 0.4rem;
+    line-height: 1.5;
+    margin-bottom: 0.35rem;
   }
 
-  .feed-item__tags {
+  .entry__foot {
+    grid-column: 2;
     display: flex;
-    gap: 0.2rem;
+    align-items: baseline;
+    gap: 0.5rem;
     flex-wrap: wrap;
-    margin-bottom: 0.5rem;
+  }
+  .entry__tags {
+    display: flex;
+    gap: 0.15rem;
+    flex-wrap: wrap;
   }
   .feed-tag {
     font-family: var(--mono);
-    font-size: 0.42rem;
-    letter-spacing: 0.03em;
+    font-size: 0.38rem;
+    letter-spacing: 0.02em;
     color: var(--ink-15);
   }
-  .feed-tag + .feed-tag::before {
-    content: '\00b7\00a0';
-    color: var(--ink-08);
-  }
+  .feed-tag + .feed-tag::before { content: '\00b7\00a0'; }
 
-  /* Reply/thread section */
-  .feed-item__actions {
-    display: flex;
-    gap: 0.8rem;
-    align-items: center;
-  }
   .action-btn {
     font-family: var(--mono);
-    font-size: 0.48rem;
+    font-size: 0.42rem;
     letter-spacing: 0.04em;
-    color: var(--ink-15);
+    color: var(--ink-08);
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.15rem 0;
+    padding: 0.1rem 0;
     transition: color 0.15s;
+    margin-left: auto;
   }
   .action-btn:hover { color: var(--red); }
 
+  /* Replies */
   .replies {
-    margin-top: 0.6rem;
-    padding-left: 1rem;
+    grid-column: 2;
+    margin-top: 0.4rem;
+    padding-left: 0.8rem;
     border-left: 1px solid var(--ink-08);
   }
-  .reply {
-    margin-bottom: 0.6rem;
-  }
-  .reply__header {
-    display: flex;
-    align-items: baseline;
-    gap: 0.3rem;
-    margin-bottom: 0.1rem;
-  }
-  .reply__author {
-    font-size: 0.78rem;
-    font-weight: 500;
-  }
-  .reply__date {
-    font-family: var(--mono);
-    font-size: 0.45rem;
-    color: var(--ink-15);
-  }
-  .reply__text {
-    font-size: 0.82rem;
-    font-weight: 300;
-    color: var(--ink-50);
-    line-height: 1.5;
-  }
+  .reply { margin-bottom: 0.5rem; }
+  .reply__header { display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: 0.05rem; }
+  .reply__author { font-size: 0.75rem; font-weight: 500; }
+  .reply__date { font-family: var(--mono); font-size: 0.4rem; color: var(--ink-15); }
+  .reply__text { font-size: 0.78rem; font-weight: 300; color: var(--ink-50); line-height: 1.45; }
 
   .reply-form {
-    margin-top: 0.5rem;
+    grid-column: 2;
+    margin-top: 0.35rem;
     display: none;
   }
-  .reply-form.show { display: flex; gap: 0.4rem; align-items: flex-start; }
+  .reply-form.show { display: flex; gap: 0.35rem; align-items: flex-start; }
   .reply-form textarea {
     flex: 1;
     font-family: var(--serif);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--ink);
     border: 1px solid var(--ink-08);
-    padding: 0.4rem 0.5rem;
+    padding: 0.35rem 0.45rem;
     background: transparent;
     resize: none;
-    min-height: 2.5rem;
-    line-height: 1.5;
+    min-height: 2.2rem;
+    line-height: 1.45;
     outline: none;
     transition: border-color 0.15s;
   }
   .reply-form textarea:focus { border-color: var(--red); }
   .reply-form button {
     font-family: var(--mono);
-    font-size: 0.5rem;
+    font-size: 0.45rem;
     letter-spacing: 0.06em;
     color: var(--surface);
     background: var(--ink);
     border: none;
-    padding: 0.4rem 0.8rem;
+    padding: 0.35rem 0.65rem;
     cursor: pointer;
     transition: background 0.15s;
     white-space: nowrap;
   }
   .reply-form button:hover { background: var(--red); }
 
-  /* Empty state */
   .empty { font-size: 0.88rem; font-style: italic; color: var(--ink-30); padding: 2rem 0; text-align: center; display: none; }
 
   footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
@@ -251,6 +282,10 @@
   @media (max-width: 600px) {
     html { font-size: 16px; }
     .h-inner { flex-direction: column; gap: 0.4rem; }
+    .page-header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .entry { grid-template-columns: 1fr; gap: 0; }
+    .entry__date { grid-row: auto; text-align: left; margin-bottom: 0.15rem; }
+    .entry__body, .entry__foot, .replies, .reply-form { grid-column: 1; }
     .f-inner { flex-direction: column; gap: 0.3rem; }
   }
 </style>
@@ -271,14 +306,19 @@
 </header>
 
 <section class="page">
-  <h1>Thoughtful <em>streams</em></h1>
-  <p class="sub">Curated writing from minds that build across boundaries</p>
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>Thoughtful <em>streams</em></h1>
+      <p class="sub">Curated writing from minds that build across boundaries</p>
+    </div>
+  </div>
 
-  <div class="filters" id="filters">
+  <div class="filter-row" id="filters">
+    <span class="filter-label">Filter</span>
     <button class="filter-pill active" data-filter="all">All</button>
   </div>
 
-  <div id="feedList"></div>
+  <div class="feed-stream" id="feedList"></div>
   <p class="empty" id="emptyState">No posts match this filter.</p>
 </section>
 
@@ -292,53 +332,239 @@
 <script>
 const FEED = [
   {
-    person: "Bret Victor",
-    personUrl: "https://worrydream.com",
-    title: "Dynamicland 2024: Our Spatial, Communal Computer",
-    url: "https://dynamicland.org/2024/Intro/",
-    date: "2024-11-01",
-    excerpt: "An introduction to Dynamicland's new 2024 system &mdash; a communal computer where every object in a room can see, think, and remember. Computing leaves the screen and enters the physical world.",
-    source: "dynamicland.org",
-    sourceUrl: "https://dynamicland.org",
-    disciplines: ["Interface Design", "CS", "Architecture"],
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    title: "5000 Years of Compute & Design Co-Evolution",
+    url: "https://www.daanish.life/coevolution",
+    date: "2026-02-01",
+    type: "essay",
+    excerpt: "How computational capabilities have enabled increasingly sophisticated design across five millennia, from Bronze Age templates to Tesla&rsquo;s battery pack optimization via modern computational dashboards.",
+    source: "daanish.life",
+    sourceUrl: "https://www.daanish.life",
+    disciplines: ["Computational Design", "Engineering", "History"],
+    replies: []
+  },
+  {
+    person: "Saad Bhamla",
+    personUrl: "https://bhamla.gatech.edu",
+    title: "Ultrafast Elastocapillary Fans Control Agile Maneuvering in Ripple Bugs and Robots",
+    url: "https://www.science.org/doi/10.1126/science.adv2792",
+    date: "2025-08-01",
+    type: "paper",
+    excerpt: "Rhagovelia ripple bugs use specialized middle-leg fans powered by surface tension&mdash;not muscles&mdash;to navigate fast-moving streams. The discovery inspired novel propulsion systems for miniature aquatic robots.",
+    source: "Science",
+    sourceUrl: "https://www.science.org",
+    disciplines: ["Biophysics", "Robotics", "Frugal Science"],
+    replies: []
+  },
+  {
+    person: "Saad Bhamla",
+    personUrl: "https://bhamla.gatech.edu",
+    title: "Named 2025 Schmidt Polymath",
+    url: "https://news.gatech.edu/news/2025/09/16/saad-bhamla-named-2025-schmidt-polymath",
+    date: "2025-09-16",
+    type: "award",
+    excerpt: "The first Georgia Tech recipient of the Schmidt Polymath Award&mdash;up to $2.5M over five years&mdash;to develop AI-enabled point-of-care diagnostics and autonomous morphing machines at planetary scale.",
+    source: "Georgia Tech News",
+    sourceUrl: "https://news.gatech.edu",
+    disciplines: ["Frugal Science", "AI", "Global Health"],
+    replies: []
+  },
+  {
+    person: "Stephanie Zhang",
+    personUrl: "https://s-z.carrd.co",
+    title: "Bioprinting Living Sculptures",
+    url: "https://grayareafestival.io/stephanie-zhang/",
+    date: "2025-09-13",
+    type: "talk",
+    excerpt: "How does order emerge from chaos through complex dynamical systems? 3D-bioprinted self-assembling living sculptures using novel bioinks of fungal and cellular matter, treating the creative process as a ritual of transfiguration.",
+    source: "Gray Area Festival",
+    sourceUrl: "https://grayareafestival.io",
+    disciplines: ["Bioprinting", "Art-Science", "Self-Assembly"],
+    replies: []
+  },
+  {
+    person: "Nicole Hsing",
+    personUrl: "https://nicolehsing.com",
+    title: "MIRROR: Modular Internal Processing for Personalized Safety in LLM Dialogue",
+    url: "https://arxiv.org/abs/2506.00430",
+    date: "2025-06-01",
+    type: "paper",
+    excerpt: "A dual-process cognitive architecture (Thinker + Talker) implementing persistent inner monologue in LLMs. 21% average improvement&mdash;up to 156%&mdash;in safety-critical scenarios across GPT-4o, Claude, Gemini, Llama, and Mistral.",
+    source: "arXiv",
+    sourceUrl: "https://arxiv.org",
+    disciplines: ["AI Safety", "Cognitive Science", "LLM Alignment"],
+    replies: []
+  },
+  {
+    person: "Nicole Hsing",
+    personUrl: "https://nicolehsing.com",
+    title: "From Solo Founder to Visionary CEO: Leading Arcarae AI",
+    url: "https://www.entrepreneur.com/en-au/women-entrepreneur/from-solo-founder-to-visionary-ceo-leading-arcarae-ai/496701",
+    date: "2025-01-01",
+    type: "essay",
+    excerpt: "Teaching herself AI research, software development, and design to build Arcarae from a solo research project into a funded company creating immersive universes for self-discovery.",
+    source: "Entrepreneur",
+    sourceUrl: "https://www.entrepreneur.com",
+    disciplines: ["AI", "Entrepreneurship", "Cognitive Science"],
+    replies: []
+  },
+  {
+    person: "Saad Bhamla",
+    personUrl: "https://bhamla.gatech.edu",
+    title: "Reversible Kink Instability Drives Ultrafast Jumping in Nematodes and Soft Robots",
+    url: "https://www.science.org/doi/abs/10.1126/scirobotics.adq3121",
+    date: "2025-01-01",
+    type: "paper",
+    excerpt: "Nematode worms use a reversible kink instability to achieve ultrafast jumping. The finding inspired a legless soft robot that can jump 10 feet high.",
+    source: "Science Robotics",
+    sourceUrl: "https://www.science.org",
+    disciplines: ["Biophysics", "Soft Robotics", "Biomechanics"],
+    replies: []
+  },
+  {
+    person: "Neri Oxman",
+    personUrl: "https://oxman.com",
+    title: "Eden: Ecological Programming for Architecture",
+    url: "https://oxman.com/projects/eden",
+    date: "2024-10-01",
+    type: "essay",
+    excerpt: "A computational framework for data-driven, cross-scale generative design guided by environmental simulation and AI. The conceptual Eden Tower demonstrates how buildings can maximize biodiversity, resilience, and ecosystem services.",
+    source: "OXMAN",
+    sourceUrl: "https://oxman.com",
+    disciplines: ["Computational Design", "Ecology", "Architecture"],
     replies: []
   },
   {
     person: "Bret Victor",
     personUrl: "https://worrydream.com",
-    title: "Inventing on Principle",
-    url: "https://worrydream.com/#!/InventingOnPrinciple",
-    date: "2012-02-10",
-    excerpt: "Creators need an immediate connection to what they create. If there is any delay in the feedback loop between thinking something and seeing it, there is a whole world of ideas which will never be.",
-    source: "worrydream.com",
-    sourceUrl: "https://worrydream.com",
-    disciplines: ["Interface Design", "Philosophy", "CS"],
+    title: "Computational Public Space",
+    url: "https://dynamicland.org/2024/Computational_Public_Space/",
+    date: "2024-11-01",
+    type: "essay",
+    excerpt: "Integrating computation into cities through &lsquo;communal computing&rsquo;&mdash;a screenless approach where people collaborate in shared physical spaces rather than isolated with devices. Explores seven value tensions relevant to urban design.",
+    source: "Dynamicland",
+    sourceUrl: "https://dynamicland.org",
+    disciplines: ["Urban Design", "Communal Computing", "Dynamic Media"],
     replies: [
-      { author: "Jacob Cole", text: "This talk changed how I think about building tools. The principle that creators need immediate connection &mdash; it's exactly what we're trying to build at IdeaFlow.", date: "2024-06" }
+      { author: "Jacob Cole", text: "This is the first major Bret Victor publication since 2019. The vision of computation leaving screens and entering civic life feels like the natural culmination of Inventing on Principle.", date: "2025-01" }
     ]
   },
   {
-    person: "Neri Oxman",
-    personUrl: "https://oxman.com",
-    title: "Nature &times; Humanity: OXMAN",
-    url: "https://oxman.com",
-    date: "2024-06-15",
-    excerpt: "Fusing design, biology, and computation toward a future where buildings grow, heal, and return to nature. A radical shift from human-centric design to Nature-centric design.",
-    source: "oxman.com",
-    sourceUrl: "https://oxman.com",
-    disciplines: ["Architecture", "Biology", "Computing"],
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    title: "3 Puzzles in Optoelectronics",
+    url: "https://www.daanish.life/optoelectronics",
+    date: "2024-10-01",
+    type: "essay",
+    excerpt: "Energy constraints in information processing and the optical solutions&mdash;electroabsorptive modulators that can achieve ~10 femtojoules per bit by decade&rsquo;s end. Updated in 2025 with notes on Neurophos&rsquo;s optical processing unit.",
+    source: "daanish.life",
+    sourceUrl: "https://www.daanish.life",
+    disciplines: ["Optoelectronics", "Physics", "Hardware"],
     replies: []
   },
   {
     person: "Neri Oxman",
     personUrl: "https://oxman.com",
-    title: "Krebs Cycle of Creativity",
-    url: "https://jods.mitpress.mit.edu/pub/ageofentanglement/release/1",
-    date: "2016-01-13",
-    excerpt: "A map of the four domains of human creativity &mdash; Science, Engineering, Design, and Art &mdash; and the 12 modalities of knowledge flow between them. Anti-disciplinarity as practice.",
-    source: "MIT Press &mdash; Journal of Design and Science",
-    sourceUrl: "https://jods.mitpress.mit.edu",
-    disciplines: ["Design", "Science", "Philosophy"],
+    title: "Man-Nahata: Architectural Studies for Megalopolis",
+    url: "https://oxman.com/projects/man-nahata",
+    date: "2024-09-27",
+    type: "essay",
+    excerpt: "Four-part model installation envisioning a potential future design of Manhattan, created as architectural and scientific advisor to Francis Ford Coppola&rsquo;s film Megalopolis. Oxman also appears in the film as &lsquo;Dr. Lyra Shir.&rsquo;",
+    source: "OXMAN",
+    sourceUrl: "https://oxman.com",
+    disciplines: ["Architecture", "Film", "Speculative Design"],
+    replies: []
+  },
+  {
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    title: "ML Weather Forecasting",
+    url: "https://www.daanish.life/weather",
+    date: "2024-11-01",
+    type: "essay",
+    excerpt: "ML-based weather forecasting (e.g. DeepMind&rsquo;s GenCast) began outperforming traditional numerical methods in 2024. A call for interpretability research to understand what concepts these models actually learn.",
+    source: "daanish.life",
+    sourceUrl: "https://www.daanish.life",
+    disciplines: ["Machine Learning", "Climate Science", "Physics"],
+    replies: []
+  },
+  {
+    person: "Stephanie Zhang",
+    personUrl: "https://s-z.carrd.co",
+    title: "Iris van Herpen: Paris Fashion Week F/W 2024",
+    url: "https://s-z.carrd.co",
+    date: "2024-03-01",
+    type: "essay",
+    excerpt: "Design work for Iris van Herpen&rsquo;s Fall/Winter 2024 Paris Fashion Week collection, applying bio-design sensibility to haute couture at the intersection of fashion, science, and engineering.",
+    source: "Iris van Herpen",
+    sourceUrl: "https://www.irisvanherpen.com",
+    disciplines: ["Fashion Design", "Bio-Design", "Art"],
+    replies: []
+  },
+  {
+    person: "Saad Bhamla",
+    personUrl: "https://bhamla.gatech.edu",
+    title: "Unifying Fluidic Excretion Across Life from Cicadas to Elephants",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10990113/",
+    date: "2024-03-01",
+    type: "paper",
+    excerpt: "Cicadas are the smallest animals to create high-speed urine jets. A unifying framework for fluidic excretion across the entire animal kingdom, with implications for micro-nozzle engineering.",
+    source: "PNAS",
+    sourceUrl: "https://www.pnas.org",
+    disciplines: ["Biophysics", "Fluid Mechanics", "Engineering"],
+    replies: []
+  },
+  {
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    title: "Physics Representations",
+    url: "https://www.daanish.life/physics-representations",
+    date: "2024-01-01",
+    type: "essay",
+    excerpt: "Five representational upgrades in physics&mdash;from Euclidean geometry to neural abstractions. &lsquo;The fundamental epistemic unit is now shifting, as we move through the cusp of the neural age.&rsquo;",
+    source: "daanish.life",
+    sourceUrl: "https://www.daanish.life",
+    disciplines: ["Physics", "Epistemology", "AI"],
+    replies: []
+  },
+  {
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    title: "Kashmir Point",
+    url: "https://nimbus-online.netlify.app/posts/08-kashmirpt",
+    date: "2024-01-01",
+    type: "essay",
+    excerpt: "A young laborer from Bagh works in an architectural studio in Kashmir Point, building miniature models of buildings and developing a forbidden bond with the employer&rsquo;s son. Fiction that bridges engineering and literature.",
+    source: "Nimbus Online",
+    sourceUrl: "https://nimbus-online.netlify.app",
+    disciplines: ["Fiction", "Architecture", "South Asian Literature"],
+    replies: []
+  },
+  {
+    person: "Jacob Cole",
+    personUrl: "https://jacobcole.net",
+    title: "The Hypertext Web is the Real Metaverse",
+    url: "https://medium.com/ideaflow/the-hypertext-web-is-the-real-metaverse-be1ced3b6565",
+    date: "2020-08-01",
+    type: "essay",
+    excerpt: "The tangled, densely connected modern web is itself a proto-Metaverse. Building a web that feels like a place designed for life would realize the vision without VR headsets.",
+    source: "IdeaFlow Blog",
+    sourceUrl: "https://medium.com/ideaflow",
+    disciplines: ["Knowledge Tools", "Hypertext", "Web Philosophy"],
+    replies: []
+  },
+  {
+    person: "Jacob Cole",
+    personUrl: "https://jacobcole.net",
+    title: "Augmenting Human Intelligence, Exploring the Cosmic Medium",
+    url: "https://volandino.com/podcast/jacob-cole/",
+    date: "2021-05-10",
+    type: "talk",
+    excerpt: "A 2.5-hour conversation on how IdeaFlow enhances human cognition, deep learning theories, consciousness, Eastern philosophy, and the intersection of humanistic inquiry with technological innovation.",
+    source: "Volandino Podcast",
+    sourceUrl: "https://volandino.com",
+    disciplines: ["AI", "Cognitive Science", "Philosophy"],
     replies: []
   },
   {
@@ -347,46 +573,52 @@ const FEED = [
     title: "Paperfuge: An Ultra-Low-Cost Hand-Powered Paper Centrifuge",
     url: "https://www.nature.com/articles/s41551-016-0009",
     date: "2017-01-10",
-    excerpt: "A 20-cent paper centrifuge inspired by a whirligig toy that can separate blood plasma in 90 seconds without electricity. Used for diagnosing malaria in resource-limited settings.",
+    type: "paper",
+    excerpt: "A 20-cent paper centrifuge inspired by a whirligig toy that separates blood plasma in 90 seconds without electricity. Used for diagnosing malaria in resource-limited settings.",
     source: "Nature Biomedical Engineering",
     sourceUrl: "https://www.nature.com",
     disciplines: ["Engineering", "Global Health", "Invention"],
     replies: []
   },
   {
-    person: "Saad Bhamla",
-    personUrl: "https://bhamla.gatech.edu",
-    title: "A $1 Hearing Aid Could Transform Access in Low-Income Countries",
-    url: "https://bhamla.gatech.edu/research",
-    date: "2024-03-01",
-    excerpt: "Building radically affordable hearing aids that cost less than a dollar. When you strip away the non-essential, you discover what's truly necessary for billions of people.",
-    source: "Bhamla Lab",
-    sourceUrl: "https://bhamla.gatech.edu",
-    disciplines: ["Biophysics", "Global Health", "Engineering"],
+    person: "Neri Oxman",
+    personUrl: "https://oxman.com",
+    title: "Krebs Cycle of Creativity",
+    url: "https://jods.mitpress.mit.edu/pub/ageofentanglement/release/1",
+    date: "2016-01-13",
+    type: "paper",
+    excerpt: "A map of the four domains of human creativity&mdash;Science, Engineering, Design, and Art&mdash;and the 12 modalities of knowledge flow between them. Anti-disciplinarity as practice.",
+    source: "MIT Press &mdash; Journal of Design and Science",
+    sourceUrl: "https://jods.mitpress.mit.edu",
+    disciplines: ["Design", "Science", "Philosophy"],
     replies: []
   },
   {
-    person: "Nicole Hsing",
-    personUrl: "https://nicolehsing.com",
-    title: "MIRROR: Inner Monologue as a Self-Alignment Technique for LLMs",
-    url: "https://arxiv.org/abs/2506.00430",
-    date: "2025-06-01",
-    excerpt: "Equipping LLMs with an inner monologue inspired by human cognitive science. 21% alignment improvement across Claude, GPT-4o, and Llama by letting models reason about their own values.",
-    source: "arXiv",
-    sourceUrl: "https://arxiv.org",
-    disciplines: ["AI", "Cognitive Science", "Neuroscience"],
-    replies: []
+    person: "Bret Victor",
+    personUrl: "https://worrydream.com",
+    title: "Inventing on Principle",
+    url: "https://worrydream.com/#!/InventingOnPrinciple",
+    date: "2012-02-10",
+    type: "talk",
+    excerpt: "Creators need an immediate connection to what they create. If there is any delay in the feedback loop between thinking something and seeing it, there is a whole world of ideas which will never be.",
+    source: "worrydream.com",
+    sourceUrl: "https://worrydream.com",
+    disciplines: ["Interface Design", "Philosophy", "CS"],
+    replies: [
+      { author: "Jacob Cole", text: "This talk changed how I think about building tools. The principle that creators need immediate connection is exactly what we&rsquo;re building at IdeaFlow.", date: "2024-06" }
+    ]
   },
   {
-    person: "Daanish Shabbir",
-    personUrl: "https://www.daanish.life",
-    title: "Fermi: A General Gateway to All Known Physics",
-    url: "https://equisystems.github.io",
-    date: "2025-06-01",
-    excerpt: "Building physics runtimes for autonomous agents. Software that doesn't merely state the laws of nature but enacts them &mdash; where form and content are inextricably tied.",
-    source: "Equivariant Systems",
-    sourceUrl: "https://equisystems.github.io",
-    disciplines: ["Physics", "AI", "Engineering"],
+    person: "Renaise Kim",
+    personUrl: "https://renaise.com",
+    title: "ARTIFICE: Where Design Meets Speculative Fiction",
+    url: "https://renaise.com",
+    date: "2025-09-01",
+    type: "essay",
+    excerpt: "A multi-disciplinary studio built on the conviction that the most powerful design decisions are born from speculative thinking. The studio is a conceptual space shaped by science fiction.",
+    source: "Renaise Studio",
+    sourceUrl: "https://renaise.com",
+    disciplines: ["Design", "Technology", "Sci-Fi"],
     replies: []
   },
   {
@@ -395,63 +627,21 @@ const FEED = [
     title: "Declaration of Interdependence",
     url: "https://www.interdependence.online/declaration",
     date: "2023-05-01",
+    type: "essay",
     excerpt: "We are caught in an inescapable network of mutuality, tied in a single garment of destiny. A literary-hacker manifesto for reimagining digital futures through collective authorship.",
     source: "Interdependence.online",
     sourceUrl: "https://www.interdependence.online",
     disciplines: ["Fiction", "Software", "Philosophy"],
     replies: []
-  },
-  {
-    person: "Jacob Cole",
-    personUrl: "https://jacobcole.net",
-    title: "The Case for Thinking Tools",
-    url: "https://ideaflow.io",
-    date: "2025-01-15",
-    excerpt: "The gap between the speed of thought and the speed of capture is the gap where ideas die. Knowledge tools should augment intelligence as you think, not after.",
-    source: "IdeaFlow",
-    sourceUrl: "https://ideaflow.io",
-    disciplines: ["CS", "Philosophy", "Knowledge Graphs"],
-    replies: []
-  },
-  {
-    person: "Stephanie Zhang",
-    personUrl: "https://s-z.carrd.co",
-    title: "Living Ink: 3D Bioprinting as Artistic Medium",
-    url: "https://s-z.carrd.co",
-    date: "2025-03-01",
-    excerpt: "What is the unsayable aliveness that lies underneath phenomena? Encoding poetry into proteins via bioprinting, witnessing self-assembly into higher-order forms through electrons, cells, and light.",
-    source: "Hybrid Studio/Lab",
-    sourceUrl: "https://s-z.carrd.co",
-    disciplines: ["Bioengineering", "Art", "Phenomenology"],
-    replies: []
-  },
-  {
-    person: "Renaise Kim",
-    personUrl: "https://renaise.com",
-    title: "ARTIFICE: Where Design Meets Speculative Fiction",
-    url: "https://renaise.com",
-    date: "2025-09-01",
-    excerpt: "A multi-disciplinary studio built on the conviction that the most powerful design decisions are born from speculative thinking. The studio is a conceptual space shaped by science fiction.",
-    source: "Renaise Studio",
-    sourceUrl: "https://renaise.com",
-    disciplines: ["Design", "Technology", "Sci-Fi"],
-    replies: []
   }
 ];
 
-// Collect unique disciplines
+// Collect unique disciplines and people
 const allDisciplines = [...new Set(FEED.flatMap(f => f.disciplines))].sort();
-const filterContainer = document.getElementById('filters');
-allDisciplines.forEach(d => {
-  const btn = document.createElement('button');
-  btn.className = 'filter-pill';
-  btn.dataset.filter = d;
-  btn.textContent = d;
-  filterContainer.appendChild(btn);
-});
-
-// Also add person filter pills
 const allPeople = [...new Set(FEED.map(f => f.person))];
+const filterContainer = document.getElementById('filters');
+
+// Add person pills first
 allPeople.forEach(p => {
   const btn = document.createElement('button');
   btn.className = 'filter-pill';
@@ -460,13 +650,22 @@ allPeople.forEach(p => {
   filterContainer.appendChild(btn);
 });
 
+// Then discipline pills
+allDisciplines.forEach(d => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-pill';
+  btn.dataset.filter = d;
+  btn.textContent = d;
+  filterContainer.appendChild(btn);
+});
+
 let currentFilter = 'all';
 let currentPerson = null;
 
-function formatDate(dateStr) {
+function fmtDate(dateStr) {
   const d = new Date(dateStr + 'T00:00:00');
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${months[d.getMonth()]} ${d.getFullYear()}`;
+  return { month: months[d.getMonth()], year: String(d.getFullYear()) };
 }
 
 function renderFeed() {
@@ -480,26 +679,30 @@ function renderFeed() {
     filtered = filtered.filter(f => f.disciplines.includes(currentFilter));
   }
 
-  // Sort by date descending
   filtered = [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
-
   empty.style.display = filtered.length === 0 ? 'block' : 'none';
 
-  container.innerHTML = filtered.map((item, i) => `
-    <div class="feed-item" style="animation-delay: ${i * 0.03}s" data-idx="${FEED.indexOf(item)}">
-      <div class="feed-item__source">
-        <span class="feed-item__author"><a href="${item.personUrl}" target="_blank">${item.person}</a></span>
-        <span class="feed-item__origin">via <a href="${item.sourceUrl}" target="_blank">${item.source}</a></span>
-        <span class="feed-item__date">${formatDate(item.date)}</span>
+  container.innerHTML = filtered.map((item, i) => {
+    const dt = fmtDate(item.date);
+    const idx = FEED.indexOf(item);
+    const typeClass = item.type ? ' entry__type--' + item.type : '';
+    return `
+    <article class="entry" style="animation-delay: ${i * 0.025}s">
+      <div class="entry__date">
+        ${dt.month}<span class="date-year">${dt.year}</span>
       </div>
-      <div class="feed-item__title"><a href="${item.url}" target="_blank">${item.title}</a></div>
-      <div class="feed-item__excerpt">${item.excerpt}</div>
-      <div class="feed-item__tags">
-        ${item.disciplines.map(d => `<span class="feed-tag">${d}</span>`).join('')}
+      <div class="entry__head">
+        <span class="entry__author"><a href="${item.personUrl}" target="_blank">${item.person}</a></span>
+        ${item.type ? `<span class="entry__type${typeClass}">${item.type}</span>` : ''}
+        <span class="entry__via">via <a href="${item.sourceUrl}" target="_blank">${item.source}</a></span>
       </div>
-      <div class="feed-item__actions">
-        <button class="action-btn" onclick="toggleReply(${FEED.indexOf(item)})">Reply</button>
-        ${item.replies.length > 0 ? `<button class="action-btn">${item.replies.length} ${item.replies.length === 1 ? 'reply' : 'replies'}</button>` : ''}
+      <div class="entry__body">
+        <div class="entry__title"><a href="${item.url}" target="_blank">${item.title}</a></div>
+        <div class="entry__excerpt">${item.excerpt}</div>
+      </div>
+      <div class="entry__foot">
+        <div class="entry__tags">${item.disciplines.map(d => `<span class="feed-tag">${d}</span>`).join('')}</div>
+        <button class="action-btn" onclick="toggleReply(${idx})">Reply${item.replies.length > 0 ? ' (' + item.replies.length + ')' : ''}</button>
       </div>
       ${item.replies.length > 0 ? `
         <div class="replies">
@@ -514,32 +717,28 @@ function renderFeed() {
           `).join('')}
         </div>
       ` : ''}
-      <div class="reply-form" id="reply-${FEED.indexOf(item)}">
+      <div class="reply-form" id="reply-${idx}">
         <textarea placeholder="Add a thoughtful reply&hellip;" rows="2"></textarea>
-        <button onclick="submitReply(${FEED.indexOf(item)})">Post</button>
+        <button onclick="submitReply(${idx})">Post</button>
       </div>
-    </div>
-  `).join('');
+    </article>`;
+  }).join('');
 }
 
 function toggleReply(idx) {
   const form = document.getElementById('reply-' + idx);
   form.classList.toggle('show');
-  if (form.classList.contains('show')) {
-    form.querySelector('textarea').focus();
-  }
+  if (form.classList.contains('show')) form.querySelector('textarea').focus();
 }
 
 function submitReply(idx) {
   const form = document.getElementById('reply-' + idx);
-  const textarea = form.querySelector('textarea');
-  const text = textarea.value.trim();
+  const text = form.querySelector('textarea').value.trim();
   if (!text) return;
   FEED[idx].replies.push({ author: "You", text: text, date: new Date().toISOString().slice(0, 7) });
   renderFeed();
 }
 
-// Filter clicks
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('filter-pill')) {
     const filter = e.target.dataset.filter;
@@ -552,11 +751,8 @@ document.addEventListener('click', (e) => {
       currentPerson = null;
     }
     document.querySelectorAll('.filter-pill').forEach(b => {
-      if (b.dataset.person) {
-        b.classList.toggle('active', b.dataset.person === currentPerson);
-      } else {
-        b.classList.toggle('active', !currentPerson && b.dataset.filter === currentFilter);
-      }
+      if (b.dataset.person) b.classList.toggle('active', b.dataset.person === currentPerson);
+      else b.classList.toggle('active', !currentPerson && b.dataset.filter === currentFilter);
     });
     renderFeed();
   }
