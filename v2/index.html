@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renaissance Engineer</title>
+<meta name="description" content="A directory of people who build across disciplines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@400;500;600&family=Source+Code+Pro:wght@300;400&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1915;
+    --ink-mid: #4a4238;
+    --ink-light: #6d6356;
+    --ink-faint: #9c8e7e;
+    --ink-ghost: #c4b8a8;
+    --cream: #f5f0e8;
+    --cream-dark: #ebe4d8;
+    --card-bg: #faf7f2;
+    --warm-white: #fffcf7;
+    --terra: #a0522d;
+    --terra-dark: #7a3d1e;
+    --gold: #c49a3c;
+    --rule: #ddd5c8;
+    --display: 'Playfair Display', 'Georgia', serif;
+    --hand: 'Caveat', cursive;
+    --mono: 'Source Code Pro', monospace;
+    --body: 'Karla', 'Helvetica Neue', sans-serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  body {
+    font-family: var(--body);
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.65;
+  }
+
+  /* Subtle grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  }
+
+  ::selection { background: var(--terra); color: var(--cream); }
+
+  a { color: var(--terra); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--terra-dark); }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .h-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0.9rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .wm {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .wm:hover { color: var(--terra); }
+  nav { display: flex; gap: 2rem; }
+  nav a {
+    font-family: var(--body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  nav a:hover { color: var(--terra); }
+
+  /* ===== INTRO ===== */
+  .intro {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--rule);
+    text-align: center;
+    padding: 3rem 2rem 2.5rem;
+  }
+  .intro h1 {
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .intro .sub {
+    font-family: var(--hand);
+    font-size: 1.15rem;
+    color: var(--ink-faint);
+    margin-top: 0.4rem;
+  }
+
+  /* ===== DIRECTORY ===== */
+  .directory {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 3.5rem;
+  }
+  .dir-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2rem;
+  }
+  .dir-head span {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* ===== CARD ===== */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    padding: 1.5rem 1.5rem 1.3rem;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(28, 25, 21, 0.07);
+  }
+
+  .card__name {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.15rem;
+    line-height: 1.3;
+  }
+  .card__name a { color: var(--ink); text-decoration: none; }
+  .card__name a:hover { color: var(--terra); }
+
+  .card__epithet {
+    font-family: var(--hand);
+    font-size: 1rem;
+    color: var(--terra);
+    margin-bottom: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .card__bio {
+    font-family: var(--body);
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+    flex-grow: 1;
+  }
+
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .card__tag {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-faint);
+    border: 1px solid var(--rule);
+    padding: 0.1rem 0.4rem;
+    background: rgba(245, 240, 232, 0.5);
+  }
+
+  .card__link {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-family: var(--body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--terra);
+    letter-spacing: 0.03em;
+  }
+  .card__link::after { content: ' \2192'; }
+  .card__link:hover { color: var(--terra-dark); }
+
+  /* ===== JOIN ===== */
+  .join {
+    background: var(--warm-white);
+    border-top: 1px solid var(--rule);
+  }
+  .join-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem 4rem;
+  }
+  .join h2 {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 0.3rem;
+  }
+  .join > .join-inner > p {
+    font-family: var(--body);
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--ink-light);
+    margin-bottom: 2rem;
+  }
+
+  .form-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    padding: 2rem;
+    max-width: 540px;
+    /* Ruled lines */
+    background-image:
+      repeating-linear-gradient(
+        transparent, transparent 34px,
+        rgba(28, 25, 21, 0.025) 34px,
+        rgba(28, 25, 21, 0.025) 35px
+      );
+    background-position: 0 0.5rem;
+  }
+
+  .fg { margin-bottom: 1.3rem; }
+  .fg label {
+    display: block;
+    font-family: var(--hand);
+    font-size: 1.05rem;
+    color: var(--terra);
+    margin-bottom: 0.15rem;
+  }
+  .fg input, .fg textarea {
+    width: 100%;
+    font-family: var(--body);
+    font-size: 0.88rem;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    padding: 0.4rem 0;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .fg input:focus, .fg textarea:focus { border-bottom-color: var(--terra); }
+  .fg input::placeholder, .fg textarea::placeholder {
+    color: var(--ink-ghost);
+    font-style: italic;
+  }
+  .fg textarea {
+    border: 1px solid var(--rule);
+    padding: 0.4rem;
+    resize: vertical;
+    min-height: 4rem;
+    line-height: 1.6;
+  }
+  .fg textarea:focus { border-color: var(--terra); }
+  .fg .hint {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    color: var(--ink-ghost);
+    margin-top: 0.2rem;
+    letter-spacing: 0.02em;
+  }
+
+  .sbtn {
+    font-family: var(--body);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    background: var(--ink);
+    border: none;
+    padding: 0.85rem 2.4rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.3rem;
+  }
+  .sbtn:hover { background: var(--terra); }
+
+  .fr {
+    font-family: var(--display);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--terra);
+    margin-top: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .fr.show { opacity: 1; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--rule);
+    background: var(--warm-white);
+  }
+  .f-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .f-inner .quote {
+    font-family: var(--display);
+    font-size: 0.78rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-faint);
+  }
+  .f-inner .meta {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    color: var(--ink-ghost);
+  }
+
+  /* ===== ANIMATION ===== */
+  .card {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: rise 0.45s ease forwards;
+  }
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.2s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.3s; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 640px) {
+    html { font-size: 16px; }
+    .h-inner { flex-direction: column; gap: 0.5rem; }
+    .grid { grid-template-columns: 1fr; }
+    .form-wrap { max-width: 100%; }
+    .f-inner { flex-direction: column; gap: 0.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="#" class="wm">Renaissance Engineer</a>
+    <nav>
+      <a href="#directory">Directory</a>
+      <a href="#join">Join</a>
+    </nav>
+  </div>
+</header>
+
+<section class="intro">
+  <h1>Build across boundaries</h1>
+  <p class="sub">an open directory of cross-disciplinary makers, 2026</p>
+</section>
+
+<section class="directory" id="directory">
+  <div class="dir-head">
+    <span>Members</span>
+    <span>6 listed</span>
+  </div>
+
+  <div class="grid">
+
+    <article class="card">
+      <h3 class="card__name"><a href="https://jacobcole.net" target="_blank">Jacob Cole</a></h3>
+      <p class="card__epithet">Mapper of worlds</p>
+      <p class="card__bio">CEO &amp; cofounder of IdeaFlow, building knowledge tools that augment intelligence as you think. Studied CS &amp; Philosophy at Oxford, EE/CS &amp; English at MIT.</p>
+      <div class="card__tags">
+        <span class="card__tag">CS</span>
+        <span class="card__tag">Philosophy</span>
+        <span class="card__tag">English</span>
+        <span class="card__tag">Knowledge Graphs</span>
+      </div>
+      <a href="https://jacobcole.net" class="card__link" target="_blank">jacobcole.net</a>
+    </article>
+
+    <article class="card">
+      <h3 class="card__name"><a href="https://www.daanish.life" target="_blank">Daanish Shabbir</a></h3>
+      <p class="card__epithet">Geometry as code</p>
+      <p class="card__bio">Building Equivariant Systems &mdash; a physics runtime for autonomous agents. Stanford EE + English. Fiction writer and co-founder of Verses, a literary-hacker collective.</p>
+      <div class="card__tags">
+        <span class="card__tag">Physics</span>
+        <span class="card__tag">AI</span>
+        <span class="card__tag">Fiction</span>
+        <span class="card__tag">Optoelectronics</span>
+      </div>
+      <a href="https://www.daanish.life" class="card__link" target="_blank">daanish.life</a>
+    </article>
+
+    <article class="card">
+      <h3 class="card__name"><a href="https://worrydream.com" target="_blank">Bret Victor</a></h3>
+      <p class="card__epithet">Humane representation of thought</p>
+      <p class="card__bio">Researcher at Dynamicland, inventor of Realtalk spatial computing. Designed Apple&rsquo;s earliest iPad interfaces. Built musical instruments, interactive data graphics, and next-generation programming tools.</p>
+      <div class="card__tags">
+        <span class="card__tag">Interface Design</span>
+        <span class="card__tag">EE</span>
+        <span class="card__tag">CS</span>
+        <span class="card__tag">Music</span>
+      </div>
+      <a href="https://worrydream.com" class="card__link" target="_blank">worrydream.com</a>
+    </article>
+
+    <article class="card">
+      <h3 class="card__name"><a href="https://neri.media.mit.edu" target="_blank">Neri Oxman</a></h3>
+      <p class="card__epithet">Material ecology</p>
+      <p class="card__bio">Architect, scientist, and inventor. Coined &ldquo;Material Ecology&rdquo; &mdash; co-fabricating with silkworms, 3D-printing glass, building structures from chitosan. Works in MoMA and Centre Pompidou permanent collections.</p>
+      <div class="card__tags">
+        <span class="card__tag">Architecture</span>
+        <span class="card__tag">Biology</span>
+        <span class="card__tag">Computing</span>
+        <span class="card__tag">Materials</span>
+      </div>
+      <a href="https://neri.media.mit.edu" class="card__link" target="_blank">neri.media.mit.edu</a>
+    </article>
+
+    <article class="card">
+      <h3 class="card__name"><a href="https://bhamla.gatech.edu" target="_blank">Saad Bhamla</a></h3>
+      <p class="card__epithet">Frugal science</p>
+      <p class="card__bio">2025 Schmidt Polymath. Invented a 20-cent paper centrifuge, a $1 hearing aid, and a 23-cent electroporator. Studies insect biophysics and builds low-cost tools for global health at Georgia Tech.</p>
+      <div class="card__tags">
+        <span class="card__tag">Chemical Eng.</span>
+        <span class="card__tag">Biophysics</span>
+        <span class="card__tag">Global Health</span>
+        <span class="card__tag">Invention</span>
+      </div>
+      <a href="https://bhamla.gatech.edu" class="card__link" target="_blank">bhamla.gatech.edu</a>
+    </article>
+
+    <article class="card">
+      <h3 class="card__name"><a href="https://renaise.com" target="_blank">Renaise Kim</a></h3>
+      <p class="card__epithet">Lived experience designer</p>
+      <p class="card__bio">Visual producer and product designer shaping brands, sites, and systems. Co-director at ARTIFICE. 8 years designing identities and products for consumer tech and media.</p>
+      <div class="card__tags">
+        <span class="card__tag">Product Design</span>
+        <span class="card__tag">Visual Identity</span>
+        <span class="card__tag">Creative Direction</span>
+      </div>
+      <a href="https://renaise.com" class="card__link" target="_blank">renaise.com</a>
+    </article>
+
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="join-inner">
+    <h2>Add yourself</h2>
+    <p>Work across disciplines? You belong here. No gatekeeping.</p>
+
+    <div class="form-wrap">
+      <form id="joinForm" onsubmit="return handleSubmit(event)">
+        <div class="fg">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="As you wish to be known">
+        </div>
+        <div class="fg">
+          <label for="epithet">Epithet</label>
+          <input type="text" id="epithet" name="epithet" placeholder="A short descriptor">
+          <p class="hint">Optional. e.g. &ldquo;Builder of bridges&rdquo;</p>
+        </div>
+        <div class="fg">
+          <label for="bio">What you build across</label>
+          <textarea id="bio" name="bio" required placeholder="What do you bridge?"></textarea>
+        </div>
+        <div class="fg">
+          <label for="disciplines">Disciplines</label>
+          <input type="text" id="disciplines" name="disciplines" required placeholder="e.g. Robotics, Poetry, Biology">
+        </div>
+        <div class="fg">
+          <label for="url">Website</label>
+          <input type="url" id="url" name="url" placeholder="https://...">
+        </div>
+        <div class="fg">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="For verification only">
+          <p class="hint">Never displayed</p>
+        </div>
+        <button type="submit" class="sbtn">Submit</button>
+        <p class="fr" id="formResponse">Submitted &mdash; we&rsquo;ll add you shortly.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-inner">
+    <span class="quote">&ldquo;Realize that everything connects to everything else.&rdquo;</span>
+    <span class="meta">renaissance.engineer &middot; 2026</span>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formResponse').classList.add('show');
+  setTimeout(() => e.target.reset(), 300);
+  setTimeout(() => document.getElementById('formResponse').classList.remove('show'), 5000);
+  return false;
+}
+</script>
+
+</body>
+</html>
