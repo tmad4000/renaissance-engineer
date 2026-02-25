@@ -152,6 +152,18 @@
     background: var(--red-light);
   }
 
+  .person__membership {
+    font-family: var(--mono);
+    font-size: 0.4rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-08);
+    flex-shrink: 0;
+    transition: color 0.25s;
+    text-transform: uppercase;
+  }
+  .person__row:hover .person__membership { color: var(--ink-15); }
+  .person.open .person__membership { color: var(--ink-15); }
+
   .person__toggle {
     font-family: var(--mono);
     font-size: 0.65rem;
@@ -329,7 +341,7 @@
 
 <section class="directory" id="directory">
 
-  <div class="person">
+  <div class="person" data-membership="joined">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Jacob Cole</span>
       <span class="person__dash">&mdash;</span>
@@ -353,7 +365,7 @@
     </div>
   </div>
 
-  <div class="person">
+  <div class="person" data-membership="joined">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Daanish Shabbir</span>
       <span class="person__dash">&mdash;</span>
@@ -377,7 +389,7 @@
     </div>
   </div>
 
-  <div class="person">
+  <div class="person" data-membership="added">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Bret Victor</span>
       <span class="person__dash">&mdash;</span>
@@ -400,7 +412,7 @@
     </div>
   </div>
 
-  <div class="person">
+  <div class="person" data-membership="added">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Neri Oxman</span>
       <span class="person__dash">&mdash;</span>
@@ -422,7 +434,7 @@
     </div>
   </div>
 
-  <div class="person">
+  <div class="person" data-membership="added">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Saad Bhamla</span>
       <span class="person__dash">&mdash;</span>
@@ -444,7 +456,7 @@
     </div>
   </div>
 
-  <div class="person">
+  <div class="person" data-membership="added">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Tom Currier</span>
       <span class="person__dash">&mdash;</span>
@@ -466,7 +478,7 @@
     </div>
   </div>
 
-  <div class="person">
+  <div class="person" data-membership="added">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Renaise Kim</span>
       <span class="person__dash">&mdash;</span>
@@ -488,7 +500,7 @@
     </div>
   </div>
 
-  <div class="person">
+  <div class="person" data-membership="added">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Stephanie Zhang</span>
       <span class="person__dash">&mdash;</span>
@@ -510,7 +522,7 @@
     </div>
   </div>
 
-  <div class="person">
+  <div class="person" data-membership="added">
     <div class="person__row" onclick="toggle(this)">
       <span class="person__name">Nicole Hsing</span>
       <span class="person__dash">&mdash;</span>
@@ -571,6 +583,38 @@
       <p class="form-msg" id="formMsg">Submitted. We&rsquo;ll review and add you to the directory.</p>
     </div>
   </form>
+
+  <div style="width: 2rem; height: 1px; background: var(--ink-15); margin: 2.5rem 0;"></div>
+
+  <h2>Nominate <em>someone</em></h2>
+  <p>Know someone whose cross-disciplinary work belongs here? Add them. This directory is collaboratively curated &mdash; every entry is a recommendation.</p>
+
+  <form class="form-grid" id="nominateForm" onsubmit="return handleNominate(event)">
+    <div class="fg">
+      <label for="n-name">Their name</label>
+      <input type="text" id="n-name" name="name" required placeholder="Person you're nominating">
+    </div>
+    <div class="fg">
+      <label for="n-url">Their website</label>
+      <input type="url" id="n-url" name="url" placeholder="https://...">
+    </div>
+    <div class="fg full">
+      <label for="n-disciplines">Their disciplines</label>
+      <input type="text" id="n-disciplines" name="disciplines" required placeholder="e.g. Architecture, Biology, Materials">
+    </div>
+    <div class="fg full">
+      <label for="n-why">Why they belong</label>
+      <textarea id="n-why" name="why" required placeholder="What makes their cross-disciplinary work notable?"></textarea>
+    </div>
+    <div class="fg full">
+      <label for="n-your-name">Your name</label>
+      <input type="text" id="n-your-name" name="nominator" required placeholder="Who is nominating them">
+    </div>
+    <div class="fg full">
+      <button type="submit" class="submit-btn">Nominate</button>
+      <p class="form-msg" id="nominateMsg">Nomination sent. We&rsquo;ll review and add them.</p>
+    </div>
+  </form>
 </section>
 
 <footer>
@@ -590,11 +634,50 @@ function toggle(row) {
   if (!wasOpen) person.classList.add('open');
 }
 
+// Inject membership badges
+document.querySelectorAll('.person[data-membership="added"]').forEach(p => {
+  const toggle = p.querySelector('.person__toggle');
+  const badge = document.createElement('span');
+  badge.className = 'person__membership';
+  badge.textContent = 'added';
+  toggle.before(badge);
+});
+document.querySelectorAll('.person[data-membership="joined"]').forEach(p => {
+  const toggle = p.querySelector('.person__toggle');
+  const badge = document.createElement('span');
+  badge.className = 'person__membership';
+  badge.style.color = 'var(--ink-15)';
+  badge.textContent = 'member';
+  toggle.before(badge);
+});
+
 function handleSubmit(e) {
   e.preventDefault();
+  const f = e.target;
+  const subject = encodeURIComponent(`Directory join request: ${f.name.value}`);
+  const body = encodeURIComponent(
+    `Name: ${f.name.value}\nWebsite: ${f.url.value}\nDisciplines: ${f.disciplines.value}\n` +
+    `Vision: ${f.vision.value}\nProject: ${f.project.value}\nEmail: ${f.email.value}`
+  );
+  window.location.href = `mailto:tmad4000@gmail.com?subject=${subject}&body=${body}`;
   document.getElementById('formMsg').classList.add('show');
-  setTimeout(() => e.target.reset(), 300);
+  setTimeout(() => f.reset(), 300);
   setTimeout(() => document.getElementById('formMsg').classList.remove('show'), 5000);
+  return false;
+}
+
+function handleNominate(e) {
+  e.preventDefault();
+  const f = e.target;
+  const subject = encodeURIComponent(`Directory nomination: ${f.name.value}`);
+  const body = encodeURIComponent(
+    `Nominee: ${f.name.value}\nWebsite: ${f.url.value}\nDisciplines: ${f.disciplines.value}\n` +
+    `Why they belong: ${f.why.value}\n---\nNominated by: ${f.nominator.value}`
+  );
+  window.location.href = `mailto:tmad4000@gmail.com?subject=${subject}&body=${body}`;
+  document.getElementById('nominateMsg').classList.add('show');
+  setTimeout(() => f.reset(), 300);
+  setTimeout(() => document.getElementById('nominateMsg').classList.remove('show'), 5000);
   return false;
 }
 </script>

@@ -141,6 +141,17 @@
     background: var(--red-light);
   }
 
+  .row__membership {
+    font-family: var(--mono);
+    font-size: 0.4rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-08);
+    flex-shrink: 0;
+    transition: color 0.25s;
+    text-transform: uppercase;
+  }
+  .row:hover .row__membership { color: var(--ink-15); }
+
   .row__arrow {
     font-size: 0.75rem;
     color: var(--ink-08);
@@ -201,7 +212,7 @@
 
 <section class="directory" id="directory">
 
-  <a href="https://jacobcole.net" target="_blank" class="row">
+  <a href="https://jacobcole.net" target="_blank" class="row" data-membership="joined">
     <span class="row__name">Jacob Cole</span>
     <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Notebooks that think with you</span>
@@ -213,7 +224,7 @@
     <span class="row__arrow">&rarr;</span>
   </a>
 
-  <a href="https://www.daanish.life" target="_blank" class="row">
+  <a href="https://www.daanish.life" target="_blank" class="row" data-membership="joined">
     <span class="row__name">Daanish Shabbir</span>
     <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Physics runtimes for autonomous agents</span>
@@ -225,7 +236,7 @@
     <span class="row__arrow">&rarr;</span>
   </a>
 
-  <a href="https://worrydream.com" target="_blank" class="row">
+  <a href="https://worrydream.com" target="_blank" class="row" data-membership="added">
     <span class="row__name">Bret Victor</span>
     <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Computing as a communal, physical medium</span>
@@ -237,7 +248,7 @@
     <span class="row__arrow">&rarr;</span>
   </a>
 
-  <a href="https://oxman.com" target="_blank" class="row">
+  <a href="https://oxman.com" target="_blank" class="row" data-membership="added">
     <span class="row__name">Neri Oxman</span>
     <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Where the natural and artificial are indistinguishable</span>
@@ -249,7 +260,7 @@
     <span class="row__arrow">&rarr;</span>
   </a>
 
-  <a href="https://bhamla.gatech.edu" target="_blank" class="row">
+  <a href="https://bhamla.gatech.edu" target="_blank" class="row" data-membership="added">
     <span class="row__name">Saad Bhamla</span>
     <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Frugal science for billions</span>
@@ -261,7 +272,7 @@
     <span class="row__arrow">&rarr;</span>
   </a>
 
-  <a href="https://renaise.com" target="_blank" class="row">
+  <a href="https://renaise.com" target="_blank" class="row" data-membership="added">
     <span class="row__name">Renaise Kim</span>
     <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Design shaped by science fiction</span>
@@ -273,7 +284,7 @@
     <span class="row__arrow">&rarr;</span>
   </a>
 
-  <a href="https://s-z.carrd.co" target="_blank" class="row">
+  <a href="https://s-z.carrd.co" target="_blank" class="row" data-membership="added">
     <span class="row__name">Stephanie Zhang</span>
     <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Poetry transfigured into proteins</span>
@@ -285,7 +296,7 @@
     <span class="row__arrow">&rarr;</span>
   </a>
 
-  <a href="https://nicolehsing.com" target="_blank" class="row">
+  <a href="https://nicolehsing.com" target="_blank" class="row" data-membership="added">
     <span class="row__name">Nicole Hsing</span>
     <span class="row__dash">&mdash;</span>
     <span class="row__tagline">Inner monologue architectures for AI</span>
@@ -309,6 +320,24 @@
     <span>2026</span>
   </div>
 </footer>
+
+<script>
+document.querySelectorAll('.row[data-membership="added"]').forEach(row => {
+  const arrow = row.querySelector('.row__arrow');
+  const badge = document.createElement('span');
+  badge.className = 'row__membership';
+  badge.textContent = 'added';
+  arrow.before(badge);
+});
+document.querySelectorAll('.row[data-membership="joined"]').forEach(row => {
+  const arrow = row.querySelector('.row__arrow');
+  const badge = document.createElement('span');
+  badge.className = 'row__membership';
+  badge.style.color = 'var(--ink-15)';
+  badge.textContent = 'member';
+  arrow.before(badge);
+});
+</script>
 
 </body>
 </html>
