@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renaissance Engineer</title>
+<meta name="description" content="A directory of polymaths, cross-disciplinary builders, and renaissance engineers working across art, science, technology, and philosophy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     RENAISSANCE ENGINEER
+     A directory of polymaths & cross-disciplinary builders
+     ============================================ */
+
+  :root {
+    --ink: #1a1a1a;
+    --ink-light: #4a4a4a;
+    --ink-faint: #8a8a8a;
+    --paper: #faf9f7;
+    --paper-warm: #f5f3ef;
+    --rule: #d4d0c8;
+    --rule-light: #e8e5de;
+    --accent: #8b0000;
+    --accent-hover: #a50000;
+    --serif: 'Cormorant Garamond', 'Georgia', serif;
+    --sans: 'Inter', 'Helvetica Neue', sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --measure: 42rem;
+    --measure-wide: 56rem;
+  }
+
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 18px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--serif);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.7;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  /* ---- HEADER / NAVIGATION ---- */
+
+  .site-header {
+    padding: 2rem 2rem 0;
+    max-width: var(--measure-wide);
+    margin: 0 auto;
+  }
+
+  .site-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .site-nav__wordmark {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  .site-nav__wordmark:hover {
+    border-bottom: none;
+    color: var(--accent);
+  }
+
+  .site-nav__links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .site-nav__links a {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    border-bottom: none;
+  }
+
+  .site-nav__links a:hover {
+    color: var(--accent);
+    border-bottom: none;
+  }
+
+  /* ---- HERO / MANIFESTO ---- */
+
+  .hero {
+    max-width: var(--measure-wide);
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+  }
+
+  .hero__issue {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  .hero__title {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4em;
+    max-width: 16ch;
+  }
+
+  .hero__title em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero__rule {
+    width: 4rem;
+    height: 1px;
+    background: var(--accent);
+    border: none;
+    margin: 2.5rem 0;
+  }
+
+  .hero__declaration {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink);
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+
+  .hero__declaration strong {
+    font-weight: 500;
+  }
+
+  .hero__principles {
+    max-width: var(--measure);
+    margin: 3rem 0;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: principle;
+  }
+
+  .hero__principles li {
+    counter-increment: principle;
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--ink);
+    padding: 0.8rem 0;
+    padding-left: 3rem;
+    position: relative;
+    border-bottom: 1px solid var(--rule-light);
+  }
+
+  .hero__principles li:first-child {
+    border-top: 1px solid var(--rule-light);
+  }
+
+  .hero__principles li::before {
+    content: counter(principle, upper-roman);
+    position: absolute;
+    left: 0;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    top: 1rem;
+  }
+
+  .hero__coda {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-light);
+    max-width: var(--measure);
+    margin-top: 2.5rem;
+    line-height: 1.75;
+  }
+
+  /* ---- SECTION DIVIDER ---- */
+
+  .section-divider {
+    max-width: var(--measure-wide);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .section-divider hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ---- DIRECTORY ---- */
+
+  .directory {
+    max-width: var(--measure-wide);
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .directory__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+
+  .directory__title {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .directory__count {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 300;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+  }
+
+  .directory__subtitle {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-light);
+    margin-bottom: 3rem;
+  }
+
+  /* ---- PERSON ENTRY ---- */
+
+  .person {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 1.6rem 0;
+    border-top: 1px solid var(--rule-light);
+    align-items: start;
+  }
+
+  .person:last-child {
+    border-bottom: 1px solid var(--rule-light);
+  }
+
+  .person__main {
+    min-width: 0;
+  }
+
+  .person__name {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 0.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .person__name a {
+    color: var(--ink);
+    border-bottom: none;
+  }
+
+  .person__name a:hover {
+    color: var(--accent);
+  }
+
+  .person__disciplines {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .person__bio {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--ink-light);
+    line-height: 1.6;
+    max-width: 38rem;
+  }
+
+  .person__era {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 300;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    padding-top: 0.35rem;
+  }
+
+  .person--historical {
+    opacity: 0.75;
+  }
+
+  .person--historical:hover {
+    opacity: 1;
+  }
+
+  .person__tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    font-weight: 300;
+    color: var(--ink-faint);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    letter-spacing: 0.03em;
+  }
+
+  /* ---- JOIN / FORM ---- */
+
+  .join {
+    background: var(--paper-warm);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .join__inner {
+    max-width: var(--measure-wide);
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .join__text-section {}
+
+  .join__label {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+  }
+
+  .join__heading {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.25;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+
+  .join__description {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--ink-light);
+    line-height: 1.7;
+  }
+
+  .join__criteria {
+    margin-top: 1.5rem;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .join__criteria li {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--ink-light);
+    line-height: 1.6;
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .join__criteria li::before {
+    content: "\2014";
+    position: absolute;
+    left: 0;
+    color: var(--ink-faint);
+  }
+
+  .join__form-section {}
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 0.7rem 0.9rem;
+    border-radius: 2px;
+    transition: border-color 0.2s ease;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--ink-light);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 5rem;
+    line-height: 1.6;
+  }
+
+  .form-group .form-hint {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    color: var(--ink-faint);
+    margin-top: 0.35rem;
+    line-height: 1.5;
+  }
+
+  .form-submit {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: none;
+    padding: 0.9rem 2.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-radius: 2px;
+  }
+
+  .form-submit:hover {
+    background: var(--accent);
+  }
+
+  .form-response {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--accent);
+    margin-top: 1rem;
+    display: none;
+  }
+
+  .form-response.visible {
+    display: block;
+  }
+
+  /* ---- FOOTER ---- */
+
+  .site-footer {
+    max-width: var(--measure-wide);
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  .site-footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .site-footer__left {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--ink-faint);
+  }
+
+  .site-footer__right {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+  }
+
+  /* ---- ORNAMENTAL ELEMENTS ---- */
+
+  .ornament {
+    text-align: center;
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--rule);
+    padding: 2rem 0;
+    letter-spacing: 0.5em;
+    user-select: none;
+  }
+
+  /* ---- RESPONSIVE ---- */
+
+  @media (max-width: 768px) {
+    html { font-size: 16px; }
+
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .hero__title { font-size: 2.4rem; }
+
+    .directory { padding: 3rem 1.5rem; }
+
+    .person {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+
+    .person__era {
+      order: -1;
+      padding-top: 0;
+      padding-bottom: 0.2rem;
+    }
+
+    .join__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 3rem 1.5rem;
+    }
+
+    .site-nav {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .site-nav__links {
+      gap: 1.5rem;
+    }
+
+    .site-footer__inner {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  /* ---- PRINT ---- */
+
+  @media print {
+    body { background: white; }
+    .join, .site-footer { display: none; }
+    .person--historical { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="site-header">
+  <nav class="site-nav">
+    <a href="#" class="site-nav__wordmark">Renaissance Engineer</a>
+    <ul class="site-nav__links">
+      <li><a href="#manifesto">Manifesto</a></li>
+      <li><a href="#directory">Directory</a></li>
+      <li><a href="#join">Join</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ====== MANIFESTO / HERO ====== -->
+<section class="hero" id="manifesto">
+  <p class="hero__issue">Est. MMXXVI &middot; An open directory</p>
+
+  <h1 class="hero__title">The case for <em>renaissance engineers</em></h1>
+
+  <hr class="hero__rule">
+
+  <p class="hero__declaration">
+    The modern world has a specialization problem. We have organized knowledge into
+    departments, disciplines, and domains so narrow that <strong>the people best equipped
+    to solve our hardest problems are those who refuse to pick a lane.</strong>
+  </p>
+
+  <p class="hero__declaration">
+    A <em>renaissance engineer</em> is someone who builds across boundaries. They may
+    write code and compose music. Design circuits and study philosophy. Run experiments
+    and paint murals. They are not dilettantes&mdash;they are synthesizers. They see
+    connections invisible to specialists because they have <strong>inhabited multiple
+    worlds</strong> and carry each world's language in their thinking.
+  </p>
+
+  <p class="hero__declaration">
+    We believe this way of working is not a relic of the past. It is an urgent
+    necessity for the future. The problems ahead&mdash;climate, consciousness,
+    coordination, coexistence&mdash;do not respect disciplinary walls.
+  </p>
+
+  <ol class="hero__principles">
+    <li>Depth in multiple domains is not a contradiction; it is a compounding advantage.</li>
+    <li>The most important ideas live in the gaps between fields.</li>
+    <li>Building is a form of thinking. Theory without craft is incomplete.</li>
+    <li>Curiosity is not a phase. It is a practice, and it deserves institutional support.</li>
+    <li>The world needs people who can hold the whole problem in their head.</li>
+  </ol>
+
+  <p class="hero__coda">
+    This directory exists to make us visible to each other. If you build across
+    boundaries, you belong here.
+  </p>
+</section>
+
+<div class="ornament" aria-hidden="true">&bull; &bull; &bull;</div>
+
+<!-- ====== DIRECTORY ====== -->
+<section class="directory" id="directory">
+  <div class="directory__header">
+    <span class="directory__title">Directory</span>
+    <span class="directory__count">8 members</span>
+  </div>
+  <p class="directory__subtitle">Those who build across boundaries</p>
+
+  <!-- Historical -->
+  <article class="person person--historical">
+    <div class="person__main">
+      <h3 class="person__name">
+        <a href="https://en.wikipedia.org/wiki/Leonardo_da_Vinci">Leonardo da Vinci</a>
+        <span class="person__tag">historical</span>
+      </h3>
+      <p class="person__disciplines">Painting &middot; Engineering &middot; Anatomy &middot; Hydraulics &middot; Optics</p>
+      <p class="person__bio">
+        Artist, inventor, scientist. Designed flying machines, mapped the human body,
+        painted the Mona Lisa, and engineered canal systems&mdash;seeing no boundary
+        between observation, beauty, and mechanism.
+      </p>
+    </div>
+    <span class="person__era">1452 &ndash; 1519</span>
+  </article>
+
+  <article class="person person--historical">
+    <div class="person__main">
+      <h3 class="person__name">
+        <a href="https://en.wikipedia.org/wiki/Benjamin_Franklin">Benjamin Franklin</a>
+        <span class="person__tag">historical</span>
+      </h3>
+      <p class="person__disciplines">Physics &middot; Diplomacy &middot; Publishing &middot; Invention &middot; Political Philosophy</p>
+      <p class="person__bio">
+        Proved that lightning is electricity, founded the first public library,
+        negotiated the French alliance, invented bifocals, and wrote prose sharp
+        enough to start a revolution. Treated every problem as a prototype.
+      </p>
+    </div>
+    <span class="person__era">1706 &ndash; 1790</span>
+  </article>
+
+  <article class="person person--historical">
+    <div class="person__main">
+      <h3 class="person__name">
+        <a href="https://en.wikipedia.org/wiki/Ada_Lovelace">Ada Lovelace</a>
+        <span class="person__tag">historical</span>
+      </h3>
+      <p class="person__disciplines">Mathematics &middot; Computing &middot; Poetry &middot; Music &middot; Philosophy of Mind</p>
+      <p class="person__bio">
+        Wrote the first computer program and, more importantly, saw that a computing
+        machine could manipulate symbols of any kind&mdash;not just numbers. Called her
+        approach "poetical science": the intersection of imagination and analysis.
+      </p>
+    </div>
+    <span class="person__era">1815 &ndash; 1852</span>
+  </article>
+
+  <!-- Modern / Fictional Examples -->
+  <article class="person">
+    <div class="person__main">
+      <h3 class="person__name">
+        <a href="#">Maya Okonkwo</a>
+      </h3>
+      <p class="person__disciplines">Computational Neuroscience &middot; Sculpture &middot; Music Production</p>
+      <p class="person__bio">
+        Builds neural network architectures inspired by the brain's visual cortex,
+        then translates those patterns into large-scale steel sculptures. Releases
+        ambient electronic albums that sonify neural spike trains. Postdoc at MIT,
+        studio in Somerville.
+      </p>
+    </div>
+    <span class="person__era">b. 1991</span>
+  </article>
+
+  <article class="person">
+    <div class="person__main">
+      <h3 class="person__name">
+        <a href="#">Rafael Mendes</a>
+      </h3>
+      <p class="person__disciplines">Architecture &middot; Distributed Systems &middot; Urban Agriculture</p>
+      <p class="person__bio">
+        Designs buildings that grow food. Licensed architect who learned to code to
+        build sensor networks for vertical farms embedded in facades. His firm in
+        S&atilde;o Paulo ships both concrete and software.
+      </p>
+    </div>
+    <span class="person__era">b. 1987</span>
+  </article>
+
+  <article class="person">
+    <div class="person__main">
+      <h3 class="person__name">
+        <a href="#">Lena Johansson</a>
+      </h3>
+      <p class="person__disciplines">Materials Science &middot; Textile Design &middot; Climate Policy</p>
+      <p class="person__bio">
+        Developed a biodegradable polymer thread now used by three major fashion
+        houses. Splits her time between a chemistry lab in Stockholm and advising
+        the EU Commission on circular economy regulation. Weaves her own prototypes
+        on a hand loom.
+      </p>
+    </div>
+    <span class="person__era">b. 1984</span>
+  </article>
+
+  <article class="person">
+    <div class="person__main">
+      <h3 class="person__name">
+        <a href="#">James Whitfield-Chen</a>
+      </h3>
+      <p class="person__disciplines">Compiler Design &middot; Calligraphy &middot; Cognitive Science &middot; Education</p>
+      <p class="person__bio">
+        Built a programming language whose syntax is informed by Chinese calligraphic
+        stroke order. Runs a school in Vancouver that teaches children to code, draw,
+        and reason about formal systems simultaneously. Published in both ACM and
+        a typography journal.
+      </p>
+    </div>
+    <span class="person__era">b. 1979</span>
+  </article>
+
+  <article class="person">
+    <div class="person__main">
+      <h3 class="person__name">
+        <a href="#">Priya Raghavan</a>
+      </h3>
+      <p class="person__disciplines">Robotics &middot; Bharatanatyam Dance &middot; Philosophy of Embodiment</p>
+      <p class="person__bio">
+        Builds soft robotics systems whose movement vocabularies are derived from
+        classical Indian dance. Her PhD bridged the MIT Media Lab and the philosophy
+        department. Currently leading a lab in Bangalore building prosthetics that
+        move with human grace.
+      </p>
+    </div>
+    <span class="person__era">b. 1993</span>
+  </article>
+</section>
+
+<div class="section-divider"><hr></div>
+
+<!-- ====== JOIN FORM ====== -->
+<section class="join" id="join">
+  <div class="join__inner">
+    <div class="join__text-section">
+      <p class="join__label">Submit yourself</p>
+      <h2 class="join__heading">Add your name to the directory</h2>
+      <p class="join__description">
+        This is not a credential check. There is no committee, no application review,
+        no gatekeeping. If you work seriously across multiple disciplines and want to
+        be visible to others who do the same, you belong here.
+      </p>
+      <ul class="join__criteria">
+        <li>You have depth (not just interest) in two or more distinct fields</li>
+        <li>You actively build, create, or research&mdash;not just consume</li>
+        <li>You believe cross-disciplinary work produces better outcomes</li>
+        <li>You want to connect with others who think this way</li>
+      </ul>
+    </div>
+
+    <div class="join__form-section">
+      <form id="joinForm" onsubmit="return handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Ada Lovelace">
+        </div>
+
+        <div class="form-group">
+          <label for="disciplines">Disciplines</label>
+          <input type="text" id="disciplines" name="disciplines" required placeholder="e.g. Robotics, Painting, Philosophy">
+          <p class="form-hint">Two or more fields you work in seriously</p>
+        </div>
+
+        <div class="form-group">
+          <label for="bio">What you do</label>
+          <textarea id="bio" name="bio" required placeholder="A sentence or two about your cross-disciplinary work..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="url">Link to your work</label>
+          <input type="url" id="url" name="url" placeholder="https://yoursite.com">
+          <p class="form-hint">Website, portfolio, or profile. Optional.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com">
+          <p class="form-hint">For verification only. Never displayed or shared.</p>
+        </div>
+
+        <button type="submit" class="form-submit">Request Listing</button>
+        <p class="form-response" id="formResponse">
+          Thank you. Your submission has been received.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span class="site-footer__left">"The mind that is not baffled is not employed."</span>
+    <span class="site-footer__right">renaissance.engineer &middot; MMXXVI</span>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+
+  const form = document.getElementById('joinForm');
+  const response = document.getElementById('formResponse');
+
+  // In production, this would POST to an API
+  // For now, show confirmation
+  response.classList.add('visible');
+
+  // Brief visual feedback then reset
+  setTimeout(() => {
+    form.reset();
+  }, 300);
+
+  // Hide message after a while
+  setTimeout(() => {
+    response.classList.remove('visible');
+  }, 6000);
+
+  return false;
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

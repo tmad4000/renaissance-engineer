@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renaissance Engineer - A Living Directory of Polymaths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   RENAISSANCE ENGINEER - DA VINCI CODEX THEME
+   ============================================ */
+
+:root {
+  --parchment:       #f4e8d1;
+  --parchment-light: #f9f1e3;
+  --parchment-dark:  #e8d5b5;
+  --parchment-edge:  #d4c4a0;
+  --ink:             #2c1810;
+  --ink-light:       #5c3a28;
+  --ink-faded:       #8b6f5c;
+  --ink-wash:        rgba(44, 24, 16, 0.06);
+  --sepia:           #704214;
+  --sepia-light:     #a0744c;
+  --red-ink:         #8b2500;
+  --gold:            #b8860b;
+  --gold-light:      #d4a840;
+  --blue-ink:        #2c4a6e;
+  --green-ink:       #3a5a3a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'EB Garamond', 'Georgia', serif;
+  background-color: #e8d5b5;
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 18px;
+  overflow-x: hidden;
+}
+
+/* Parchment texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: linear-gradient(to bottom, var(--parchment) 0%, var(--parchment) 70%, transparent 100%);
+  padding: 1rem 2rem 2rem;
+}
+
+nav .nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--parchment-edge);
+  padding-bottom: 0.75rem;
+}
+
+nav .logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+nav .logo span {
+  font-weight: 300;
+  color: var(--ink-faded);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+nav ul a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: var(--ink-light);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav ul a:hover {
+  color: var(--sepia);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--parchment);
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 2rem 4rem;
+}
+
+/* Aged edge vignette */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(139, 111, 92, 0.15) 100%);
+  pointer-events: none;
+}
+
+/* Decorative corner flourishes */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 2rem;
+  border: 1px solid var(--parchment-edge);
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: 900px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Vitruvian-inspired SVG decoration */
+.hero-emblem {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2.5rem;
+  opacity: 0.7;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 0.3em;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--sepia);
+}
+
+.hero .subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--ink-faded);
+  margin-bottom: 2.5rem;
+  font-weight: 400;
+  transform: rotate(-0.5deg);
+}
+
+.hero .description {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: var(--ink-light);
+  max-width: 680px;
+  margin: 0 auto 3rem;
+  font-weight: 400;
+}
+
+.hero .description strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Handwritten annotation style */
+.annotation {
+  font-family: 'Caveat', cursive;
+  color: var(--sepia-light);
+  font-size: 1.1rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 2.2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--parchment);
+  position: relative;
+}
+
+.btn-primary:hover {
+  background: var(--sepia);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--ink-light);
+}
+
+.btn-secondary:hover {
+  background: var(--ink);
+  color: var(--parchment);
+}
+
+/* Decorative divider between sections */
+.section-divider {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.section-divider svg {
+  width: 300px;
+  height: 40px;
+  opacity: 0.4;
+}
+
+/* ============================================
+   ABOUT SECTION
+   ============================================ */
+
+.about {
+  background: var(--parchment-light);
+  padding: 5rem 2rem;
+  position: relative;
+}
+
+.about::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--parchment-edge), transparent);
+}
+
+.about-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.about h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--sepia);
+  margin: 1rem auto 0;
+}
+
+.about-col {
+  font-size: 1.05rem;
+  color: var(--ink-light);
+}
+
+.about-col p {
+  margin-bottom: 1.2rem;
+}
+
+.discipline-sketch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.discipline-tag {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  padding: 0.3rem 0.9rem;
+  border: 1px dashed var(--parchment-edge);
+  color: var(--sepia);
+  transform: rotate(var(--r, 0deg));
+  transition: all 0.3s;
+}
+
+.discipline-tag:hover {
+  border-color: var(--sepia);
+  background: rgba(176, 134, 11, 0.06);
+}
+
+/* ============================================
+   DIRECTORY SECTION
+   ============================================ */
+
+.directory {
+  background: var(--parchment);
+  padding: 5rem 2rem 6rem;
+  position: relative;
+}
+
+.directory-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3.5rem;
+}
+
+.directory-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.directory-header .handwritten-note {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: var(--ink-faded);
+}
+
+/* Notebook page cards */
+.directory-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.person-card {
+  background: var(--parchment-light);
+  border: 1px solid var(--parchment-edge);
+  padding: 2rem 2rem 1.8rem;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Notebook ruled lines */
+  background-image:
+    repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      rgba(44, 24, 16, 0.04) 31px,
+      rgba(44, 24, 16, 0.04) 32px
+    );
+  background-position: 0 1.8rem;
+}
+
+/* Left margin line (notebook style) */
+.person-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 54px;
+  width: 1px;
+  background: rgba(139, 37, 0, 0.12);
+}
+
+/* Top torn-edge effect */
+.person-card::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--parchment);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 6'%3E%3Cpath d='M0,3 Q5,0 10,3 Q15,6 20,3 Q25,0 30,3 Q35,6 40,3 Q45,0 50,3 Q55,6 60,3 Q65,0 70,3 Q75,6 80,3 Q85,0 90,3 Q95,6 100,3 Q105,0 110,3 Q115,6 120,3 Q125,0 130,3 Q135,6 140,3 Q145,0 150,3 Q155,6 160,3 Q165,0 170,3 Q175,6 180,3 Q185,0 190,3 Q195,6 200,3 Q205,0 210,3 Q215,6 220,3 Q225,0 230,3 Q235,6 240,3 Q245,0 250,3 Q255,6 260,3 Q265,0 270,3 Q275,6 280,3 Q285,0 290,3 Q295,6 300,3 Q305,0 310,3 Q315,6 320,3 Q325,0 330,3 Q335,6 340,3 Q345,0 350,3 Q355,6 360,3 Q365,0 370,3 Q375,6 380,3 Q385,0 390,3 Q395,6 400,3' fill='none' stroke='black' stroke-width='6'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 6'%3E%3Cpath d='M0,3 Q5,0 10,3 Q15,6 20,3 Q25,0 30,3 Q35,6 40,3 Q45,0 50,3 Q55,6 60,3 Q65,0 70,3 Q75,6 80,3 Q85,0 90,3 Q95,6 100,3 Q105,0 110,3 Q115,6 120,3 Q125,0 130,3 Q135,6 140,3 Q145,0 150,3 Q155,6 160,3 Q165,0 170,3 Q175,6 180,3 Q185,0 190,3 Q195,6 200,3 Q205,0 210,3 Q215,6 220,3 Q225,0 230,3 Q235,6 240,3 Q245,0 250,3 Q255,6 260,3 Q265,0 270,3 Q275,6 280,3 Q285,0 290,3 Q295,6 300,3 Q305,0 310,3 Q315,6 320,3 Q325,0 330,3 Q335,6 340,3 Q345,0 350,3 Q355,6 360,3 Q365,0 370,3 Q375,6 380,3 Q385,0 390,3 Q395,6 400,3' fill='none' stroke='black' stroke-width='6'/%3E%3C/svg%3E");
+}
+
+.person-card:hover {
+  transform: translateY(-4px) rotate(0.3deg);
+  box-shadow:
+    0 8px 30px rgba(44, 24, 16, 0.12),
+    0 2px 8px rgba(44, 24, 16, 0.08);
+}
+
+/* Card inner layout */
+.card-era {
+  font-family: 'Caveat', cursive;
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  text-align: right;
+  margin-bottom: 0.2rem;
+  opacity: 0.7;
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.card-portrait {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1.5px solid var(--parchment-edge);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--parchment);
+  overflow: hidden;
+  position: relative;
+}
+
+/* SVG portrait placeholder with hatching */
+.card-portrait svg {
+  width: 40px;
+  height: 40px;
+  opacity: 0.6;
+}
+
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+}
+
+.card-epithet {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--sepia);
+  font-style: italic;
+}
+
+.card-bio {
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  padding-left: 0;
+}
+
+.card-disciplines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.card-discipline {
+  font-family: 'Caveat', cursive;
+  font-size: 0.9rem;
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--parchment-edge);
+  color: var(--sepia);
+  background: rgba(244, 232, 209, 0.5);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--parchment-edge);
+  padding-top: 0.8rem;
+}
+
+.card-link {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  color: var(--blue-ink);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+
+.card-link:hover {
+  color: var(--sepia);
+}
+
+.card-link::after {
+  content: ' \2192';
+}
+
+.card-number {
+  font-family: 'Caveat', cursive;
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  opacity: 0.5;
+}
+
+/* Sketch decoration on select cards */
+.card-sketch {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* ============================================
+   SUBMIT / JOIN SECTION
+   ============================================ */
+
+.submit {
+  background: var(--parchment-dark);
+  padding: 5rem 2rem 6rem;
+  position: relative;
+}
+
+.submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--parchment-edge), transparent);
+}
+
+.submit-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.submit-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.submit-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.submit-header p {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: var(--ink-faded);
+}
+
+/* Notebook-styled form */
+.notebook-form {
+  background: var(--parchment-light);
+  border: 1px solid var(--parchment-edge);
+  padding: 2.5rem 3rem;
+  position: relative;
+  /* Ruled lines */
+  background-image:
+    repeating-linear-gradient(
+      transparent,
+      transparent 35px,
+      rgba(44, 24, 16, 0.04) 35px,
+      rgba(44, 24, 16, 0.04) 36px
+    );
+  background-position: 0 0.5rem;
+  box-shadow: 0 4px 20px rgba(44, 24, 16, 0.08);
+}
+
+/* Left margin line */
+.notebook-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 48px;
+  width: 1px;
+  background: rgba(139, 37, 0, 0.1);
+}
+
+/* Spiral binding holes */
+.notebook-form::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 18px;
+  width: 12px;
+  height: calc(100% - 40px);
+  background-image:
+    radial-gradient(circle 5px at center, rgba(44, 24, 16, 0.15) 4px, transparent 4px);
+  background-size: 12px 36px;
+  background-repeat: repeat-y;
+}
+
+.form-group {
+  margin-bottom: 1.8rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  color: var(--sepia);
+  margin-bottom: 0.3rem;
+  padding-left: 0.2rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--parchment-edge);
+  padding: 0.5rem 0.2rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-bottom-color: var(--sepia);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.7;
+  border: 1px solid var(--parchment-edge);
+  padding: 0.5rem;
+}
+
+.form-group textarea:focus {
+  border-color: var(--sepia);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--ink-faded);
+  opacity: 0.5;
+  font-style: italic;
+}
+
+/* Checkbox group for disciplines */
+.discipline-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.discipline-check {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.discipline-check input[type="checkbox"] {
+  width: auto;
+  accent-color: var(--sepia);
+  cursor: pointer;
+}
+
+.discipline-check span {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--ink-light);
+}
+
+.form-submit-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.form-note {
+  font-family: 'Caveat', cursive;
+  font-size: 0.95rem;
+  color: var(--ink-faded);
+  max-width: 280px;
+}
+
+.btn-submit {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--parchment);
+  border: none;
+  padding: 0.85rem 2.5rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-submit:hover {
+  background: var(--sepia);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+  background: var(--ink);
+  color: var(--parchment-dark);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+footer .footer-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+footer .footer-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  color: var(--parchment-edge);
+}
+
+footer .footer-attribution {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--ink-faded);
+  margin-bottom: 2rem;
+}
+
+footer .footer-bottom {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--ink-faded);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+footer a {
+  color: var(--parchment-edge);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--parchment);
+}
+
+/* ============================================
+   SVG DECORATIONS
+   ============================================ */
+
+.sketch-border-top,
+.sketch-border-bottom {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.sketch-border-top svg,
+.sketch-border-bottom svg {
+  width: 100%;
+  height: 20px;
+}
+
+/* Floating sketch decorations */
+.float-sketch {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.04;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  nav .nav-inner {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  nav ul {
+    gap: 1.2rem;
+  }
+
+  .hero {
+    padding: 8rem 1.5rem 3rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-emblem {
+    width: 140px;
+    height: 140px;
+  }
+
+  .about-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .directory-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .notebook-form {
+    padding: 2rem 1.5rem 2rem 2.5rem;
+  }
+
+  .notebook-form::before {
+    left: 28px;
+  }
+
+  .notebook-form::after {
+    left: 8px;
+  }
+
+  .form-submit-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-note {
+    text-align: center;
+    max-width: none;
+  }
+
+  .person-card::before {
+    left: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .person-card {
+    padding: 1.5rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.person-card {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.person-card:nth-child(1) { animation-delay: 0.1s; }
+.person-card:nth-child(2) { animation-delay: 0.2s; }
+.person-card:nth-child(3) { animation-delay: 0.3s; }
+.person-card:nth-child(4) { animation-delay: 0.4s; }
+.person-card:nth-child(5) { animation-delay: 0.5s; }
+.person-card:nth-child(6) { animation-delay: 0.6s; }
+.person-card:nth-child(7) { animation-delay: 0.7s; }
+.person-card:nth-child(8) { animation-delay: 0.8s; }
+
+/* Success message */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+}
+
+.form-success.visible {
+  display: block;
+}
+
+.form-success h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.form-success p {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: var(--ink-faded);
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     NAVIGATION
+     ============================================ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Renaissance <span>Engineer</span></a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#directory">Directory</a></li>
+      <li><a href="#join">Join</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============================================
+     HERO SECTION
+     ============================================ -->
+<section class="hero">
+
+  <!-- Vitruvian-inspired emblem -->
+  <div class="hero-content">
+    <div class="hero-emblem">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer circle -->
+        <circle cx="100" cy="100" r="92" stroke="#5c3a28" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="100" cy="100" r="88" stroke="#5c3a28" stroke-width="0.3" opacity="0.3"/>
+        <!-- Inner circle -->
+        <circle cx="100" cy="100" r="60" stroke="#5c3a28" stroke-width="0.5" opacity="0.4"/>
+        <!-- Square -->
+        <rect x="30" y="30" width="140" height="140" stroke="#5c3a28" stroke-width="0.6" opacity="0.35"/>
+        <!-- Cross hairs / axes -->
+        <line x1="100" y1="15" x2="100" y2="185" stroke="#5c3a28" stroke-width="0.3" opacity="0.2"/>
+        <line x1="15" y1="100" x2="185" y2="100" stroke="#5c3a28" stroke-width="0.3" opacity="0.2"/>
+        <!-- Diagonal lines -->
+        <line x1="30" y1="30" x2="170" y2="170" stroke="#5c3a28" stroke-width="0.2" opacity="0.15"/>
+        <line x1="170" y1="30" x2="30" y2="170" stroke="#5c3a28" stroke-width="0.2" opacity="0.15"/>
+        <!-- Human figure (stylized) -->
+        <!-- Head -->
+        <circle cx="100" cy="52" r="10" stroke="#2c1810" stroke-width="1" opacity="0.5"/>
+        <!-- Body -->
+        <line x1="100" y1="62" x2="100" y2="115" stroke="#2c1810" stroke-width="1" opacity="0.5"/>
+        <!-- Arms extended -->
+        <line x1="100" y1="78" x2="58" y2="72" stroke="#2c1810" stroke-width="0.8" opacity="0.4"/>
+        <line x1="100" y1="78" x2="142" y2="72" stroke="#2c1810" stroke-width="0.8" opacity="0.4"/>
+        <!-- Arms up (vitruvian) -->
+        <line x1="100" y1="78" x2="65" y2="48" stroke="#2c1810" stroke-width="0.6" opacity="0.25"/>
+        <line x1="100" y1="78" x2="135" y2="48" stroke="#2c1810" stroke-width="0.6" opacity="0.25"/>
+        <!-- Legs -->
+        <line x1="100" y1="115" x2="78" y2="158" stroke="#2c1810" stroke-width="0.8" opacity="0.4"/>
+        <line x1="100" y1="115" x2="122" y2="158" stroke="#2c1810" stroke-width="0.8" opacity="0.4"/>
+        <!-- Legs spread (vitruvian) -->
+        <line x1="100" y1="115" x2="60" y2="150" stroke="#2c1810" stroke-width="0.6" opacity="0.25"/>
+        <line x1="100" y1="115" x2="140" y2="150" stroke="#2c1810" stroke-width="0.6" opacity="0.25"/>
+        <!-- Golden ratio spiral hint -->
+        <path d="M100,100 Q120,80 130,100 Q140,120 120,130 Q100,140 90,120 Q80,100 95,90" stroke="#b8860b" stroke-width="0.5" opacity="0.25" fill="none"/>
+        <!-- Compass points / measurement marks -->
+        <circle cx="100" cy="100" r="2" fill="#5c3a28" opacity="0.3"/>
+        <circle cx="58" cy="72" r="1.5" fill="#5c3a28" opacity="0.2"/>
+        <circle cx="142" cy="72" r="1.5" fill="#5c3a28" opacity="0.2"/>
+        <circle cx="78" cy="158" r="1.5" fill="#5c3a28" opacity="0.2"/>
+        <circle cx="122" cy="158" r="1.5" fill="#5c3a28" opacity="0.2"/>
+        <!-- Small annotation lines -->
+        <line x1="170" y1="52" x2="180" y2="52" stroke="#5c3a28" stroke-width="0.3" opacity="0.3"/>
+        <line x1="170" y1="78" x2="185" y2="78" stroke="#5c3a28" stroke-width="0.3" opacity="0.3"/>
+        <line x1="170" y1="100" x2="190" y2="100" stroke="#5c3a28" stroke-width="0.3" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <h1>The <em>Renaissance</em> Engineer</h1>
+
+    <p class="subtitle">A living codex of those who refuse to be just one thing</p>
+
+    <p class="description">
+      The world sorts people into boxes. <strong>Renaissance Engineers</strong> build across every box at once &mdash;
+      weaving together art and algorithms, philosophy and physics, design and deep learning.
+      They are the polymaths, the cross-disciplinary builders, the ones who see
+      connections where others see walls.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#directory" class="btn btn-primary">Browse the Directory</a>
+      <a href="#join" class="btn btn-secondary">Add Yourself</a>
+    </div>
+  </div>
+
+  <!-- Floating decorative sketches -->
+  <svg class="float-sketch" style="top:12%;left:5%;width:120px;" viewBox="0 0 120 120" fill="none">
+    <circle cx="60" cy="60" r="50" stroke="#2c1810" stroke-width="0.8"/>
+    <path d="M60,10 L60,110 M10,60 L110,60" stroke="#2c1810" stroke-width="0.4"/>
+    <path d="M60,60 L95,30" stroke="#2c1810" stroke-width="0.5"/>
+    <circle cx="60" cy="60" r="35" stroke="#2c1810" stroke-width="0.3" stroke-dasharray="2,4"/>
+  </svg>
+
+  <svg class="float-sketch" style="bottom:15%;right:4%;width:150px;" viewBox="0 0 150 100" fill="none">
+    <!-- Gear sketch -->
+    <circle cx="50" cy="50" r="30" stroke="#2c1810" stroke-width="0.6"/>
+    <circle cx="50" cy="50" r="20" stroke="#2c1810" stroke-width="0.4"/>
+    <circle cx="50" cy="50" r="8" stroke="#2c1810" stroke-width="0.5"/>
+    <path d="M50,18 L47,10 L53,10 Z M50,82 L47,90 L53,90 Z M18,50 L10,47 L10,53 Z M82,50 L90,47 L90,53 Z" stroke="#2c1810" stroke-width="0.4"/>
+    <!-- Small gear -->
+    <circle cx="105" cy="45" r="18" stroke="#2c1810" stroke-width="0.5"/>
+    <circle cx="105" cy="45" r="10" stroke="#2c1810" stroke-width="0.3"/>
+    <circle cx="105" cy="45" r="4" stroke="#2c1810" stroke-width="0.4"/>
+  </svg>
+
+  <svg class="float-sketch" style="top:60%;left:3%;width:80px;" viewBox="0 0 80 120" fill="none">
+    <!-- DNA helix hint -->
+    <path d="M20,10 Q60,30 20,50 Q-20,70 20,90 Q60,110 20,130" stroke="#2c1810" stroke-width="0.6" fill="none"/>
+    <path d="M60,10 Q20,30 60,50 Q100,70 60,90 Q20,110 60,130" stroke="#2c1810" stroke-width="0.6" fill="none"/>
+    <line x1="20" y1="30" x2="60" y2="30" stroke="#2c1810" stroke-width="0.3"/>
+    <line x1="20" y1="50" x2="60" y2="50" stroke="#2c1810" stroke-width="0.3"/>
+    <line x1="20" y1="70" x2="60" y2="70" stroke="#2c1810" stroke-width="0.3"/>
+    <line x1="20" y1="90" x2="60" y2="90" stroke="#2c1810" stroke-width="0.3"/>
+  </svg>
+</section>
+
+<!-- ============================================
+     ABOUT SECTION
+     ============================================ -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <h2>What Is a Renaissance Engineer?</h2>
+
+    <div class="about-col">
+      <p>
+        Leonardo da Vinci painted the Mona Lisa, designed flying machines, studied anatomy through
+        dissection, engineered canal systems, and wrote treatises on optics &mdash; all as one
+        continuous practice. He did not see boundaries between art and science. Neither do we.
+      </p>
+      <p>
+        A <strong>Renaissance Engineer</strong> is someone who works seriously across multiple
+        disciplines &mdash; not as a hobbyist, but as a practitioner who brings depth in
+        one domain to create breakthroughs in another.
+      </p>
+    </div>
+
+    <div class="about-col">
+      <p>
+        Today's renaissance engineers might be a neuroscientist who sculpts, a compiler
+        designer who composes music, or an architect who writes machine learning papers.
+        They are defined not by what they do, but by the <em>bridges</em> they build
+        between what others keep separate.
+      </p>
+
+      <div class="discipline-sketch">
+        <span class="discipline-tag" style="--r: -1.5deg;">Engineering</span>
+        <span class="discipline-tag" style="--r: 0.8deg;">Art</span>
+        <span class="discipline-tag" style="--r: -0.5deg;">Philosophy</span>
+        <span class="discipline-tag" style="--r: 1.2deg;">Science</span>
+        <span class="discipline-tag" style="--r: -0.8deg;">Music</span>
+        <span class="discipline-tag" style="--r: 0.3deg;">Design</span>
+        <span class="discipline-tag" style="--r: -1deg;">Mathematics</span>
+        <span class="discipline-tag" style="--r: 0.6deg;">Writing</span>
+        <span class="discipline-tag" style="--r: -0.3deg;">Biology</span>
+        <span class="discipline-tag" style="--r: 1deg;">Architecture</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     DECORATIVE DIVIDER
+     ============================================ -->
+<div class="section-divider" style="background: var(--parchment);">
+  <svg viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="20" x2="120" y2="20" stroke="#8b6f5c" stroke-width="0.5"/>
+    <circle cx="135" cy="20" r="3" stroke="#8b6f5c" stroke-width="0.5"/>
+    <circle cx="150" cy="20" r="5" stroke="#8b6f5c" stroke-width="0.6"/>
+    <circle cx="165" cy="20" r="3" stroke="#8b6f5c" stroke-width="0.5"/>
+    <line x1="180" y1="20" x2="300" y2="20" stroke="#8b6f5c" stroke-width="0.5"/>
+    <path d="M140,12 Q150,8 160,12" stroke="#8b6f5c" stroke-width="0.4" fill="none"/>
+    <path d="M140,28 Q150,32 160,28" stroke="#8b6f5c" stroke-width="0.4" fill="none"/>
+  </svg>
+</div>
+
+<!-- ============================================
+     DIRECTORY SECTION
+     ============================================ -->
+<section class="directory" id="directory">
+  <div class="directory-header">
+    <h2>The Directory</h2>
+    <p class="handwritten-note">Folio I &mdash; a catalog of remarkable cross-disciplinary minds</p>
+  </div>
+
+  <div class="directory-grid">
+
+    <!-- Card 1: Leonardo da Vinci -->
+    <div class="person-card" style="transform: rotate(-0.3deg);">
+      <div class="card-era">c. 1452 &ndash; 1519</div>
+      <div class="card-header">
+        <div class="card-portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M12,10 Q16,4 20,6 Q24,4 28,10" stroke="#5c3a28" stroke-width="0.6" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-name">Leonardo da Vinci</div>
+          <div class="card-epithet">"The Universal Man"</div>
+        </div>
+      </div>
+      <p class="card-bio">
+        Painter, anatomist, engineer, sculptor, architect, musician, mathematician, inventor.
+        Designed flying machines centuries before flight, mapped the human body through
+        dissection, and painted works that define Western art.
+      </p>
+      <div class="card-disciplines">
+        <span class="card-discipline">Painting</span>
+        <span class="card-discipline">Engineering</span>
+        <span class="card-discipline">Anatomy</span>
+        <span class="card-discipline">Architecture</span>
+        <span class="card-discipline">Music</span>
+      </div>
+      <div class="card-footer">
+        <a href="https://en.wikipedia.org/wiki/Leonardo_da_Vinci" class="card-link" target="_blank">Explore works</a>
+        <span class="card-number">No. I</span>
+      </div>
+      <!-- Decorative sketch -->
+      <svg class="card-sketch" width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <path d="M10,50 Q15,20 30,15 Q45,10 50,5" stroke="#2c1810" stroke-width="2"/>
+        <path d="M5,45 L15,40 L20,50" stroke="#2c1810" stroke-width="1"/>
+        <circle cx="30" cy="15" r="3" stroke="#2c1810" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <!-- Card 2: Ada Lovelace -->
+    <div class="person-card" style="transform: rotate(0.4deg);">
+      <div class="card-era">1815 &ndash; 1852</div>
+      <div class="card-header">
+        <div class="card-portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M13,14 Q17,8 20,9 Q23,8 27,14" stroke="#5c3a28" stroke-width="0.6" fill="none"/>
+            <path d="M12,11 Q14,6 20,7 Q26,6 28,11" stroke="#5c3a28" stroke-width="0.4" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-name">Ada Lovelace</div>
+          <div class="card-epithet">"Enchantress of Numbers"</div>
+        </div>
+      </div>
+      <p class="card-bio">
+        Mathematician, writer, and visionary who saw that Charles Babbage's Analytical Engine
+        could go beyond pure calculation. Wrote the first algorithm, and prophesied that
+        machines might compose music and create art.
+      </p>
+      <div class="card-disciplines">
+        <span class="card-discipline">Mathematics</span>
+        <span class="card-discipline">Computing</span>
+        <span class="card-discipline">Writing</span>
+        <span class="card-discipline">Music</span>
+      </div>
+      <div class="card-footer">
+        <a href="https://en.wikipedia.org/wiki/Ada_Lovelace" class="card-link" target="_blank">Explore works</a>
+        <span class="card-number">No. II</span>
+      </div>
+    </div>
+
+    <!-- Card 3: Nikola Tesla -->
+    <div class="person-card" style="transform: rotate(-0.5deg);">
+      <div class="card-era">1856 &ndash; 1943</div>
+      <div class="card-header">
+        <div class="card-portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <line x1="14" y1="8" x2="14" y2="4" stroke="#5c3a28" stroke-width="0.5"/>
+            <line x1="26" y1="8" x2="26" y2="4" stroke="#5c3a28" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-name">Nikola Tesla</div>
+          <div class="card-epithet">"Master of Lightning"</div>
+        </div>
+      </div>
+      <p class="card-bio">
+        Electrical engineer, mechanical engineer, physicist, and futurist whose inventions
+        powered the modern world. Held nearly 300 patents, spoke eight languages, and
+        envisioned wireless communication decades before it existed.
+      </p>
+      <div class="card-disciplines">
+        <span class="card-discipline">Electrical Engineering</span>
+        <span class="card-discipline">Physics</span>
+        <span class="card-discipline">Invention</span>
+        <span class="card-discipline">Futurism</span>
+      </div>
+      <div class="card-footer">
+        <a href="https://en.wikipedia.org/wiki/Nikola_Tesla" class="card-link" target="_blank">Explore works</a>
+        <span class="card-number">No. III</span>
+      </div>
+    </div>
+
+    <!-- Card 4: Hildegard von Bingen -->
+    <div class="person-card" style="transform: rotate(0.2deg);">
+      <div class="card-era">1098 &ndash; 1179</div>
+      <div class="card-header">
+        <div class="card-portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M10,14 Q15,3 20,4 Q25,3 30,14" stroke="#5c3a28" stroke-width="0.5" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-name">Hildegard von Bingen</div>
+          <div class="card-epithet">"The Sibyl of the Rhine"</div>
+        </div>
+      </div>
+      <p class="card-bio">
+        Composer, philosopher, mystic, herbalist, and natural historian.
+        Wrote treatises on medicine and natural science, composed an entire
+        corpus of liturgical music, invented a constructed language, and
+        advised popes and emperors.
+      </p>
+      <div class="card-disciplines">
+        <span class="card-discipline">Music</span>
+        <span class="card-discipline">Medicine</span>
+        <span class="card-discipline">Philosophy</span>
+        <span class="card-discipline">Natural Science</span>
+        <span class="card-discipline">Writing</span>
+      </div>
+      <div class="card-footer">
+        <a href="https://en.wikipedia.org/wiki/Hildegard_of_Bingen" class="card-link" target="_blank">Explore works</a>
+        <span class="card-number">No. IV</span>
+      </div>
+    </div>
+
+    <!-- Card 5: Modern fictional - Maya Chen -->
+    <div class="person-card" style="transform: rotate(-0.4deg);">
+      <div class="card-era">Present day</div>
+      <div class="card-header">
+        <div class="card-portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M14,12 Q18,6 22,8 Q26,6 28,12" stroke="#5c3a28" stroke-width="0.5" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-name">Maya Chen</div>
+          <div class="card-epithet">"Biomimetic Architect"</div>
+        </div>
+      </div>
+      <p class="card-bio">
+        Computational biologist turned architect who designs buildings that grow and
+        adapt like living organisms. Her structures use mycelium-based materials and
+        algorithms derived from neural network research.
+      </p>
+      <div class="card-disciplines">
+        <span class="card-discipline">Architecture</span>
+        <span class="card-discipline">Biology</span>
+        <span class="card-discipline">Machine Learning</span>
+        <span class="card-discipline">Materials Science</span>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link">View portfolio</a>
+        <span class="card-number">No. V</span>
+      </div>
+    </div>
+
+    <!-- Card 6: Modern fictional - Kofi Asante -->
+    <div class="person-card" style="transform: rotate(0.3deg);">
+      <div class="card-era">Present day</div>
+      <div class="card-header">
+        <div class="card-portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-name">Kofi Asante</div>
+          <div class="card-epithet">"Sonic Mathematician"</div>
+        </div>
+      </div>
+      <p class="card-bio">
+        Percussionist and number theorist who discovered deep connections between
+        West African polyrhythmic patterns and prime number distribution. Builds
+        instruments that make abstract mathematics audible.
+      </p>
+      <div class="card-disciplines">
+        <span class="card-discipline">Mathematics</span>
+        <span class="card-discipline">Music</span>
+        <span class="card-discipline">Instrument Design</span>
+        <span class="card-discipline">Ethnomusicology</span>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link">View portfolio</a>
+        <span class="card-number">No. VI</span>
+      </div>
+    </div>
+
+    <!-- Card 7: Modern fictional - Elena Vasquez -->
+    <div class="person-card" style="transform: rotate(-0.2deg);">
+      <div class="card-era">Present day</div>
+      <div class="card-header">
+        <div class="card-portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+            <path d="M12,10 Q16,5 20,7 Q24,5 28,10" stroke="#5c3a28" stroke-width="0.5" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-name">Elena Vasquez</div>
+          <div class="card-epithet">"Philosopher of Code"</div>
+        </div>
+      </div>
+      <p class="card-bio">
+        Compiler engineer and moral philosopher who writes programming languages
+        designed around ethical constraints. Her work explores how the structure of
+        code shapes the structure of thought.
+      </p>
+      <div class="card-disciplines">
+        <span class="card-discipline">Computer Science</span>
+        <span class="card-discipline">Philosophy</span>
+        <span class="card-discipline">Ethics</span>
+        <span class="card-discipline">Linguistics</span>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link">View portfolio</a>
+        <span class="card-number">No. VII</span>
+      </div>
+    </div>
+
+    <!-- Card 8: Modern fictional - James Okafor-Wright -->
+    <div class="person-card" style="transform: rotate(0.5deg);">
+      <div class="card-era">Present day</div>
+      <div class="card-header">
+        <div class="card-portrait">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="8" stroke="#5c3a28" stroke-width="1"/>
+            <path d="M8,38 Q8,24 20,22 Q32,24 32,38" stroke="#5c3a28" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-name">James Okafor-Wright</div>
+          <div class="card-epithet">"The Kinetic Sculptor"</div>
+        </div>
+      </div>
+      <p class="card-bio">
+        Roboticist and sculptor who builds large-scale kinetic art installations
+        powered by custom hardware and neural controllers. Trained in mechanical
+        engineering, now represented by galleries worldwide.
+      </p>
+      <div class="card-disciplines">
+        <span class="card-discipline">Robotics</span>
+        <span class="card-discipline">Sculpture</span>
+        <span class="card-discipline">Mechanical Engineering</span>
+        <span class="card-discipline">Art</span>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link">View portfolio</a>
+        <span class="card-number">No. VIII</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     SUBMIT / JOIN SECTION
+     ============================================ -->
+<section class="submit" id="join">
+  <div class="submit-inner">
+    <div class="submit-header">
+      <h2>Inscribe Yourself</h2>
+      <p>Add your page to the codex &mdash; the directory is open to all who build across boundaries</p>
+    </div>
+
+    <form class="notebook-form" id="joinForm" onsubmit="return handleSubmit(event)">
+      <div id="formFields">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="As you wish to be known..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="epithet">Your Epithet (a short title or descriptor)</label>
+          <input type="text" id="epithet" name="epithet" placeholder='e.g. "Builder of Bridges Between Worlds"'>
+        </div>
+
+        <div class="form-group">
+          <label for="bio">Your Story (a brief description of your cross-disciplinary work)</label>
+          <textarea id="bio" name="bio" placeholder="What do you build? What do you bridge? What connections do you see that others miss?" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Your Disciplines (select all that apply)</label>
+          <div class="discipline-checks">
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="engineering">
+              <span>Engineering</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="art">
+              <span>Art</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="science">
+              <span>Science</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="philosophy">
+              <span>Philosophy</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="music">
+              <span>Music</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="design">
+              <span>Design</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="mathematics">
+              <span>Mathematics</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="writing">
+              <span>Writing</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="biology">
+              <span>Biology</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="architecture">
+              <span>Architecture</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="computing">
+              <span>Computing</span>
+            </label>
+            <label class="discipline-check">
+              <input type="checkbox" name="disciplines" value="other">
+              <span>Other</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="url">Link to Your Work</label>
+          <input type="url" id="url" name="url" placeholder="https://your-portfolio.com">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Contact (email, kept private)</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-submit-row">
+          <p class="form-note">
+            All entries are reviewed before appearing in the directory.
+            We look for genuine cross-disciplinary depth.
+          </p>
+          <button type="submit" class="btn-submit">Submit Entry</button>
+        </div>
+      </div>
+
+      <div class="form-success" id="formSuccess">
+        <h3>Your page has been inscribed</h3>
+        <p>We shall review your entry and add it to the codex. Expect word by carrier pigeon &mdash; or, more likely, email.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer>
+  <div class="footer-inner">
+    <p class="footer-quote">
+      &ldquo;Study the science of art. Study the art of science.
+      Develop your senses &mdash; especially learn how to see.
+      Realize that everything connects to everything else.&rdquo;
+    </p>
+    <p class="footer-attribution">&mdash; Leonardo da Vinci</p>
+    <p class="footer-bottom">
+      Renaissance Engineer &middot; A directory for polymaths &middot; <a href="#join">Add yourself</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formFields').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('visible');
+  return false;
+}
+
+// Subtle parallax on hero
+document.addEventListener('scroll', () => {
+  const hero = document.querySelector('.hero-content');
+  const scrolled = window.pageYOffset;
+  if (scrolled < window.innerHeight) {
+    hero.style.transform = `translateY(${scrolled * 0.15}px)`;
+    hero.style.opacity = 1 - (scrolled / (window.innerHeight * 0.9));
+  }
+});
+
+// Intersection Observer for card animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.person-card').forEach(card => {
+  card.style.animationPlayState = 'paused';
+  observer.observe(card);
+});
+</script>
+
+</body>
+</html>
