@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visions &mdash; Renaissance Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --ink-70: #3a3a3a;
+    --ink-50: #666;
+    --ink-30: #999;
+    --ink-15: #ccc;
+    --ink-08: #e4e4e4;
+    --bg: #fafafa;
+    --surface: #fff;
+    --red: #b33a2b;
+    --serif: 'Newsreader', 'Georgia', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --max-w: 700px;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 18px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--serif); color: var(--ink); background: var(--bg); line-height: 1.75; }
+  ::selection { background: var(--red); color: #fff; }
+  a { color: var(--ink); }
+  a:hover { color: var(--red); }
+
+  header { border-bottom: 1px solid var(--ink-08); background: var(--surface); position: sticky; top: 0; z-index: 100; }
+  .h-inner { max-width: var(--max-w); margin: 0 auto; padding: 0.85rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .wm { font-size: 1.05rem; font-weight: 500; text-decoration: none; color: var(--ink); letter-spacing: -0.02em; }
+  .wm:hover { color: var(--red); }
+  nav { display: flex; gap: 1.4rem; }
+  nav a { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-decoration: none; color: var(--ink-50); }
+  nav a:hover { color: var(--red); }
+  nav a.active { color: var(--red); }
+
+  .page { max-width: var(--max-w); margin: 0 auto; padding: 3rem 2rem 4rem; }
+
+  .page h1 {
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
+  }
+  .page h1 em { font-weight: 500; font-style: italic; color: var(--red); }
+  .page > .sub {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--ink-30);
+    margin-bottom: 3rem;
+    letter-spacing: 0.03em;
+  }
+
+  .vision-entry {
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.4s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .vision-entry:nth-child(2) { animation-delay: 0.05s; }
+  .vision-entry:nth-child(3) { animation-delay: 0.1s; }
+  .vision-entry:nth-child(4) { animation-delay: 0.15s; }
+  .vision-entry:nth-child(5) { animation-delay: 0.2s; }
+  .vision-entry:nth-child(6) { animation-delay: 0.25s; }
+  .vision-entry:nth-child(7) { animation-delay: 0.3s; }
+  .vision-entry:nth-child(8) { animation-delay: 0.35s; }
+
+  .vision-entry blockquote {
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-70);
+    line-height: 1.65;
+    border-left: 2px solid var(--red);
+    padding-left: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .vision-entry .attribution {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-left: 1.2rem;
+  }
+  .vision-entry .attr-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .vision-entry .attr-name a { text-decoration: none; color: var(--ink); }
+  .vision-entry .attr-name a:hover { color: var(--red); }
+  .vision-entry .attr-disciplines {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--ink-30);
+    letter-spacing: 0.03em;
+  }
+
+  .separator {
+    width: 100%;
+    height: 1px;
+    background: var(--ink-08);
+    margin-bottom: 3rem;
+  }
+
+  footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
+  .f-inner { max-width: var(--max-w); margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .f-inner span { font-family: var(--mono); font-size: 0.55rem; color: var(--ink-30); }
+
+  @media (max-width: 600px) {
+    html { font-size: 17px; }
+    .h-inner { flex-direction: column; gap: 0.4rem; }
+    .page { padding: 2.5rem 1.5rem 3rem; }
+    .vision-entry .attribution { flex-direction: column; gap: 0.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="index.html" class="wm">Renaissance Engineer</a>
+    <nav>
+      <a href="index.html#directory">Directory</a>
+      <a href="visions.html" class="active">Visions</a>
+      <a href="showcase.html">Showcase</a>
+      <a href="manifesto.html">Manifesto</a>
+    </nav>
+  </div>
+</header>
+
+<article class="page">
+  <h1>What we want to <em>see</em></h1>
+  <p class="sub">The futures these builders are working toward</p>
+
+  <div class="vision-entry">
+    <blockquote>A world where knowledge tools augment intelligence as you think &mdash; where notebooks become thinking partners and the connections between ideas are as tangible as the ideas themselves.</blockquote>
+    <div class="attribution">
+      <span class="attr-name"><a href="index.html#directory">Jacob Cole</a></span>
+      <span class="attr-disciplines">CS &middot; Philosophy &middot; English &middot; Knowledge Graphs</span>
+    </div>
+  </div>
+  <div class="separator"></div>
+
+  <div class="vision-entry">
+    <blockquote>A general gateway to all known physics for autonomous agents &mdash; where form and content are inextricably tied, and software enacts critique rather than merely stating it.</blockquote>
+    <div class="attribution">
+      <span class="attr-name"><a href="index.html#directory">Daanish Shabbir</a></span>
+      <span class="attr-disciplines">EE &middot; Physics &middot; AI &middot; Fiction &middot; Optoelectronics</span>
+    </div>
+  </div>
+  <div class="separator"></div>
+
+  <div class="vision-entry">
+    <blockquote>If there is any delay in the feedback loop between thinking something and seeing it, there is a whole world of ideas which will never be. You can fight for a principle by inventing.</blockquote>
+    <div class="attribution">
+      <span class="attr-name"><a href="index.html#directory">Bret Victor</a></span>
+      <span class="attr-disciplines">Interface Design &middot; EE &middot; CS &middot; Music</span>
+    </div>
+  </div>
+  <div class="separator"></div>
+
+  <div class="vision-entry">
+    <blockquote>A future where one cannot differentiate between the natural and the artificial &mdash; a radical shift from human-centric design to Nature-centric design, where buildings age, decay, and return to nature.</blockquote>
+    <div class="attribution">
+      <span class="attr-name"><a href="index.html#directory">Neri Oxman</a></span>
+      <span class="attr-disciplines">Architecture &middot; Biology &middot; Computing &middot; Materials</span>
+    </div>
+  </div>
+  <div class="separator"></div>
+
+  <div class="vision-entry">
+    <blockquote>I want to democratize not just the tools we create but the knowledge we use to identify a problem and come up with clear and clever solutions &mdash; for billions of people, at planetary scale.</blockquote>
+    <div class="attribution">
+      <span class="attr-name"><a href="index.html#directory">Saad Bhamla</a></span>
+      <span class="attr-disciplines">Chemical Eng. &middot; Biophysics &middot; Frugal Science &middot; Global Health</span>
+    </div>
+  </div>
+  <div class="separator"></div>
+
+  <div class="vision-entry">
+    <blockquote>A world where art and technology converge through speculative thinking &mdash; where design shapes culture and the studio is a hybrid conceptual space built on science fiction.</blockquote>
+    <div class="attribution">
+      <span class="attr-name"><a href="index.html#directory">Renaise Kim</a></span>
+      <span class="attr-disciplines">Product Design &middot; Visual Identity &middot; Creative Direction &middot; Sci-Fi</span>
+    </div>
+  </div>
+  <div class="separator"></div>
+
+  <div class="vision-entry">
+    <blockquote>What is the unsayable aliveness that lies underneath phenomena? Investigating emergence and self-assembly through electrons, cells, and light &mdash; transfiguring poetry into proteins via bioprinting.</blockquote>
+    <div class="attribution">
+      <span class="attr-name"><a href="index.html#directory">Stephanie Zhang</a></span>
+      <span class="attr-disciplines">Bioengineering &middot; Media &middot; Phenomenology &middot; Optogenetics &middot; Painting</span>
+    </div>
+  </div>
+  <div class="separator"></div>
+
+  <div class="vision-entry">
+    <blockquote>Marrying code with creative expression, poetic prose woven with quantum physics &mdash; helping humanity remember and unlock the power each individual holds within.</blockquote>
+    <div class="attribution">
+      <span class="attr-name"><a href="index.html#directory">Nicole Hsing</a></span>
+      <span class="attr-disciplines">Cognitive Science &middot; AI &middot; Neuroscience &middot; Philosophy &middot; Writing</span>
+    </div>
+  </div>
+
+</article>
+
+<footer>
+  <div class="f-inner">
+    <span>renaissance.engineer</span>
+    <span>2026</span>
+  </div>
+</footer>
+
+</body>
+</html>

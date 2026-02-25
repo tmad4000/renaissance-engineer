@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showcase &mdash; Renaissance Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --ink-70: #3a3a3a;
+    --ink-50: #666;
+    --ink-30: #999;
+    --ink-15: #ccc;
+    --ink-08: #e4e4e4;
+    --bg: #fafafa;
+    --surface: #fff;
+    --red: #b33a2b;
+    --red-light: rgba(179, 58, 43, 0.06);
+    --serif: 'Newsreader', 'Georgia', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --max-w: 860px;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--serif); color: var(--ink); background: var(--bg); line-height: 1.65; }
+  ::selection { background: var(--red); color: #fff; }
+  a { color: var(--ink); }
+  a:hover { color: var(--red); }
+
+  header { border-bottom: 1px solid var(--ink-08); background: var(--surface); position: sticky; top: 0; z-index: 100; }
+  .h-inner { max-width: var(--max-w); margin: 0 auto; padding: 0.85rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .wm { font-size: 1.05rem; font-weight: 500; text-decoration: none; color: var(--ink); letter-spacing: -0.02em; }
+  .wm:hover { color: var(--red); }
+  nav { display: flex; gap: 1.4rem; }
+  nav a { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-decoration: none; color: var(--ink-50); }
+  nav a:hover { color: var(--red); }
+  nav a.active { color: var(--red); }
+
+  .page { max-width: var(--max-w); margin: 0 auto; padding: 2.8rem 2rem 4rem; }
+
+  .page h1 {
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.3rem;
+  }
+  .page h1 em { font-weight: 500; font-style: italic; color: var(--red); }
+  .page > .sub {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--ink-30);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* View controls */
+  .controls {
+    display: flex;
+    gap: 1.5rem;
+    align-items: baseline;
+    margin-bottom: 2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--ink-08);
+    flex-wrap: wrap;
+  }
+  .controls .label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-30);
+  }
+  .view-btns { display: flex; gap: 0.5rem; }
+  .view-btn {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-30);
+    background: none;
+    border: 1px solid var(--ink-08);
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .view-btn:hover { color: var(--ink); border-color: var(--ink-15); }
+  .view-btn.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
+
+  .filter-btns { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .filter-btn {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-30);
+    background: none;
+    border: 1px solid var(--ink-08);
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { color: var(--ink); border-color: var(--ink-15); }
+  .filter-btn.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
+
+  /* Project list */
+  .project-list { }
+
+  .project {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--ink-08);
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+    transition: opacity 0.2s;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .project.hidden { display: none; }
+
+  .project__name {
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .project__name a { text-decoration: none; color: var(--ink); transition: color 0.15s; }
+  .project__name a:hover { color: var(--red); }
+  .project__name a::after { content: ' \2192'; color: var(--ink-15); font-size: 0.85em; }
+
+  .project__desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ink-50);
+    line-height: 1.55;
+    margin-top: 0.15rem;
+  }
+
+  .project__meta {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    margin-top: 0.3rem;
+    flex-wrap: wrap;
+  }
+  .project__by {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--ink-30);
+  }
+  .project__by a { color: var(--ink-50); text-decoration: none; }
+  .project__by a:hover { color: var(--red); }
+
+  .project__crosses {
+    display: flex;
+    gap: 0.25rem;
+  }
+  .cross-tag {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.03em;
+    color: var(--red);
+    border: 1px solid rgba(179, 58, 43, 0.2);
+    padding: 0.1rem 0.35rem;
+    background: var(--red-light);
+    cursor: pointer;
+  }
+
+  .project__date {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--ink-15);
+    white-space: nowrap;
+    align-self: start;
+    margin-top: 0.15rem;
+  }
+
+  /* Person grouping view */
+  .person-group { margin-bottom: 2rem; }
+  .person-group__name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--ink-08);
+    margin-bottom: 0;
+  }
+  .person-group__name a { text-decoration: none; color: var(--ink); }
+  .person-group__name a:hover { color: var(--red); }
+  .person-group .project { padding-left: 0; }
+
+  .empty-state {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--ink-30);
+    padding: 2rem 0;
+    text-align: center;
+    display: none;
+  }
+
+  footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
+  .f-inner { max-width: var(--max-w); margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .f-inner span { font-family: var(--mono); font-size: 0.55rem; color: var(--ink-30); }
+
+  @media (max-width: 600px) {
+    html { font-size: 16px; }
+    .h-inner { flex-direction: column; gap: 0.4rem; }
+    .controls { flex-direction: column; gap: 0.8rem; }
+    .project { grid-template-columns: 1fr; }
+    .project__date { margin-top: 0; }
+    .f-inner { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="index.html" class="wm">Renaissance Engineer</a>
+    <nav>
+      <a href="index.html#directory">Directory</a>
+      <a href="visions.html">Visions</a>
+      <a href="showcase.html" class="active">Showcase</a>
+      <a href="manifesto.html">Manifesto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page">
+  <h1>Projects across <em>boundaries</em></h1>
+  <p class="sub">Cross-disciplinary work by directory members</p>
+
+  <div class="controls">
+    <div>
+      <span class="label">View</span>
+      <div class="view-btns">
+        <button class="view-btn active" data-view="recency">Recent</button>
+        <button class="view-btn" data-view="intersection">By intersection</button>
+        <button class="view-btn" data-view="person">By person</button>
+      </div>
+    </div>
+    <div>
+      <span class="label">Filter</span>
+      <div class="filter-btns" id="filterBtns">
+        <button class="filter-btn active" data-filter="all">All</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="projectContainer">
+    <!-- Recency & intersection views -->
+    <div id="listView" class="project-list"></div>
+    <!-- Person view -->
+    <div id="personView" style="display:none;"></div>
+  </div>
+
+  <p class="empty-state" id="emptyState">No projects match this filter.</p>
+</section>
+
+<footer>
+  <div class="f-inner">
+    <span>renaissance.engineer</span>
+    <span>2026</span>
+  </div>
+</footer>
+
+<script>
+const PROJECTS = [
+  {
+    name: "IdeaFlow",
+    url: "https://ideaflow.io",
+    desc: "A notebook that augments your intelligence as you type. Knowledge graph underneath, natural language on top.",
+    person: "Jacob Cole",
+    personUrl: "https://jacobcole.net",
+    crosses: ["CS", "Philosophy", "Knowledge Graphs"],
+    date: "2019",
+    sortDate: 20190101
+  },
+  {
+    name: "Noos",
+    url: "https://globalbr.ai",
+    desc: "Open knowledge graph for connected thinking across people and tools.",
+    person: "Jacob Cole",
+    personUrl: "https://jacobcole.net",
+    crosses: ["CS", "Knowledge Graphs"],
+    date: "2025",
+    sortDate: 20250101
+  },
+  {
+    name: "Equivariant Systems / Fermi",
+    url: "https://equisystems.github.io",
+    desc: "A physics runtime for autonomous agents. General gateway to all known physics.",
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    crosses: ["Physics", "AI", "Engineering"],
+    date: "2025",
+    sortDate: 20250601
+  },
+  {
+    name: "Verses & Declaration of Interdependence",
+    url: "https://www.interdependence.online/about",
+    desc: "Literary-hacker collective reimagining digital futures. Rhetorical software that enacts critique.",
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    crosses: ["Fiction", "Software", "Philosophy"],
+    date: "2023",
+    sortDate: 20230101
+  },
+  {
+    name: "Dynamicland / Realtalk",
+    url: "https://dynamicland.org",
+    desc: "The world's only self-hosted spatial computing system. Computing as a communal, physical medium.",
+    person: "Bret Victor",
+    personUrl: "https://worrydream.com",
+    crosses: ["Interface Design", "CS", "Architecture"],
+    date: "2018",
+    sortDate: 20180101
+  },
+  {
+    name: "Inventing on Principle",
+    url: "https://worrydream.com/#!/InventingOnPrinciple",
+    desc: "Talk and demo on principle-driven invention that launched a movement in creative tools.",
+    person: "Bret Victor",
+    personUrl: "https://worrydream.com",
+    crosses: ["Interface Design", "Philosophy", "CS"],
+    date: "2012",
+    sortDate: 20120101
+  },
+  {
+    name: "OXMAN",
+    url: "https://oxman.com",
+    desc: "Fusing design, technology, and biology. Radical shift from human-centric to Nature-centric design.",
+    person: "Neri Oxman",
+    personUrl: "https://oxman.com",
+    crosses: ["Architecture", "Biology", "Computing"],
+    date: "2024",
+    sortDate: 20240101
+  },
+  {
+    name: "Material Ecology (MoMA)",
+    url: "https://www.moma.org/calendar/exhibitions/5090",
+    desc: "Silk Pavilion, Aguahoja, and optically transparent 3D-printed glass. In MoMA permanent collection.",
+    person: "Neri Oxman",
+    personUrl: "https://neri.media.mit.edu",
+    crosses: ["Architecture", "Biology", "Materials"],
+    date: "2020",
+    sortDate: 20200201
+  },
+  {
+    name: "Paperfuge",
+    url: "https://bhamla.gatech.edu/research",
+    desc: "A 20-cent paper centrifuge for diagnostics without electricity. Inspired by a whirligig toy.",
+    person: "Saad Bhamla",
+    personUrl: "https://bhamla.gatech.edu",
+    crosses: ["Engineering", "Global Health", "Invention"],
+    date: "2017",
+    sortDate: 20170101
+  },
+  {
+    name: "The Bhamla Lab",
+    url: "https://bhamla.gatech.edu",
+    desc: "$1 hearing aids, 23-cent electroporators, and insect biophysics. Frugal science at planetary scale.",
+    person: "Saad Bhamla",
+    personUrl: "https://bhamla.gatech.edu",
+    crosses: ["Biophysics", "Engineering", "Global Health"],
+    date: "2018",
+    sortDate: 20180601
+  },
+  {
+    name: "ARTIFICE",
+    url: "https://luma.com/005",
+    desc: "Multi-disciplinary studio merging art, technology, and immersive experience. Built on science fiction.",
+    person: "Renaise Kim",
+    personUrl: "https://renaise.com",
+    crosses: ["Design", "Technology", "Sci-Fi"],
+    date: "2025",
+    sortDate: 20250901
+  },
+  {
+    name: "Renaise Studio",
+    url: "https://renaise.com",
+    desc: "Visual identity and product design for consumer tech and media. Shaping brands, sites, and systems.",
+    person: "Renaise Kim",
+    personUrl: "https://renaise.com",
+    crosses: ["Product Design", "Visual Identity"],
+    date: "2017",
+    sortDate: 20170601
+  },
+  {
+    name: "Hybrid Studio/Lab &mdash; Living Ink",
+    url: "https://s-z.carrd.co",
+    desc: "3D bioprinting with iPSCs and fungi. Poetry-to-protein encoding. Witnessing self-assembly into higher-order forms.",
+    person: "Stephanie Zhang",
+    personUrl: "https://s-z.carrd.co",
+    crosses: ["Bioengineering", "Art", "Phenomenology"],
+    date: "2025",
+    sortDate: 20250301
+  },
+  {
+    name: "Moonbear (YC)",
+    url: "https://s-z.carrd.co",
+    desc: "AI tools for biologists. Y Combinator-backed.",
+    person: "Stephanie Zhang",
+    personUrl: "https://s-z.carrd.co",
+    crosses: ["AI", "Biology"],
+    date: "2022",
+    sortDate: 20220101
+  },
+  {
+    name: "Iris van Herpen &mdash; Paris Fashion Week F/W 2024",
+    url: "https://s-z.carrd.co",
+    desc: "Design at the intersection of fashion, biology, and computation.",
+    person: "Stephanie Zhang",
+    personUrl: "https://s-z.carrd.co",
+    crosses: ["Fashion", "Biology", "Computation"],
+    date: "2024",
+    sortDate: 20240901
+  },
+  {
+    name: "Arcarae",
+    url: "https://arcarae.com",
+    desc: "Human-AI co-exploration of internal world models through immersive, AI-guided experiences.",
+    person: "Nicole Hsing",
+    personUrl: "https://nicolehsing.com",
+    crosses: ["AI", "Cognitive Science", "Philosophy"],
+    date: "2025",
+    sortDate: 20250101
+  },
+  {
+    name: "MIRROR",
+    url: "https://nicolehsing.com",
+    desc: "Inner monologue architecture for LLMs. 21% alignment improvement across Claude, GPT-4o, and Llama.",
+    person: "Nicole Hsing",
+    personUrl: "https://nicolehsing.com",
+    crosses: ["AI", "Neuroscience", "Cognitive Science"],
+    date: "2025",
+    sortDate: 20250601
+  }
+];
+
+// Collect all unique crosses for filter buttons
+const allCrosses = [...new Set(PROJECTS.flatMap(p => p.crosses))].sort();
+const filterContainer = document.getElementById('filterBtns');
+allCrosses.forEach(c => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn';
+  btn.dataset.filter = c;
+  btn.textContent = c;
+  filterContainer.appendChild(btn);
+});
+
+let currentView = 'recency';
+let currentFilter = 'all';
+
+function renderProjectHTML(p, showPerson = true) {
+  return `
+    <div class="project" data-crosses="${p.crosses.join(',')}" data-person="${p.person}" data-sort="${p.sortDate}" style="animation-delay: 0s;">
+      <div>
+        <div class="project__name"><a href="${p.url}" target="_blank">${p.name}</a></div>
+        <div class="project__desc">${p.desc}</div>
+        <div class="project__meta">
+          ${showPerson ? `<span class="project__by">by <a href="${p.personUrl}" target="_blank">${p.person}</a></span>` : ''}
+          <div class="project__crosses">
+            ${p.crosses.map(c => `<span class="cross-tag" data-cross="${c}">${c}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+      <span class="project__date">${p.date}</span>
+    </div>
+  `;
+}
+
+function render() {
+  const listView = document.getElementById('listView');
+  const personView = document.getElementById('personView');
+  const empty = document.getElementById('emptyState');
+
+  let filtered = currentFilter === 'all'
+    ? PROJECTS
+    : PROJECTS.filter(p => p.crosses.includes(currentFilter));
+
+  empty.style.display = filtered.length === 0 ? 'block' : 'none';
+
+  if (currentView === 'recency') {
+    listView.style.display = '';
+    personView.style.display = 'none';
+    const sorted = [...filtered].sort((a, b) => b.sortDate - a.sortDate);
+    listView.innerHTML = sorted.map(p => renderProjectHTML(p)).join('');
+  } else if (currentView === 'intersection') {
+    listView.style.display = '';
+    personView.style.display = 'none';
+    // Group by primary cross discipline
+    const groups = {};
+    filtered.forEach(p => {
+      p.crosses.forEach(c => {
+        if (!groups[c]) groups[c] = [];
+        if (!groups[c].find(x => x.name === p.name)) groups[c].push(p);
+      });
+    });
+    const sortedKeys = Object.keys(groups).sort();
+    listView.innerHTML = sortedKeys.map(key => `
+      <div class="person-group">
+        <h3 class="person-group__name">${key}</h3>
+        ${groups[key].map(p => renderProjectHTML(p)).join('')}
+      </div>
+    `).join('');
+  } else if (currentView === 'person') {
+    listView.style.display = 'none';
+    personView.style.display = '';
+    const groups = {};
+    filtered.forEach(p => {
+      if (!groups[p.person]) groups[p.person] = [];
+      groups[p.person].push(p);
+    });
+    personView.innerHTML = Object.keys(groups).map(name => `
+      <div class="person-group">
+        <h3 class="person-group__name"><a href="${groups[name][0].personUrl}" target="_blank">${name}</a></h3>
+        ${groups[name].sort((a, b) => b.sortDate - a.sortDate).map(p => renderProjectHTML(p, false)).join('')}
+      </div>
+    `).join('');
+  }
+
+  // Wire up cross-tag clicks as filters
+  document.querySelectorAll('.cross-tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      currentFilter = tag.dataset.cross;
+      syncFilterBtns();
+      render();
+    });
+  });
+}
+
+function syncFilterBtns() {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === currentFilter);
+  });
+}
+
+// View button clicks
+document.querySelectorAll('.view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentView = btn.dataset.view;
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  });
+});
+
+// Filter button clicks
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('filter-btn')) {
+    currentFilter = e.target.dataset.filter;
+    syncFilterBtns();
+    render();
+  }
+});
+
+// Initial render
+render();
+</script>
+
+</body>
+</html>
