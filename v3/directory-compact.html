@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renaissance Engineer</title>
+<meta name="description" content="A directory of people who build across disciplines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --ink-70: #3a3a3a;
+    --ink-50: #666;
+    --ink-30: #999;
+    --ink-15: #ccc;
+    --ink-08: #e4e4e4;
+    --bg: #fafafa;
+    --surface: #fff;
+    --red: #b33a2b;
+    --red-light: rgba(179, 58, 43, 0.06);
+    --serif: 'Newsreader', 'Georgia', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --max-w: 860px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--serif); color: var(--ink); background: var(--bg); line-height: 1.65; }
+  ::selection { background: var(--red); color: #fff; }
+  a { color: var(--ink); }
+  a:hover { color: var(--red); }
+
+  header { border-bottom: 1px solid var(--ink-08); background: var(--surface); position: sticky; top: 0; z-index: 100; }
+  .h-inner { max-width: var(--max-w); margin: 0 auto; padding: 0.85rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .wm { font-size: 1.05rem; font-weight: 500; text-decoration: none; color: var(--ink); letter-spacing: -0.02em; }
+  .wm:hover { color: var(--red); }
+  nav { display: flex; gap: 1.6rem; }
+  nav a { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; text-decoration: none; color: var(--ink-50); }
+  nav a:hover { color: var(--red); }
+
+  .intro {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 2.8rem 2rem 1.8rem;
+  }
+  .intro h1 {
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+  .intro h1 em { font-weight: 500; font-style: italic; color: var(--red); }
+  .intro .sub {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--ink-30);
+    letter-spacing: 0.03em;
+    margin-top: 0.35rem;
+  }
+
+  /* ===== COMPACT DIRECTORY ===== */
+  .directory {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+  }
+
+  .row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--ink-08);
+    text-decoration: none;
+    transition: padding-left 0.15s, background 0.15s;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+  }
+  .row:hover {
+    padding-left: 0.35rem;
+    background: linear-gradient(90deg, var(--red-light), transparent 60%);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .row:nth-child(1) { animation-delay: 0.03s; }
+  .row:nth-child(2) { animation-delay: 0.06s; }
+  .row:nth-child(3) { animation-delay: 0.09s; }
+  .row:nth-child(4) { animation-delay: 0.12s; }
+  .row:nth-child(5) { animation-delay: 0.15s; }
+  .row:nth-child(6) { animation-delay: 0.18s; }
+  .row:nth-child(7) { animation-delay: 0.21s; }
+  .row:nth-child(8) { animation-delay: 0.24s; }
+
+  .row__name {
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    flex-shrink: 0;
+    color: var(--ink);
+    transition: color 0.15s;
+  }
+  .row:hover .row__name { color: var(--red); }
+
+  .row__dash {
+    color: var(--ink-15);
+    flex-shrink: 0;
+  }
+
+  .row__tagline {
+    font-size: 0.88rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-50);
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row__tags {
+    display: flex;
+    gap: 0.2rem;
+    flex-shrink: 0;
+  }
+  .row__tag {
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-30);
+    border: 1px solid var(--ink-08);
+    padding: 0.1rem 0.3rem;
+    white-space: nowrap;
+  }
+  .row:hover .row__tag {
+    color: var(--red);
+    border-color: rgba(179, 58, 43, 0.2);
+    background: var(--red-light);
+  }
+
+  .row__arrow {
+    font-size: 0.75rem;
+    color: var(--ink-08);
+    flex-shrink: 0;
+    transition: color 0.15s, transform 0.15s;
+  }
+  .row:hover .row__arrow { color: var(--red); transform: translateX(2px); }
+
+  /* CTA */
+  .cta {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+  }
+  .cta a {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-50);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-15);
+    padding-bottom: 0.1rem;
+  }
+  .cta a:hover { color: var(--red); border-bottom-color: var(--red); }
+
+  footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
+  .f-inner { max-width: var(--max-w); margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .f-inner span { font-family: var(--mono); font-size: 0.55rem; color: var(--ink-30); }
+
+  @media (max-width: 700px) {
+    html { font-size: 16px; }
+    .h-inner { flex-direction: column; gap: 0.4rem; }
+    .row { flex-wrap: wrap; gap: 0.3rem 0.5rem; }
+    .row__tagline { white-space: normal; }
+    .row__tags { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="index.html" class="wm">Renaissance Engineer</a>
+    <nav>
+      <a href="index.html#directory">Directory</a>
+      <a href="visions.html">Visions</a>
+      <a href="showcase.html">Showcase</a>
+      <a href="manifesto.html">Manifesto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="intro">
+  <h1>People who build across <em>boundaries</em></h1>
+  <p class="sub">An open directory &middot; Est. 2026</p>
+</section>
+
+<section class="directory" id="directory">
+
+  <a href="https://jacobcole.net" target="_blank" class="row">
+    <span class="row__name">Jacob Cole</span>
+    <span class="row__dash">&mdash;</span>
+    <span class="row__tagline">Notebooks that think with you</span>
+    <span class="row__tags">
+      <span class="row__tag">CS</span>
+      <span class="row__tag">Philosophy</span>
+      <span class="row__tag">Knowledge Graphs</span>
+    </span>
+    <span class="row__arrow">&rarr;</span>
+  </a>
+
+  <a href="https://www.daanish.life" target="_blank" class="row">
+    <span class="row__name">Daanish Shabbir</span>
+    <span class="row__dash">&mdash;</span>
+    <span class="row__tagline">Physics runtimes for autonomous agents</span>
+    <span class="row__tags">
+      <span class="row__tag">EE</span>
+      <span class="row__tag">Physics</span>
+      <span class="row__tag">Fiction</span>
+    </span>
+    <span class="row__arrow">&rarr;</span>
+  </a>
+
+  <a href="https://worrydream.com" target="_blank" class="row">
+    <span class="row__name">Bret Victor</span>
+    <span class="row__dash">&mdash;</span>
+    <span class="row__tagline">Computing as a communal, physical medium</span>
+    <span class="row__tags">
+      <span class="row__tag">Interface Design</span>
+      <span class="row__tag">EE</span>
+      <span class="row__tag">CS</span>
+    </span>
+    <span class="row__arrow">&rarr;</span>
+  </a>
+
+  <a href="https://oxman.com" target="_blank" class="row">
+    <span class="row__name">Neri Oxman</span>
+    <span class="row__dash">&mdash;</span>
+    <span class="row__tagline">Where the natural and artificial are indistinguishable</span>
+    <span class="row__tags">
+      <span class="row__tag">Architecture</span>
+      <span class="row__tag">Biology</span>
+      <span class="row__tag">Materials</span>
+    </span>
+    <span class="row__arrow">&rarr;</span>
+  </a>
+
+  <a href="https://bhamla.gatech.edu" target="_blank" class="row">
+    <span class="row__name">Saad Bhamla</span>
+    <span class="row__dash">&mdash;</span>
+    <span class="row__tagline">Frugal science for billions</span>
+    <span class="row__tags">
+      <span class="row__tag">ChemE</span>
+      <span class="row__tag">Biophysics</span>
+      <span class="row__tag">Global Health</span>
+    </span>
+    <span class="row__arrow">&rarr;</span>
+  </a>
+
+  <a href="https://renaise.com" target="_blank" class="row">
+    <span class="row__name">Renaise Kim</span>
+    <span class="row__dash">&mdash;</span>
+    <span class="row__tagline">Design shaped by science fiction</span>
+    <span class="row__tags">
+      <span class="row__tag">Product Design</span>
+      <span class="row__tag">Visual Identity</span>
+      <span class="row__tag">Sci-Fi</span>
+    </span>
+    <span class="row__arrow">&rarr;</span>
+  </a>
+
+  <a href="https://s-z.carrd.co" target="_blank" class="row">
+    <span class="row__name">Stephanie Zhang</span>
+    <span class="row__dash">&mdash;</span>
+    <span class="row__tagline">Poetry transfigured into proteins</span>
+    <span class="row__tags">
+      <span class="row__tag">Bioengineering</span>
+      <span class="row__tag">Media</span>
+      <span class="row__tag">Painting</span>
+    </span>
+    <span class="row__arrow">&rarr;</span>
+  </a>
+
+  <a href="https://nicolehsing.com" target="_blank" class="row">
+    <span class="row__name">Nicole Hsing</span>
+    <span class="row__dash">&mdash;</span>
+    <span class="row__tagline">Inner monologue architectures for AI</span>
+    <span class="row__tags">
+      <span class="row__tag">Cognitive Science</span>
+      <span class="row__tag">AI</span>
+      <span class="row__tag">Philosophy</span>
+    </span>
+    <span class="row__arrow">&rarr;</span>
+  </a>
+
+</section>
+
+<div class="cta">
+  <a href="index.html#join">Add yourself to the directory</a>
+</div>
+
+<footer>
+  <div class="f-inner">
+    <span>renaissance.engineer</span>
+    <span>2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
