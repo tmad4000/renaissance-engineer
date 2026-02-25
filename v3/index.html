@@ -60,40 +60,52 @@
     margin-top: 0.35rem;
   }
 
-  /* ===== COMPACT DIRECTORY ===== */
+  /* ===== DIRECTORY ===== */
   .directory {
     max-width: var(--max-w);
     margin: 0 auto;
     padding: 0 2rem 3rem;
   }
 
-  .row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--ink-08);
-    text-decoration: none;
-    transition: padding-left 0.15s, background 0.15s;
+  .person {
     opacity: 0;
     animation: fadeIn 0.3s ease forwards;
   }
-  .row:hover {
-    padding-left: 0.35rem;
-    background: linear-gradient(90deg, var(--red-light), transparent 60%);
-  }
   @keyframes fadeIn { to { opacity: 1; } }
+  .person:nth-child(1) { animation-delay: 0.03s; }
+  .person:nth-child(2) { animation-delay: 0.06s; }
+  .person:nth-child(3) { animation-delay: 0.09s; }
+  .person:nth-child(4) { animation-delay: 0.12s; }
+  .person:nth-child(5) { animation-delay: 0.15s; }
+  .person:nth-child(6) { animation-delay: 0.18s; }
+  .person:nth-child(7) { animation-delay: 0.21s; }
+  .person:nth-child(8) { animation-delay: 0.24s; }
+  .person:nth-child(9) { animation-delay: 0.27s; }
 
-  .row:nth-child(1) { animation-delay: 0.03s; }
-  .row:nth-child(2) { animation-delay: 0.06s; }
-  .row:nth-child(3) { animation-delay: 0.09s; }
-  .row:nth-child(4) { animation-delay: 0.12s; }
-  .row:nth-child(5) { animation-delay: 0.15s; }
-  .row:nth-child(6) { animation-delay: 0.18s; }
-  .row:nth-child(7) { animation-delay: 0.21s; }
-  .row:nth-child(8) { animation-delay: 0.24s; }
+  .person__row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.75rem 0.5rem;
+    cursor: pointer;
+    transition: padding-left 0.15s, background 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+    background-image: linear-gradient(var(--ink-08), var(--ink-08));
+    background-size: 30% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+  }
+  .person:last-child .person__row { background-image: none; }
+  .person__row:hover {
+    padding-left: 0.85rem;
+    background-color: var(--red-light);
+    background-image: none;
+    border-radius: 3px;
+  }
+  .person__row:hover .person__name { color: var(--red); }
 
-  .row__name {
+  .person__name {
     font-size: 1.05rem;
     font-weight: 500;
     letter-spacing: -0.01em;
@@ -102,14 +114,13 @@
     color: var(--ink);
     transition: color 0.15s;
   }
-  .row:hover .row__name { color: var(--red); }
 
-  .row__dash {
+  .person__dash {
     color: var(--ink-15);
     flex-shrink: 0;
   }
 
-  .row__tagline {
+  .person__tagline {
     font-size: 0.88rem;
     font-weight: 300;
     font-style: italic;
@@ -121,12 +132,12 @@
     text-overflow: ellipsis;
   }
 
-  .row__tags {
+  .person__tags {
     display: flex;
     gap: 0.2rem;
     flex-shrink: 0;
   }
-  .row__tag {
+  .person__tag {
     font-family: var(--mono);
     font-size: 0.45rem;
     letter-spacing: 0.03em;
@@ -135,19 +146,61 @@
     padding: 0.1rem 0.3rem;
     white-space: nowrap;
   }
-  .row:hover .row__tag {
+  .person__row:hover .person__tag {
     color: var(--red);
     border-color: rgba(179, 58, 43, 0.2);
     background: var(--red-light);
   }
 
-  .row__arrow {
-    font-size: 0.75rem;
-    color: var(--ink-08);
+  .person__toggle {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--ink-15);
     flex-shrink: 0;
-    transition: color 0.15s, transform 0.15s;
+    transition: color 0.15s, transform 0.25s;
   }
-  .row:hover .row__arrow { color: var(--red); transform: translateX(2px); }
+  .person__row:hover .person__toggle { color: var(--red); }
+  .person.open .person__toggle { transform: rotate(45deg); }
+
+  /* Expandable detail */
+  .person__detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+  }
+  .person.open .person__detail {
+    max-height: 500px;
+    padding: 0.5rem 0.5rem 1.2rem;
+  }
+
+  .detail__inner {
+    padding-top: 0.6rem;
+  }
+  .detail__vision {
+    font-size: 0.92rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-70);
+    line-height: 1.55;
+    border-left: 2px solid var(--red);
+    padding-left: 0.9rem;
+    margin-bottom: 0.6rem;
+    max-width: 38rem;
+  }
+  .detail__links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .detail__links a {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--ink-50);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .detail__links a:hover { color: var(--red); }
+  .detail__links a::after { content: ' \2192'; color: var(--ink-15); font-size: 0.8em; }
 
   /* ===== JOIN ===== */
   .join {
@@ -245,9 +298,9 @@
   @media (max-width: 700px) {
     html { font-size: 16px; }
     .h-inner { flex-direction: column; gap: 0.4rem; }
-    .row { flex-wrap: wrap; gap: 0.3rem 0.5rem; }
-    .row__tagline { white-space: normal; }
-    .row__tags { display: none; }
+    .person__row { flex-wrap: wrap; gap: 0.3rem 0.5rem; }
+    .person__tagline { white-space: normal; }
+    .person__tags { display: none; }
     .form-grid { grid-template-columns: 1fr; }
     .f-inner { flex-direction: column; gap: 0.3rem; }
   }
@@ -262,6 +315,7 @@
       <a href="#directory">Directory</a>
       <a href="visions.html">Visions</a>
       <a href="showcase.html">Showcase</a>
+      <a href="feed.html">Feed</a>
       <a href="manifesto.html">Manifesto</a>
       <a href="#join">Join</a>
     </nav>
@@ -275,101 +329,210 @@
 
 <section class="directory" id="directory">
 
-  <a href="https://jacobcole.net" target="_blank" class="row">
-    <span class="row__name">Jacob Cole</span>
-    <span class="row__dash">&mdash;</span>
-    <span class="row__tagline">Notebooks that think with you</span>
-    <span class="row__tags">
-      <span class="row__tag">CS</span>
-      <span class="row__tag">Philosophy</span>
-      <span class="row__tag">Knowledge Graphs</span>
-    </span>
-    <span class="row__arrow">&rarr;</span>
-  </a>
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Jacob Cole</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Notebooks that think with you</span>
+      <span class="person__tags">
+        <span class="person__tag">CS</span>
+        <span class="person__tag">Philosophy</span>
+        <span class="person__tag">Knowledge Graphs</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">A world where knowledge tools augment intelligence as you think &mdash; where notebooks become thinking partners and the connections between ideas are as tangible as the ideas themselves.</div>
+        <div class="detail__links">
+          <a href="https://jacobcole.net" target="_blank">Website</a>
+          <a href="https://ideaflow.io" target="_blank">IdeaFlow</a>
+          <a href="https://globalbr.ai" target="_blank">Noos</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <a href="https://www.daanish.life" target="_blank" class="row">
-    <span class="row__name">Daanish Shabbir</span>
-    <span class="row__dash">&mdash;</span>
-    <span class="row__tagline">Physics runtimes for autonomous agents</span>
-    <span class="row__tags">
-      <span class="row__tag">EE</span>
-      <span class="row__tag">Physics</span>
-      <span class="row__tag">Fiction</span>
-    </span>
-    <span class="row__arrow">&rarr;</span>
-  </a>
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Daanish Shabbir</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Physics runtimes for autonomous agents</span>
+      <span class="person__tags">
+        <span class="person__tag">EE</span>
+        <span class="person__tag">Physics</span>
+        <span class="person__tag">Fiction</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">A general gateway to all known physics for autonomous agents &mdash; where form and content are inextricably tied, and software enacts critique rather than merely stating it.</div>
+        <div class="detail__links">
+          <a href="https://www.daanish.life" target="_blank">Website</a>
+          <a href="https://equisystems.github.io" target="_blank">Equivariant Systems</a>
+          <a href="https://www.interdependence.online" target="_blank">Interdependence</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <a href="https://worrydream.com" target="_blank" class="row">
-    <span class="row__name">Bret Victor</span>
-    <span class="row__dash">&mdash;</span>
-    <span class="row__tagline">Computing as a communal, physical medium</span>
-    <span class="row__tags">
-      <span class="row__tag">Interface Design</span>
-      <span class="row__tag">EE</span>
-      <span class="row__tag">CS</span>
-    </span>
-    <span class="row__arrow">&rarr;</span>
-  </a>
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Bret Victor</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Computing as a communal, physical medium</span>
+      <span class="person__tags">
+        <span class="person__tag">Interface Design</span>
+        <span class="person__tag">EE</span>
+        <span class="person__tag">CS</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">If there is any delay in the feedback loop between thinking something and seeing it, there is a whole world of ideas which will never be. You can fight for a principle by inventing.</div>
+        <div class="detail__links">
+          <a href="https://worrydream.com" target="_blank">Website</a>
+          <a href="https://dynamicland.org" target="_blank">Dynamicland</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <a href="https://oxman.com" target="_blank" class="row">
-    <span class="row__name">Neri Oxman</span>
-    <span class="row__dash">&mdash;</span>
-    <span class="row__tagline">Where the natural and artificial are indistinguishable</span>
-    <span class="row__tags">
-      <span class="row__tag">Architecture</span>
-      <span class="row__tag">Biology</span>
-      <span class="row__tag">Materials</span>
-    </span>
-    <span class="row__arrow">&rarr;</span>
-  </a>
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Neri Oxman</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Where the natural and artificial are indistinguishable</span>
+      <span class="person__tags">
+        <span class="person__tag">Architecture</span>
+        <span class="person__tag">Biology</span>
+        <span class="person__tag">Materials</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">A future where one cannot differentiate between the natural and the artificial &mdash; a radical shift from human-centric design to Nature-centric design, where buildings age, decay, and return to nature.</div>
+        <div class="detail__links">
+          <a href="https://oxman.com" target="_blank">OXMAN</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <a href="https://bhamla.gatech.edu" target="_blank" class="row">
-    <span class="row__name">Saad Bhamla</span>
-    <span class="row__dash">&mdash;</span>
-    <span class="row__tagline">Frugal science for billions</span>
-    <span class="row__tags">
-      <span class="row__tag">ChemE</span>
-      <span class="row__tag">Biophysics</span>
-      <span class="row__tag">Global Health</span>
-    </span>
-    <span class="row__arrow">&rarr;</span>
-  </a>
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Saad Bhamla</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Frugal science for billions</span>
+      <span class="person__tags">
+        <span class="person__tag">ChemE</span>
+        <span class="person__tag">Biophysics</span>
+        <span class="person__tag">Global Health</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">I want to democratize not just the tools we create but the knowledge we use to identify a problem and come up with clear and clever solutions &mdash; for billions of people, at planetary scale.</div>
+        <div class="detail__links">
+          <a href="https://bhamla.gatech.edu" target="_blank">Bhamla Lab</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <a href="https://renaise.com" target="_blank" class="row">
-    <span class="row__name">Renaise Kim</span>
-    <span class="row__dash">&mdash;</span>
-    <span class="row__tagline">Design shaped by science fiction</span>
-    <span class="row__tags">
-      <span class="row__tag">Product Design</span>
-      <span class="row__tag">Visual Identity</span>
-      <span class="row__tag">Sci-Fi</span>
-    </span>
-    <span class="row__arrow">&rarr;</span>
-  </a>
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Tom Currier</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Reinventing transit through sleep engineering</span>
+      <span class="person__tags">
+        <span class="person__tag">Engineering</span>
+        <span class="person__tag">Robotics</span>
+        <span class="person__tag">Design</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">Transportation reimagined from first principles &mdash; from solar robotics to communal living to a patent-pending suspension system that makes the bumpiest road feel smooth. Thiel Fellow, Stanford dropout, serial builder.</div>
+        <div class="detail__links">
+          <a href="https://www.ridecabin.com" target="_blank">Cabin</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <a href="https://s-z.carrd.co" target="_blank" class="row">
-    <span class="row__name">Stephanie Zhang</span>
-    <span class="row__dash">&mdash;</span>
-    <span class="row__tagline">Poetry transfigured into proteins</span>
-    <span class="row__tags">
-      <span class="row__tag">Bioengineering</span>
-      <span class="row__tag">Media</span>
-      <span class="row__tag">Painting</span>
-    </span>
-    <span class="row__arrow">&rarr;</span>
-  </a>
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Renaise Kim</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Design shaped by science fiction</span>
+      <span class="person__tags">
+        <span class="person__tag">Product Design</span>
+        <span class="person__tag">Visual Identity</span>
+        <span class="person__tag">Sci-Fi</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">A world where art and technology converge through speculative thinking &mdash; where design shapes culture and the studio is a hybrid conceptual space built on science fiction.</div>
+        <div class="detail__links">
+          <a href="https://renaise.com" target="_blank">Renaise Studio</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <a href="https://nicolehsing.com" target="_blank" class="row">
-    <span class="row__name">Nicole Hsing</span>
-    <span class="row__dash">&mdash;</span>
-    <span class="row__tagline">Inner monologue architectures for AI</span>
-    <span class="row__tags">
-      <span class="row__tag">Cognitive Science</span>
-      <span class="row__tag">AI</span>
-      <span class="row__tag">Philosophy</span>
-    </span>
-    <span class="row__arrow">&rarr;</span>
-  </a>
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Stephanie Zhang</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Poetry transfigured into proteins</span>
+      <span class="person__tags">
+        <span class="person__tag">Bioengineering</span>
+        <span class="person__tag">Media</span>
+        <span class="person__tag">Painting</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">What is the unsayable aliveness that lies underneath phenomena? Investigating emergence and self-assembly through electrons, cells, and light &mdash; transfiguring poetry into proteins via bioprinting.</div>
+        <div class="detail__links">
+          <a href="https://s-z.carrd.co" target="_blank">Portfolio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <span class="person__name">Nicole Hsing</span>
+      <span class="person__dash">&mdash;</span>
+      <span class="person__tagline">Inner monologue architectures for AI</span>
+      <span class="person__tags">
+        <span class="person__tag">Cognitive Science</span>
+        <span class="person__tag">AI</span>
+        <span class="person__tag">Philosophy</span>
+      </span>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">Marrying code with creative expression, poetic prose woven with quantum physics &mdash; helping humanity remember and unlock the power each individual holds within.</div>
+        <div class="detail__links">
+          <a href="https://nicolehsing.com" target="_blank">Website</a>
+          <a href="https://arcarae.com" target="_blank">Arcarae</a>
+          <a href="https://arxiv.org/abs/2506.00430" target="_blank">MIRROR Paper</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </section>
 
@@ -418,6 +581,15 @@
 </footer>
 
 <script>
+function toggle(row) {
+  const person = row.closest('.person');
+  const wasOpen = person.classList.contains('open');
+  // Close all others
+  document.querySelectorAll('.person.open').forEach(p => p.classList.remove('open'));
+  // Toggle this one
+  if (!wasOpen) person.classList.add('open');
+}
+
 function handleSubmit(e) {
   e.preventDefault();
   document.getElementById('formMsg').classList.add('show');

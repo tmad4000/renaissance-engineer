@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feed &mdash; Renaissance Engineer</title>
+<meta name="description" content="A curated feed of thoughtful writing from people who build across disciplines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --ink-70: #3a3a3a;
+    --ink-50: #666;
+    --ink-30: #999;
+    --ink-15: #ccc;
+    --ink-08: #e4e4e4;
+    --bg: #fafafa;
+    --surface: #fff;
+    --red: #b33a2b;
+    --red-light: rgba(179, 58, 43, 0.06);
+    --serif: 'Newsreader', 'Georgia', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --max-w: 700px;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--serif); color: var(--ink); background: var(--bg); line-height: 1.65; }
+  ::selection { background: var(--red); color: #fff; }
+  a { color: var(--ink); }
+  a:hover { color: var(--red); }
+
+  header { border-bottom: 1px solid var(--ink-08); background: var(--surface); position: sticky; top: 0; z-index: 100; }
+  .h-inner { max-width: var(--max-w); margin: 0 auto; padding: 0.85rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .wm { font-size: 1.05rem; font-weight: 500; text-decoration: none; color: var(--ink); letter-spacing: -0.02em; }
+  .wm:hover { color: var(--red); }
+  nav { display: flex; gap: 1.4rem; }
+  nav a { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-decoration: none; color: var(--ink-50); }
+  nav a:hover { color: var(--red); }
+  nav a.active { color: var(--red); }
+
+  .page { max-width: var(--max-w); margin: 0 auto; padding: 2rem 2rem 3rem; }
+
+  .page h1 {
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.3rem;
+  }
+  .page h1 em { font-weight: 500; font-style: italic; color: var(--red); }
+  .page > .sub {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--ink-30);
+    margin-bottom: 1.8rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* Filter pills */
+  .filters {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .filter-pill {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-30);
+    background: none;
+    border: 1px solid var(--ink-08);
+    padding: 0.15rem 0.45rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-pill:hover { color: var(--ink); border-color: var(--ink-15); }
+  .filter-pill.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
+
+  /* Feed entries */
+  .feed-item {
+    padding: 1.2rem 0;
+    opacity: 0;
+    animation: fadeUp 0.3s ease forwards;
+    background-image: linear-gradient(var(--ink-08), var(--ink-08));
+    background-size: 90% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+  }
+  .feed-item:last-child { background-image: none; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .feed-item__source {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-bottom: 0.3rem;
+  }
+  .feed-item__author {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .feed-item__author a { text-decoration: none; }
+  .feed-item__author a:hover { color: var(--red); }
+  .feed-item__origin {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    color: var(--ink-30);
+    letter-spacing: 0.02em;
+  }
+  .feed-item__origin a { color: var(--ink-30); text-decoration: none; }
+  .feed-item__origin a:hover { color: var(--red); }
+  .feed-item__date {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    color: var(--ink-15);
+    margin-left: auto;
+  }
+
+  .feed-item__title {
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    margin-bottom: 0.25rem;
+  }
+  .feed-item__title a { text-decoration: none; }
+  .feed-item__title a:hover { color: var(--red); }
+
+  .feed-item__excerpt {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--ink-50);
+    line-height: 1.55;
+    margin-bottom: 0.4rem;
+  }
+
+  .feed-item__tags {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+  .feed-tag {
+    font-family: var(--mono);
+    font-size: 0.42rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-15);
+  }
+  .feed-tag + .feed-tag::before {
+    content: '\00b7\00a0';
+    color: var(--ink-08);
+  }
+
+  /* Reply/thread section */
+  .feed-item__actions {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+  .action-btn {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-15);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.15rem 0;
+    transition: color 0.15s;
+  }
+  .action-btn:hover { color: var(--red); }
+
+  .replies {
+    margin-top: 0.6rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--ink-08);
+  }
+  .reply {
+    margin-bottom: 0.6rem;
+  }
+  .reply__header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin-bottom: 0.1rem;
+  }
+  .reply__author {
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+  .reply__date {
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    color: var(--ink-15);
+  }
+  .reply__text {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--ink-50);
+    line-height: 1.5;
+  }
+
+  .reply-form {
+    margin-top: 0.5rem;
+    display: none;
+  }
+  .reply-form.show { display: flex; gap: 0.4rem; align-items: flex-start; }
+  .reply-form textarea {
+    flex: 1;
+    font-family: var(--serif);
+    font-size: 0.82rem;
+    color: var(--ink);
+    border: 1px solid var(--ink-08);
+    padding: 0.4rem 0.5rem;
+    background: transparent;
+    resize: none;
+    min-height: 2.5rem;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .reply-form textarea:focus { border-color: var(--red); }
+  .reply-form button {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    color: var(--surface);
+    background: var(--ink);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .reply-form button:hover { background: var(--red); }
+
+  /* Empty state */
+  .empty { font-size: 0.88rem; font-style: italic; color: var(--ink-30); padding: 2rem 0; text-align: center; display: none; }
+
+  footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
+  .f-inner { max-width: var(--max-w); margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .f-inner span { font-family: var(--mono); font-size: 0.55rem; color: var(--ink-30); }
+
+  @media (max-width: 600px) {
+    html { font-size: 16px; }
+    .h-inner { flex-direction: column; gap: 0.4rem; }
+    .f-inner { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="index.html" class="wm">Renaissance Engineer</a>
+    <nav>
+      <a href="index.html#directory">Directory</a>
+      <a href="visions.html">Visions</a>
+      <a href="showcase.html">Showcase</a>
+      <a href="feed.html" class="active">Feed</a>
+      <a href="manifesto.html">Manifesto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page">
+  <h1>Thoughtful <em>streams</em></h1>
+  <p class="sub">Curated writing from minds that build across boundaries</p>
+
+  <div class="filters" id="filters">
+    <button class="filter-pill active" data-filter="all">All</button>
+  </div>
+
+  <div id="feedList"></div>
+  <p class="empty" id="emptyState">No posts match this filter.</p>
+</section>
+
+<footer>
+  <div class="f-inner">
+    <span>renaissance.engineer</span>
+    <span>2026</span>
+  </div>
+</footer>
+
+<script>
+const FEED = [
+  {
+    person: "Bret Victor",
+    personUrl: "https://worrydream.com",
+    title: "Dynamicland 2024: Our Spatial, Communal Computer",
+    url: "https://dynamicland.org/2024/Intro/",
+    date: "2024-11-01",
+    excerpt: "An introduction to Dynamicland's new 2024 system &mdash; a communal computer where every object in a room can see, think, and remember. Computing leaves the screen and enters the physical world.",
+    source: "dynamicland.org",
+    sourceUrl: "https://dynamicland.org",
+    disciplines: ["Interface Design", "CS", "Architecture"],
+    replies: []
+  },
+  {
+    person: "Bret Victor",
+    personUrl: "https://worrydream.com",
+    title: "Inventing on Principle",
+    url: "https://worrydream.com/#!/InventingOnPrinciple",
+    date: "2012-02-10",
+    excerpt: "Creators need an immediate connection to what they create. If there is any delay in the feedback loop between thinking something and seeing it, there is a whole world of ideas which will never be.",
+    source: "worrydream.com",
+    sourceUrl: "https://worrydream.com",
+    disciplines: ["Interface Design", "Philosophy", "CS"],
+    replies: [
+      { author: "Jacob Cole", text: "This talk changed how I think about building tools. The principle that creators need immediate connection &mdash; it's exactly what we're trying to build at IdeaFlow.", date: "2024-06" }
+    ]
+  },
+  {
+    person: "Neri Oxman",
+    personUrl: "https://oxman.com",
+    title: "Nature &times; Humanity: OXMAN",
+    url: "https://oxman.com",
+    date: "2024-06-15",
+    excerpt: "Fusing design, biology, and computation toward a future where buildings grow, heal, and return to nature. A radical shift from human-centric design to Nature-centric design.",
+    source: "oxman.com",
+    sourceUrl: "https://oxman.com",
+    disciplines: ["Architecture", "Biology", "Computing"],
+    replies: []
+  },
+  {
+    person: "Neri Oxman",
+    personUrl: "https://oxman.com",
+    title: "Krebs Cycle of Creativity",
+    url: "https://jods.mitpress.mit.edu/pub/ageofentanglement/release/1",
+    date: "2016-01-13",
+    excerpt: "A map of the four domains of human creativity &mdash; Science, Engineering, Design, and Art &mdash; and the 12 modalities of knowledge flow between them. Anti-disciplinarity as practice.",
+    source: "MIT Press &mdash; Journal of Design and Science",
+    sourceUrl: "https://jods.mitpress.mit.edu",
+    disciplines: ["Design", "Science", "Philosophy"],
+    replies: []
+  },
+  {
+    person: "Saad Bhamla",
+    personUrl: "https://bhamla.gatech.edu",
+    title: "Paperfuge: An Ultra-Low-Cost Hand-Powered Paper Centrifuge",
+    url: "https://www.nature.com/articles/s41551-016-0009",
+    date: "2017-01-10",
+    excerpt: "A 20-cent paper centrifuge inspired by a whirligig toy that can separate blood plasma in 90 seconds without electricity. Used for diagnosing malaria in resource-limited settings.",
+    source: "Nature Biomedical Engineering",
+    sourceUrl: "https://www.nature.com",
+    disciplines: ["Engineering", "Global Health", "Invention"],
+    replies: []
+  },
+  {
+    person: "Saad Bhamla",
+    personUrl: "https://bhamla.gatech.edu",
+    title: "A $1 Hearing Aid Could Transform Access in Low-Income Countries",
+    url: "https://bhamla.gatech.edu/research",
+    date: "2024-03-01",
+    excerpt: "Building radically affordable hearing aids that cost less than a dollar. When you strip away the non-essential, you discover what's truly necessary for billions of people.",
+    source: "Bhamla Lab",
+    sourceUrl: "https://bhamla.gatech.edu",
+    disciplines: ["Biophysics", "Global Health", "Engineering"],
+    replies: []
+  },
+  {
+    person: "Nicole Hsing",
+    personUrl: "https://nicolehsing.com",
+    title: "MIRROR: Inner Monologue as a Self-Alignment Technique for LLMs",
+    url: "https://arxiv.org/abs/2506.00430",
+    date: "2025-06-01",
+    excerpt: "Equipping LLMs with an inner monologue inspired by human cognitive science. 21% alignment improvement across Claude, GPT-4o, and Llama by letting models reason about their own values.",
+    source: "arXiv",
+    sourceUrl: "https://arxiv.org",
+    disciplines: ["AI", "Cognitive Science", "Neuroscience"],
+    replies: []
+  },
+  {
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    title: "Fermi: A General Gateway to All Known Physics",
+    url: "https://equisystems.github.io",
+    date: "2025-06-01",
+    excerpt: "Building physics runtimes for autonomous agents. Software that doesn't merely state the laws of nature but enacts them &mdash; where form and content are inextricably tied.",
+    source: "Equivariant Systems",
+    sourceUrl: "https://equisystems.github.io",
+    disciplines: ["Physics", "AI", "Engineering"],
+    replies: []
+  },
+  {
+    person: "Daanish Shabbir",
+    personUrl: "https://www.daanish.life",
+    title: "Declaration of Interdependence",
+    url: "https://www.interdependence.online/declaration",
+    date: "2023-05-01",
+    excerpt: "We are caught in an inescapable network of mutuality, tied in a single garment of destiny. A literary-hacker manifesto for reimagining digital futures through collective authorship.",
+    source: "Interdependence.online",
+    sourceUrl: "https://www.interdependence.online",
+    disciplines: ["Fiction", "Software", "Philosophy"],
+    replies: []
+  },
+  {
+    person: "Jacob Cole",
+    personUrl: "https://jacobcole.net",
+    title: "The Case for Thinking Tools",
+    url: "https://ideaflow.io",
+    date: "2025-01-15",
+    excerpt: "The gap between the speed of thought and the speed of capture is the gap where ideas die. Knowledge tools should augment intelligence as you think, not after.",
+    source: "IdeaFlow",
+    sourceUrl: "https://ideaflow.io",
+    disciplines: ["CS", "Philosophy", "Knowledge Graphs"],
+    replies: []
+  },
+  {
+    person: "Stephanie Zhang",
+    personUrl: "https://s-z.carrd.co",
+    title: "Living Ink: 3D Bioprinting as Artistic Medium",
+    url: "https://s-z.carrd.co",
+    date: "2025-03-01",
+    excerpt: "What is the unsayable aliveness that lies underneath phenomena? Encoding poetry into proteins via bioprinting, witnessing self-assembly into higher-order forms through electrons, cells, and light.",
+    source: "Hybrid Studio/Lab",
+    sourceUrl: "https://s-z.carrd.co",
+    disciplines: ["Bioengineering", "Art", "Phenomenology"],
+    replies: []
+  },
+  {
+    person: "Renaise Kim",
+    personUrl: "https://renaise.com",
+    title: "ARTIFICE: Where Design Meets Speculative Fiction",
+    url: "https://renaise.com",
+    date: "2025-09-01",
+    excerpt: "A multi-disciplinary studio built on the conviction that the most powerful design decisions are born from speculative thinking. The studio is a conceptual space shaped by science fiction.",
+    source: "Renaise Studio",
+    sourceUrl: "https://renaise.com",
+    disciplines: ["Design", "Technology", "Sci-Fi"],
+    replies: []
+  }
+];
+
+// Collect unique disciplines
+const allDisciplines = [...new Set(FEED.flatMap(f => f.disciplines))].sort();
+const filterContainer = document.getElementById('filters');
+allDisciplines.forEach(d => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-pill';
+  btn.dataset.filter = d;
+  btn.textContent = d;
+  filterContainer.appendChild(btn);
+});
+
+// Also add person filter pills
+const allPeople = [...new Set(FEED.map(f => f.person))];
+allPeople.forEach(p => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-pill';
+  btn.dataset.person = p;
+  btn.textContent = p;
+  filterContainer.appendChild(btn);
+});
+
+let currentFilter = 'all';
+let currentPerson = null;
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function renderFeed() {
+  const container = document.getElementById('feedList');
+  const empty = document.getElementById('emptyState');
+
+  let filtered = FEED;
+  if (currentPerson) {
+    filtered = filtered.filter(f => f.person === currentPerson);
+  } else if (currentFilter !== 'all') {
+    filtered = filtered.filter(f => f.disciplines.includes(currentFilter));
+  }
+
+  // Sort by date descending
+  filtered = [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  empty.style.display = filtered.length === 0 ? 'block' : 'none';
+
+  container.innerHTML = filtered.map((item, i) => `
+    <div class="feed-item" style="animation-delay: ${i * 0.03}s" data-idx="${FEED.indexOf(item)}">
+      <div class="feed-item__source">
+        <span class="feed-item__author"><a href="${item.personUrl}" target="_blank">${item.person}</a></span>
+        <span class="feed-item__origin">via <a href="${item.sourceUrl}" target="_blank">${item.source}</a></span>
+        <span class="feed-item__date">${formatDate(item.date)}</span>
+      </div>
+      <div class="feed-item__title"><a href="${item.url}" target="_blank">${item.title}</a></div>
+      <div class="feed-item__excerpt">${item.excerpt}</div>
+      <div class="feed-item__tags">
+        ${item.disciplines.map(d => `<span class="feed-tag">${d}</span>`).join('')}
+      </div>
+      <div class="feed-item__actions">
+        <button class="action-btn" onclick="toggleReply(${FEED.indexOf(item)})">Reply</button>
+        ${item.replies.length > 0 ? `<button class="action-btn">${item.replies.length} ${item.replies.length === 1 ? 'reply' : 'replies'}</button>` : ''}
+      </div>
+      ${item.replies.length > 0 ? `
+        <div class="replies">
+          ${item.replies.map(r => `
+            <div class="reply">
+              <div class="reply__header">
+                <span class="reply__author">${r.author}</span>
+                <span class="reply__date">${r.date}</span>
+              </div>
+              <div class="reply__text">${r.text}</div>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+      <div class="reply-form" id="reply-${FEED.indexOf(item)}">
+        <textarea placeholder="Add a thoughtful reply&hellip;" rows="2"></textarea>
+        <button onclick="submitReply(${FEED.indexOf(item)})">Post</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleReply(idx) {
+  const form = document.getElementById('reply-' + idx);
+  form.classList.toggle('show');
+  if (form.classList.contains('show')) {
+    form.querySelector('textarea').focus();
+  }
+}
+
+function submitReply(idx) {
+  const form = document.getElementById('reply-' + idx);
+  const textarea = form.querySelector('textarea');
+  const text = textarea.value.trim();
+  if (!text) return;
+  FEED[idx].replies.push({ author: "You", text: text, date: new Date().toISOString().slice(0, 7) });
+  renderFeed();
+}
+
+// Filter clicks
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('filter-pill')) {
+    const filter = e.target.dataset.filter;
+    const person = e.target.dataset.person;
+    if (person) {
+      currentPerson = currentPerson === person ? null : person;
+      currentFilter = 'all';
+    } else {
+      currentFilter = filter;
+      currentPerson = null;
+    }
+    document.querySelectorAll('.filter-pill').forEach(b => {
+      if (b.dataset.person) {
+        b.classList.toggle('active', b.dataset.person === currentPerson);
+      } else {
+        b.classList.toggle('active', !currentPerson && b.dataset.filter === currentFilter);
+      }
+    });
+    renderFeed();
+  }
+});
+
+renderFeed();
+</script>
+
+</body>
+</html>

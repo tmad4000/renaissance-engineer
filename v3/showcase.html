@@ -57,51 +57,60 @@
     letter-spacing: 0.03em;
   }
 
-  /* Controls bar — single line */
+  /* Controls — minimal inline */
   .controls {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.8rem;
-    margin-bottom: 2rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid var(--ink-08);
+    margin-bottom: 1.5rem;
   }
-  .view-btns { display: flex; gap: 0.3rem; flex-shrink: 0; }
-  .view-btn {
-    font-family: var(--mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.04em;
-    color: var(--ink-30);
-    background: none;
-    border: 1px solid var(--ink-08);
-    padding: 0.2rem 0.5rem;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .view-btn:hover { color: var(--ink); border-color: var(--ink-15); }
-  .view-btn.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
-
-  .controls .divider {
-    width: 1px;
-    height: 1rem;
-    background: var(--ink-08);
-    flex-shrink: 0;
-  }
-
-  .filter-btns { display: flex; gap: 0.25rem; flex-wrap: wrap; align-items: center; }
-  .filter-btn {
+  .controls__label {
     font-family: var(--mono);
     font-size: 0.5rem;
-    letter-spacing: 0.03em;
-    color: var(--ink-30);
-    background: none;
-    border: 1px solid var(--ink-08);
-    padding: 0.15rem 0.4rem;
-    cursor: pointer;
-    transition: all 0.15s;
+    color: var(--ink-15);
+    letter-spacing: 0.04em;
   }
-  .filter-btn:hover { color: var(--ink); border-color: var(--ink-15); }
-  .filter-btn.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
+  .view-select {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-50);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--ink-08);
+    padding: 0.15rem 0.3rem 0.15rem 0;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 4 4-4' fill='none' stroke='%23999' stroke-width='1'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    padding-right: 1rem;
+    outline: none;
+  }
+  .view-select:hover { color: var(--red); border-bottom-color: var(--red); }
+  .view-select:focus { border-bottom-color: var(--red); }
+
+  .filter-select {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-50);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--ink-08);
+    padding: 0.15rem 0.3rem 0.15rem 0;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 4 4-4' fill='none' stroke='%23999' stroke-width='1'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    padding-right: 1rem;
+    outline: none;
+  }
+  .filter-select:hover { color: var(--red); border-bottom-color: var(--red); }
+  .filter-select:focus { border-bottom-color: var(--red); }
 
   /* Project cards with thumbnails */
   .project-list {
@@ -236,7 +245,6 @@
     html { font-size: 16px; }
     .h-inner { flex-direction: column; gap: 0.4rem; }
     .controls { flex-wrap: wrap; gap: 0.5rem; }
-    .controls .divider { display: none; }
     .project-list { grid-template-columns: 1fr; }
     .f-inner { flex-direction: column; gap: 0.3rem; }
   }
@@ -251,6 +259,7 @@
       <a href="index.html#directory">Directory</a>
       <a href="visions.html">Visions</a>
       <a href="showcase.html" class="active">Showcase</a>
+      <a href="feed.html">Feed</a>
       <a href="manifesto.html">Manifesto</a>
     </nav>
   </div>
@@ -261,15 +270,16 @@
   <p class="sub">Cross-disciplinary work by directory members</p>
 
   <div class="controls">
-    <div class="view-btns">
-      <button class="view-btn active" data-view="recency">Recent</button>
-      <button class="view-btn" data-view="intersection">By intersection</button>
-      <button class="view-btn" data-view="person">By person</button>
-    </div>
-    <div class="divider"></div>
-    <div class="filter-btns" id="filterBtns">
-      <button class="filter-btn active" data-filter="all">All</button>
-    </div>
+    <span class="controls__label">View</span>
+    <select class="view-select" id="viewSelect">
+      <option value="recency">Recent</option>
+      <option value="intersection">By intersection</option>
+      <option value="person">By person</option>
+    </select>
+    <span class="controls__label">Filter</span>
+    <select class="filter-select" id="filterSelect">
+      <option value="all">All disciplines</option>
+    </select>
   </div>
 
   <div id="projectContainer">
@@ -351,7 +361,8 @@ const PROJECTS = [
     personUrl: "https://worrydream.com",
     crosses: ["Interface Design", "Philosophy", "CS"],
     date: "2012",
-    sortDate: 20120101
+    sortDate: 20120101,
+    image: "https://worrydream.com/Home2024/previews/Inventing_on_Principle.jpg"
   },
   {
     name: "OXMAN",
@@ -394,7 +405,8 @@ const PROJECTS = [
     personUrl: "https://bhamla.gatech.edu",
     crosses: ["Biophysics", "Engineering", "Global Health"],
     date: "2018",
-    sortDate: 20180601
+    sortDate: 20180601,
+    image: "https://images.squarespace-cdn.com/content/v1/60ef472cab12c51e777931f3/1627501371289-21ZZNDW5NBH0TQHHW3ND/Bhamla-Collage_Homepage-2.png"
   },
   {
     name: "ARTIFICE",
@@ -404,7 +416,8 @@ const PROJECTS = [
     personUrl: "https://renaise.com",
     crosses: ["Design", "Technology", "Sci-Fi"],
     date: "2025",
-    sortDate: 20250901
+    sortDate: 20250901,
+    image: "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=500,height=500/event-covers/ld/6ec7f98e-be3f-429f-915f-66c81e53c8b7.png"
   },
   {
     name: "Renaise Studio",
@@ -444,7 +457,8 @@ const PROJECTS = [
     personUrl: "https://s-z.carrd.co",
     crosses: ["Fashion", "Biology", "Computation"],
     date: "2024",
-    sortDate: 20240901
+    sortDate: 20240901,
+    image: "https://www.irisvanherpen.com/_uploaded/202507/017-IVH-Sympoiesis-LRG.jpg"
   },
   {
     name: "Arcarae",
@@ -454,7 +468,8 @@ const PROJECTS = [
     personUrl: "https://nicolehsing.com",
     crosses: ["AI", "Cognitive Science", "Philosophy"],
     date: "2025",
-    sortDate: 20250101
+    sortDate: 20250101,
+    image: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/56/74/ca/5674ca57-9b92-29d8-c9a1-992245715f98/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/1200x630wa.png"
   },
   {
     name: "MIRROR",
@@ -464,19 +479,19 @@ const PROJECTS = [
     personUrl: "https://nicolehsing.com",
     crosses: ["AI", "Neuroscience", "Cognitive Science"],
     date: "2025",
-    sortDate: 20250601
+    sortDate: 20250601,
+    image: "https://arxiv.org/html/2506.00430v1/extracted/6499183/overview.png"
   }
 ];
 
-// Collect all unique crosses for filter buttons
+// Collect all unique crosses for filter dropdown
 const allCrosses = [...new Set(PROJECTS.flatMap(p => p.crosses))].sort();
-const filterContainer = document.getElementById('filterBtns');
+const filterSelect = document.getElementById('filterSelect');
 allCrosses.forEach(c => {
-  const btn = document.createElement('button');
-  btn.className = 'filter-btn';
-  btn.dataset.filter = c;
-  btn.textContent = c;
-  filterContainer.appendChild(btn);
+  const opt = document.createElement('option');
+  opt.value = c;
+  opt.textContent = c;
+  filterSelect.appendChild(opt);
 });
 
 let currentView = 'recency';
@@ -608,29 +623,16 @@ function render() {
   });
 }
 
-function syncFilterBtns() {
-  document.querySelectorAll('.filter-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.filter === currentFilter);
-  });
-}
-
-// View button clicks
-document.querySelectorAll('.view-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    currentView = btn.dataset.view;
-    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    render();
-  });
+// View select
+document.getElementById('viewSelect').addEventListener('change', (e) => {
+  currentView = e.target.value;
+  render();
 });
 
-// Filter button clicks
-document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('filter-btn')) {
-    currentFilter = e.target.dataset.filter;
-    syncFilterBtns();
-    render();
-  }
+// Filter select
+filterSelect.addEventListener('change', (e) => {
+  currentFilter = e.target.value;
+  render();
 });
 
 // Initial render
