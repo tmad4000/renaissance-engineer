@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Renaissance.Engineer Feed</title>
+  <link>https://renaissance.engineer/feed.html</link>
+  <description>Curated writing from minds that build across disciplines.</description>
+  <language>en</language>
+  <lastBuildDate>Sat, 01 Feb 2026 00:00:00 GMT</lastBuildDate>
+  <atom:link href="https://renaissance.engineer/feed.xml" rel="self" type="application/rss+xml"/>
+
+  <item>
+    <title>5000 Years of Compute &amp; Design Co-Evolution</title>
+    <link>https://www.daanish.life/coevolution</link>
+    <guid>https://www.daanish.life/coevolution</guid>
+    <pubDate>Sun, 01 Feb 2026 00:00:00 GMT</pubDate>
+    <author>Daanish Shabbir</author>
+    <description>How computational capabilities have enabled increasingly sophisticated design across five millennia, from Bronze Age templates to Tesla's battery pack optimization via modern computational dashboards.</description>
+    <category>Computational Design</category>
+    <category>Engineering</category>
+    <category>History</category>
+  </item>
+
+  <item>
+    <title>Named 2025 Schmidt Polymath</title>
+    <link>https://news.gatech.edu/news/2025/09/16/saad-bhamla-named-2025-schmidt-polymath</link>
+    <guid>https://news.gatech.edu/news/2025/09/16/saad-bhamla-named-2025-schmidt-polymath</guid>
+    <pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate>
+    <author>Saad Bhamla</author>
+    <description>The first Georgia Tech recipient of the Schmidt Polymath Award — up to $2.5M over five years — to develop AI-enabled point-of-care diagnostics and autonomous morphing machines at planetary scale.</description>
+    <category>Frugal Science</category>
+    <category>AI</category>
+    <category>Global Health</category>
+  </item>
+
+  <item>
+    <title>Bioprinting Living Sculptures</title>
+    <link>https://grayareafestival.io/stephanie-zhang/</link>
+    <guid>https://grayareafestival.io/stephanie-zhang/</guid>
+    <pubDate>Sat, 13 Sep 2025 00:00:00 GMT</pubDate>
+    <author>Stephanie Zhang</author>
+    <description>How does order emerge from chaos through complex dynamical systems? 3D-bioprinted self-assembling living sculptures using novel bioinks of fungal and cellular matter, treating the creative process as a ritual of transfiguration.</description>
+    <category>Bioprinting</category>
+    <category>Art-Science</category>
+    <category>Self-Assembly</category>
+  </item>
+
+  <item>
+    <title>ARTIFICE: Where Design Meets Speculative Fiction</title>
+    <link>https://renaise.com</link>
+    <guid>https://renaise.com-artifice</guid>
+    <pubDate>Mon, 01 Sep 2025 00:00:00 GMT</pubDate>
+    <author>Renaise Kim</author>
+    <description>A multi-disciplinary studio built on the conviction that the most powerful design decisions are born from speculative thinking. The studio is a conceptual space shaped by science fiction.</description>
+    <category>Design</category>
+    <category>Technology</category>
+    <category>Sci-Fi</category>
+  </item>
+
+  <item>
+    <title>Ultrafast Elastocapillary Fans Control Agile Maneuvering in Ripple Bugs and Robots</title>
+    <link>https://www.science.org/doi/10.1126/science.adv2792</link>
+    <guid>https://www.science.org/doi/10.1126/science.adv2792</guid>
+    <pubDate>Fri, 01 Aug 2025 00:00:00 GMT</pubDate>
+    <author>Saad Bhamla</author>
+    <description>Rhagovelia ripple bugs use specialized middle-leg fans powered by surface tension — not muscles — to navigate fast-moving streams. The discovery inspired novel propulsion systems for miniature aquatic robots.</description>
+    <category>Biophysics</category>
+    <category>Robotics</category>
+    <category>Frugal Science</category>
+  </item>
+
+  <item>
+    <title>MIRROR: Modular Internal Processing for Personalized Safety in LLM Dialogue</title>
+    <link>https://arxiv.org/abs/2506.00430</link>
+    <guid>https://arxiv.org/abs/2506.00430</guid>
+    <pubDate>Sun, 01 Jun 2025 00:00:00 GMT</pubDate>
+    <author>Nicole Hsing</author>
+    <description>A dual-process cognitive architecture (Thinker + Talker) implementing persistent inner monologue in LLMs. 21% average improvement — up to 156% — in safety-critical scenarios across GPT-4o, Claude, Gemini, Llama, and Mistral.</description>
+    <category>AI Safety</category>
+    <category>Cognitive Science</category>
+    <category>LLM Alignment</category>
+  </item>
+
+  <item>
+    <title>From Solo Founder to Visionary CEO: Leading Arcarae AI</title>
+    <link>https://www.entrepreneur.com/en-au/women-entrepreneur/from-solo-founder-to-visionary-ceo-leading-arcarae-ai/496701</link>
+    <guid>https://www.entrepreneur.com/en-au/women-entrepreneur/from-solo-founder-to-visionary-ceo-leading-arcarae-ai/496701</guid>
+    <pubDate>Thu, 01 Jan 2025 00:00:00 GMT</pubDate>
+    <author>Nicole Hsing</author>
+    <description>Teaching herself AI research, software development, and design to build Arcarae from a solo research project into a funded company creating immersive universes for self-discovery.</description>
+    <category>AI</category>
+    <category>Entrepreneurship</category>
+    <category>Cognitive Science</category>
+  </item>
+
+  <item>
+    <title>Reversible Kink Instability Drives Ultrafast Jumping in Nematodes and Soft Robots</title>
+    <link>https://www.science.org/doi/abs/10.1126/scirobotics.adq3121</link>
+    <guid>https://www.science.org/doi/abs/10.1126/scirobotics.adq3121</guid>
+    <pubDate>Thu, 01 Jan 2025 00:00:00 GMT</pubDate>
+    <author>Saad Bhamla</author>
+    <description>Nematode worms use a reversible kink instability to achieve ultrafast jumping. The finding inspired a legless soft robot that can jump 10 feet high.</description>
+    <category>Biophysics</category>
+    <category>Soft Robotics</category>
+    <category>Biomechanics</category>
+  </item>
+
+  <item>
+    <title>Computational Public Space</title>
+    <link>https://dynamicland.org/2024/Computational_Public_Space/</link>
+    <guid>https://dynamicland.org/2024/Computational_Public_Space/</guid>
+    <pubDate>Fri, 01 Nov 2024 00:00:00 GMT</pubDate>
+    <author>Bret Victor</author>
+    <description>Integrating computation into cities through 'communal computing' — a screenless approach where people collaborate in shared physical spaces rather than isolated with devices. Explores seven value tensions relevant to urban design.</description>
+    <category>Urban Design</category>
+    <category>Communal Computing</category>
+    <category>Dynamic Media</category>
+  </item>
+
+  <item>
+    <title>ML Weather Forecasting</title>
+    <link>https://www.daanish.life/weather</link>
+    <guid>https://www.daanish.life/weather</guid>
+    <pubDate>Fri, 01 Nov 2024 00:00:00 GMT</pubDate>
+    <author>Daanish Shabbir</author>
+    <description>ML-based weather forecasting (e.g. DeepMind's GenCast) began outperforming traditional numerical methods in 2024. A call for interpretability research to understand what concepts these models actually learn.</description>
+    <category>Machine Learning</category>
+    <category>Climate Science</category>
+    <category>Physics</category>
+  </item>
+
+  <item>
+    <title>Eden: Ecological Programming for Architecture</title>
+    <link>https://oxman.com/projects/eden</link>
+    <guid>https://oxman.com/projects/eden</guid>
+    <pubDate>Tue, 01 Oct 2024 00:00:00 GMT</pubDate>
+    <author>Neri Oxman</author>
+    <description>A computational framework for data-driven, cross-scale generative design guided by environmental simulation and AI. The conceptual Eden Tower demonstrates how buildings can maximize biodiversity, resilience, and ecosystem services.</description>
+    <category>Computational Design</category>
+    <category>Ecology</category>
+    <category>Architecture</category>
+  </item>
+
+  <item>
+    <title>3 Puzzles in Optoelectronics</title>
+    <link>https://www.daanish.life/optoelectronics</link>
+    <guid>https://www.daanish.life/optoelectronics</guid>
+    <pubDate>Tue, 01 Oct 2024 00:00:00 GMT</pubDate>
+    <author>Daanish Shabbir</author>
+    <description>Energy constraints in information processing and the optical solutions — electroabsorptive modulators that can achieve ~10 femtojoules per bit by decade's end.</description>
+    <category>Optoelectronics</category>
+    <category>Physics</category>
+    <category>Hardware</category>
+  </item>
+
+  <item>
+    <title>Man-Nahata: Architectural Studies for Megalopolis</title>
+    <link>https://oxman.com/projects/man-nahata</link>
+    <guid>https://oxman.com/projects/man-nahata</guid>
+    <pubDate>Fri, 27 Sep 2024 00:00:00 GMT</pubDate>
+    <author>Neri Oxman</author>
+    <description>Four-part model installation envisioning a potential future design of Manhattan, created as architectural and scientific advisor to Francis Ford Coppola's film Megalopolis.</description>
+    <category>Architecture</category>
+    <category>Film</category>
+    <category>Speculative Design</category>
+  </item>
+
+  <item>
+    <title>Iris van Herpen: Paris Fashion Week F/W 2024</title>
+    <link>https://s-z.carrd.co</link>
+    <guid>https://s-z.carrd.co-irisvanherpen-2024</guid>
+    <pubDate>Fri, 01 Mar 2024 00:00:00 GMT</pubDate>
+    <author>Stephanie Zhang</author>
+    <description>Design work for Iris van Herpen's Fall/Winter 2024 Paris Fashion Week collection, applying bio-design sensibility to haute couture at the intersection of fashion, science, and engineering.</description>
+    <category>Fashion Design</category>
+    <category>Bio-Design</category>
+    <category>Art</category>
+  </item>
+
+  <item>
+    <title>Unifying Fluidic Excretion Across Life from Cicadas to Elephants</title>
+    <link>https://pmc.ncbi.nlm.nih.gov/articles/PMC10990113/</link>
+    <guid>https://pmc.ncbi.nlm.nih.gov/articles/PMC10990113/</guid>
+    <pubDate>Fri, 01 Mar 2024 00:00:00 GMT</pubDate>
+    <author>Saad Bhamla</author>
+    <description>Cicadas are the smallest animals to create high-speed urine jets. A unifying framework for fluidic excretion across the entire animal kingdom, with implications for micro-nozzle engineering.</description>
+    <category>Biophysics</category>
+    <category>Fluid Mechanics</category>
+    <category>Engineering</category>
+  </item>
+
+  <item>
+    <title>Physics Representations</title>
+    <link>https://www.daanish.life/physics-representations</link>
+    <guid>https://www.daanish.life/physics-representations</guid>
+    <pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+    <author>Daanish Shabbir</author>
+    <description>Five representational upgrades in physics — from Euclidean geometry to neural abstractions. 'The fundamental epistemic unit is now shifting, as we move through the cusp of the neural age.'</description>
+    <category>Physics</category>
+    <category>Epistemology</category>
+    <category>AI</category>
+  </item>
+
+  <item>
+    <title>Kashmir Point</title>
+    <link>https://nimbus-online.netlify.app/posts/08-kashmirpt</link>
+    <guid>https://nimbus-online.netlify.app/posts/08-kashmirpt</guid>
+    <pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+    <author>Daanish Shabbir</author>
+    <description>A young laborer from Bagh works in an architectural studio in Kashmir Point, building miniature models of buildings and developing a forbidden bond with the employer's son. Fiction that bridges engineering and literature.</description>
+    <category>Fiction</category>
+    <category>Architecture</category>
+    <category>South Asian Literature</category>
+  </item>
+
+  <item>
+    <title>Declaration of Interdependence</title>
+    <link>https://www.interdependence.online/declaration</link>
+    <guid>https://www.interdependence.online/declaration</guid>
+    <pubDate>Mon, 01 May 2023 00:00:00 GMT</pubDate>
+    <author>Daanish Shabbir</author>
+    <description>We are caught in an inescapable network of mutuality, tied in a single garment of destiny. A literary-hacker manifesto for reimagining digital futures through collective authorship.</description>
+    <category>Fiction</category>
+    <category>Software</category>
+    <category>Philosophy</category>
+  </item>
+
+  <item>
+    <title>Augmenting Human Intelligence, Exploring the Cosmic Medium</title>
+    <link>https://volandino.com/podcast/jacob-cole/</link>
+    <guid>https://volandino.com/podcast/jacob-cole/</guid>
+    <pubDate>Mon, 10 May 2021 00:00:00 GMT</pubDate>
+    <author>Jacob Cole</author>
+    <description>A 2.5-hour conversation on how IdeaFlow enhances human cognition, deep learning theories, consciousness, Eastern philosophy, and the intersection of humanistic inquiry with technological innovation.</description>
+    <category>AI</category>
+    <category>Cognitive Science</category>
+    <category>Philosophy</category>
+  </item>
+
+  <item>
+    <title>The Hypertext Web is the Real Metaverse</title>
+    <link>https://medium.com/ideaflow/the-hypertext-web-is-the-real-metaverse-be1ced3b6565</link>
+    <guid>https://medium.com/ideaflow/the-hypertext-web-is-the-real-metaverse-be1ced3b6565</guid>
+    <pubDate>Sat, 01 Aug 2020 00:00:00 GMT</pubDate>
+    <author>Jacob Cole</author>
+    <description>The tangled, densely connected modern web is itself a proto-Metaverse. Building a web that feels like a place designed for life would realize the vision without VR headsets.</description>
+    <category>Knowledge Tools</category>
+    <category>Hypertext</category>
+    <category>Web Philosophy</category>
+  </item>
+
+  <item>
+    <title>Paperfuge: An Ultra-Low-Cost Hand-Powered Paper Centrifuge</title>
+    <link>https://www.nature.com/articles/s41551-016-0009</link>
+    <guid>https://www.nature.com/articles/s41551-016-0009</guid>
+    <pubDate>Tue, 10 Jan 2017 00:00:00 GMT</pubDate>
+    <author>Saad Bhamla</author>
+    <description>A 20-cent paper centrifuge inspired by a whirligig toy that separates blood plasma in 90 seconds without electricity. Used for diagnosing malaria in resource-limited settings.</description>
+    <category>Engineering</category>
+    <category>Global Health</category>
+    <category>Invention</category>
+  </item>
+
+  <item>
+    <title>Krebs Cycle of Creativity</title>
+    <link>https://jods.mitpress.mit.edu/pub/ageofentanglement/release/1</link>
+    <guid>https://jods.mitpress.mit.edu/pub/ageofentanglement/release/1</guid>
+    <pubDate>Wed, 13 Jan 2016 00:00:00 GMT</pubDate>
+    <author>Neri Oxman</author>
+    <description>A map of the four domains of human creativity — Science, Engineering, Design, and Art — and the 12 modalities of knowledge flow between them. Anti-disciplinarity as practice.</description>
+    <category>Design</category>
+    <category>Science</category>
+    <category>Philosophy</category>
+  </item>
+
+  <item>
+    <title>Inventing on Principle</title>
+    <link>https://worrydream.com/#!/InventingOnPrinciple</link>
+    <guid>https://worrydream.com/#!/InventingOnPrinciple</guid>
+    <pubDate>Fri, 10 Feb 2012 00:00:00 GMT</pubDate>
+    <author>Bret Victor</author>
+    <description>Creators need an immediate connection to what they create. If there is any delay in the feedback loop between thinking something and seeing it, there is a whole world of ideas which will never be.</description>
+    <category>Interface Design</category>
+    <category>Philosophy</category>
+    <category>CS</category>
+  </item>
+
+</channel>
+</rss>

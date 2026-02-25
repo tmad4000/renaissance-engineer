@@ -154,6 +154,55 @@
   .tooltip__disciplines { font-family: var(--mono); font-size: 0.42rem; color: var(--ink-30); letter-spacing: 0.03em; }
   .tooltip__theme { font-family: var(--mono); font-size: 0.4rem; color: var(--red); letter-spacing: 0.02em; margin-top: 0.1rem; }
 
+  /* ===== DETAIL SIDEBAR ===== */
+  .detail-panel {
+    position: fixed;
+    top: 58px; right: 0; bottom: 0;
+    width: 300px;
+    background: var(--surface);
+    border-left: 1px solid var(--ink-08);
+    z-index: 70;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    overflow-y: auto;
+    padding: 1.2rem 1rem;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.04);
+  }
+  .detail-panel.open { transform: translateX(0); }
+  .detail-panel__close {
+    position: absolute; top: 0.6rem; right: 0.6rem;
+    font-family: var(--mono); font-size: 0.85rem; color: var(--ink-30);
+    background: none; border: none; cursor: pointer; padding: 0.2rem 0.4rem;
+  }
+  .detail-panel__close:hover { color: var(--red); }
+  .detail-panel__name { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 0.2rem; }
+  .detail-panel__type { font-family: var(--mono); font-size: 0.4rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 0.6rem; }
+  .detail-panel__text { font-size: 0.82rem; font-weight: 300; font-style: italic; color: var(--ink-50); line-height: 1.55; margin-bottom: 0.5rem; }
+  .detail-panel__meta { font-family: var(--mono); font-size: 0.42rem; color: var(--ink-30); letter-spacing: 0.02em; margin-bottom: 0.25rem; }
+  .detail-panel__link {
+    display: inline-block;
+    font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.04em;
+    color: var(--ink-50); text-decoration: none;
+    border-bottom: 1px solid var(--ink-08);
+    margin-top: 0.6rem;
+  }
+  .detail-panel__link:hover { color: var(--red); border-bottom-color: var(--red); }
+  .detail-panel__neighbors { margin-top: 1rem; }
+  .detail-panel__neighbors-title { font-family: var(--mono); font-size: 0.42rem; color: var(--ink-15); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .detail-panel__neighbor {
+    display: block; font-size: 0.75rem; font-weight: 400;
+    color: var(--ink-50); text-decoration: none; padding: 0.2rem 0;
+    cursor: pointer; transition: color 0.15s;
+  }
+  .detail-panel__neighbor:hover { color: var(--red); }
+  .detail-panel__neighbor-theme {
+    font-family: var(--mono); font-size: 0.38rem; color: var(--ink-15); margin-left: 0.3rem;
+  }
+
+  @media (max-width: 600px) {
+    .detail-panel { width: 100%; top: 0; z-index: 110; }
+  }
+
   /* ===== LEGEND ===== */
   .legend {
     position: fixed;
@@ -166,9 +215,34 @@
     line-height: 1.8;
   }
   .legend__title { font-size: 0.52rem; color: var(--ink-50); margin-bottom: 0.2rem; }
-  .legend__item { display: flex; align-items: center; gap: 0.35rem; }
+  .legend__item { display: flex; align-items: center; gap: 0.35rem; cursor: pointer; transition: opacity 0.15s; }
+  .legend__item:hover { opacity: 0.7; }
+  .legend__item.hidden { opacity: 0.25; text-decoration: line-through; }
   .legend__dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .legend__rect { width: 8px; height: 5px; flex-shrink: 0; }
+
+  /* ===== REPULSION SLIDER ===== */
+  .slider-wrap {
+    position: fixed;
+    bottom: 3.2rem; right: 2rem;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .slider-wrap label {
+    font-family: var(--mono);
+    font-size: 0.42rem;
+    color: var(--ink-30);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .slider-wrap input[type="range"] {
+    width: 80px;
+    height: 2px;
+    accent-color: var(--red);
+    cursor: pointer;
+  }
 
   /* ===== CONTROLS ===== */
   .controls {
@@ -233,7 +307,17 @@
   <div class="tooltip__theme" id="tipTheme"></div>
 </div>
 
+<div class="detail-panel" id="detailPanel">
+  <button class="detail-panel__close" onclick="closeDetail()">&times;</button>
+  <div id="detailContent"></div>
+</div>
+
 <div class="legend" id="legend"></div>
+
+<div class="slider-wrap">
+  <label>Repulsion</label>
+  <input type="range" id="repulsionSlider" min="100" max="3000" value="800" oninput="repulsionForce=+this.value">
+</div>
 
 <div class="controls">
   <button onclick="resetView()">Reset</button>
@@ -393,6 +477,8 @@ let edges = [];
 let nodeMap = {};
 let showLabels = true;
 let filtersOpen = false;
+let repulsionForce = 800;
+let visibleTypes = { person: true, vision: true, project: true, discipline: true, 'person-label': true };
 let filters = {
   showPeople: true,
   showVisions: true,
@@ -626,28 +712,36 @@ function buildEverythingView(cx, cy) {
 // UI UPDATES
 // ============================================================
 
+function legendItem(type, dotStyle, label, shape) {
+  const cls = visibleTypes[type] ? 'legend__item' : 'legend__item hidden';
+  const dot = shape === 'rect'
+    ? `<span class="legend__rect" style="${dotStyle}"></span>`
+    : `<span class="legend__dot" style="${dotStyle}"></span>`;
+  return `<div class="${cls}" onclick="toggleType('${type}')">${dot} ${label}</div>`;
+}
+
+function toggleType(type) {
+  visibleTypes[type] = !visibleTypes[type];
+  updateLegend();
+}
+
 function updateLegend() {
   const el = document.getElementById('legend');
+  let html = '<div class="legend__title">Click to toggle</div>';
+
   if (currentView === 'visions') {
-    el.innerHTML = `
-      <div class="legend__title">Connected visions</div>
-      <div class="legend__item"><span class="legend__dot" style="background:#b33a2b"></span> Vision</div>
-      <div class="legend__item"><span class="legend__dot" style="background:#999"></span> Person</div>
-      <div class="legend__item"><span class="legend__dot" style="background:transparent;border:1px dashed rgba(179,58,43,0.3)"></span> Thematic link</div>`;
+    html += legendItem('vision', 'background:#b33a2b', 'Vision');
+    html += legendItem('person-label', 'background:#999', 'Person');
   } else if (currentView === 'people') {
-    el.innerHTML = `
-      <div class="legend__title">Connected people</div>
-      <div class="legend__item"><span class="legend__dot" style="background:#111"></span> Person</div>
-      <div class="legend__item"><span class="legend__dot" style="background:#ddd"></span> Discipline</div>
-      <div class="legend__item"><span class="legend__dot" style="background:transparent;border:1px dashed rgba(0,0,0,0.1)"></span> Shared discipline</div>`;
+    html += legendItem('person', 'background:#111', 'Person');
+    html += legendItem('discipline', 'background:#ddd', 'Discipline');
   } else {
-    el.innerHTML = `
-      <div class="legend__title">Everything</div>
-      <div class="legend__item"><span class="legend__dot" style="background:#111"></span> Person</div>
-      <div class="legend__item"><span class="legend__dot" style="background:#b33a2b"></span> Vision</div>
-      <div class="legend__item"><span class="legend__rect" style="background:#5a7a4a;border-radius:1px"></span> Project</div>
-      <div class="legend__item"><span class="legend__dot" style="background:transparent;border:1px dashed rgba(179,58,43,0.3)"></span> Thematic link</div>`;
+    html += legendItem('person', 'background:#111', 'Person');
+    html += legendItem('vision', 'background:#b33a2b', 'Vision');
+    html += legendItem('project', 'background:#5a7a4a;border-radius:1px', 'Project', 'rect');
   }
+
+  el.innerHTML = html;
 }
 
 function updateFilterPanel() {
@@ -695,6 +789,8 @@ function handleFilter(id, value) {
 function setView(view) {
   currentView = view;
   document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  // Reset type visibility for the new view
+  visibleTypes = { person: true, vision: true, project: true, discipline: true, 'person-label': true };
   buildGraph();
 }
 
@@ -731,7 +827,7 @@ window.addEventListener('resize', resize);
 
 function simulate() {
   const alpha = 0.12;
-  const repulsion = currentView === 'everything' ? 600 : 800;
+  const repulsion = repulsionForce;
 
   for (let i = 0; i < nodes.length; i++) {
     for (let j = i + 1; j < nodes.length; j++) {
@@ -786,27 +882,38 @@ const NODE_COLORS = {
 function draw() {
   ctx.clearRect(0, 0, W, H);
 
+  // Determine active highlight set
+  const hl = highlightSet;  // null = no highlight active
+  const isHighlighting = hl && hl.size > 0;
+
   // Edges
   edges.forEach(e => {
     const a = nodeMap[e.source], b = nodeMap[e.target];
     if (!a || !b) return;
+    if (!visibleTypes[a.type] || !visibleTypes[b.type]) return;
+
+    const edgeLit = !isHighlighting || (hl.has(e.source) && hl.has(e.target));
+    const dimAlpha = isHighlighting && !edgeLit ? 0.08 : 1;
+
     const ax = a.x + panX, ay = a.y + panY;
     const bx = b.x + panX, by = b.y + panY;
 
+    ctx.globalAlpha = dimAlpha;
     ctx.beginPath();
     ctx.moveTo(ax, ay);
     ctx.lineTo(bx, by);
 
     if (e.type === 'thematic') {
-      ctx.strokeStyle = hoveredEdge === e ? 'rgba(179,58,43,0.35)' : 'rgba(179,58,43,0.1)';
-      ctx.lineWidth = hoveredEdge === e ? 1.5 : 1;
+      const isActive = hoveredEdge === e || (edgeLit && isHighlighting);
+      ctx.strokeStyle = isActive ? 'rgba(179,58,43,0.4)' : 'rgba(179,58,43,0.1)';
+      ctx.lineWidth = isActive ? 1.5 : 1;
       ctx.setLineDash([3, 4]);
     } else if (e.type === 'manifests') {
-      ctx.strokeStyle = 'rgba(90,122,74,0.15)';
+      ctx.strokeStyle = edgeLit && isHighlighting ? 'rgba(90,122,74,0.35)' : 'rgba(90,122,74,0.15)';
       ctx.lineWidth = 0.7;
       ctx.setLineDash([2, 3]);
     } else if (e.type === 'authorship') {
-      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+      ctx.strokeStyle = edgeLit && isHighlighting ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.06)';
       ctx.lineWidth = 0.5;
       ctx.setLineDash([]);
     } else if (e.type === 'shared-disc') {
@@ -825,17 +932,22 @@ function draw() {
     if (e.type === 'thematic' && showLabels && e.theme) {
       const mx = (ax + bx) / 2, my = (ay + by) / 2;
       ctx.font = '300 7.5px DM Mono, monospace';
-      ctx.fillStyle = hoveredEdge === e ? 'rgba(179,58,43,0.6)' : 'rgba(179,58,43,0.2)';
+      ctx.fillStyle = (hoveredEdge === e || (edgeLit && isHighlighting)) ? 'rgba(179,58,43,0.6)' : 'rgba(179,58,43,0.2)';
       ctx.textAlign = 'center';
       ctx.fillText(e.theme, mx, my - 3);
     }
+    ctx.globalAlpha = 1;
   });
 
   // Nodes
   nodes.forEach(n => {
+    if (!visibleTypes[n.type]) return;
     const x = n.x + panX, y = n.y + panY;
     const colors = NODE_COLORS[n.type] || NODE_COLORS['discipline'];
     const isHovered = hoveredNode === n;
+    const isSelected = selectedNode === n;
+    const nodeLit = !isHighlighting || hl.has(n.id);
+    ctx.globalAlpha = isHighlighting && !nodeLit ? 0.12 : 1;
 
     // Glow
     if (colors.glow) {
@@ -845,18 +957,26 @@ function draw() {
       ctx.fill();
     }
 
+    // Selection ring
+    if (isSelected) {
+      ctx.beginPath();
+      ctx.arc(x, y, n.radius + 4, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(179,58,43,0.4)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
     // Shape
     if (n.type === 'project') {
-      // Rounded rect for projects
       const s = n.radius * 1.6;
       ctx.beginPath();
       ctx.roundRect(x - s/2, y - s/3, s, s * 0.65, 2);
-      ctx.fillStyle = isHovered ? colors.hover : colors.fill;
+      ctx.fillStyle = (isHovered || isSelected) ? colors.hover : colors.fill;
       ctx.fill();
     } else {
       ctx.beginPath();
       ctx.arc(x, y, n.radius, 0, Math.PI * 2);
-      ctx.fillStyle = isHovered ? colors.hover : colors.fill;
+      ctx.fillStyle = (isHovered || isSelected) ? colors.hover : colors.fill;
       ctx.fill();
     }
 
@@ -864,18 +984,17 @@ function draw() {
     if (showLabels) {
       if (n.type === 'person' || n.type === 'vision') {
         ctx.font = n.type === 'person' ? '500 11px Newsreader, Georgia, serif' : 'italic 300 10px Newsreader, Georgia, serif';
-        ctx.fillStyle = isHovered ? (colors.hover || colors.label) : colors.label;
+        ctx.fillStyle = (isHovered || isSelected) ? (colors.hover || colors.label) : colors.label;
         ctx.textAlign = 'center';
         ctx.fillText(n.label, x, y - n.radius - 6);
-        // Person subtitle on vision nodes
-        if (n.type === 'vision' && n.person) {
+        if (n.type === 'vision' && n.person && visibleTypes['person-label'] !== false) {
           ctx.font = '300 7.5px DM Mono, monospace';
           ctx.fillStyle = '#bbb';
           ctx.fillText(n.person, x, y + n.radius + 10);
         }
       } else if (n.type === 'project') {
         ctx.font = '400 8px DM Mono, monospace';
-        ctx.fillStyle = isHovered ? colors.hover : '#8aa67d';
+        ctx.fillStyle = (isHovered || isSelected) ? colors.hover : '#8aa67d';
         ctx.textAlign = 'center';
         ctx.fillText(n.label, x, y - n.radius - 5);
       } else if (n.type === 'person-label') {
@@ -885,11 +1004,12 @@ function draw() {
         ctx.fillText(n.label, x, y - n.radius - 4);
       } else {
         ctx.font = '300 8px DM Mono, monospace';
-        ctx.fillStyle = isHovered ? '#666' : '#bbb';
+        ctx.fillStyle = (isHovered || isSelected) ? '#666' : '#bbb';
         ctx.textAlign = 'center';
         ctx.fillText(n.label, x, y - n.radius - 4);
       }
     }
+    ctx.globalAlpha = 1;
   });
 }
 
@@ -899,15 +1019,27 @@ function draw() {
 let panX = 0, panY = 0;
 let isPanning = false, panStartX, panStartY;
 let hoveredNode = null, hoveredEdge = null, draggedNode = null;
+let selectedNode = null;
+let highlightSet = null; // Set of node ids to highlight (hovered node + neighbors)
 
 function getNodeAt(mx, my) {
   for (let i = nodes.length - 1; i >= 0; i--) {
     const n = nodes[i];
+    if (!visibleTypes[n.type]) continue;
     const dx = mx - (n.x + panX), dy = my - (n.y + panY);
     const hitR = n.radius + 6;
     if (dx * dx + dy * dy < hitR * hitR) return n;
   }
   return null;
+}
+
+function getNeighborIds(node) {
+  const ids = new Set([node.id]);
+  edges.forEach(e => {
+    if (e.source === node.id && nodeMap[e.target]) ids.add(e.target);
+    if (e.target === node.id && nodeMap[e.source]) ids.add(e.source);
+  });
+  return ids;
 }
 
 function getEdgeAt(mx, my) {
@@ -948,6 +1080,16 @@ canvas.addEventListener('mousemove', (e) => {
   const edge = node ? null : getEdgeAt(mx, my);
   hoveredNode = node;
   hoveredEdge = edge;
+
+  // Compute highlight set: hovered or selected node + neighbors
+  if (node) {
+    highlightSet = getNeighborIds(node);
+  } else if (selectedNode) {
+    highlightSet = getNeighborIds(selectedNode);
+  } else {
+    highlightSet = null;
+  }
+
   canvas.style.cursor = (node || edge) ? 'pointer' : 'grab';
 
   const tipName = document.getElementById('tipName');
@@ -996,7 +1138,9 @@ canvas.addEventListener('mousemove', (e) => {
   }
 });
 
+let mouseDownPos = null;
 canvas.addEventListener('mousedown', (e) => {
+  mouseDownPos = { x: e.clientX, y: e.clientY };
   const node = getNodeAt(e.clientX, e.clientY);
   if (node) {
     draggedNode = node;
@@ -1009,10 +1153,20 @@ canvas.addEventListener('mousedown', (e) => {
   }
 });
 
-canvas.addEventListener('mouseup', () => {
+canvas.addEventListener('mouseup', (e) => {
+  const wasDrag = mouseDownPos && (Math.abs(e.clientX - mouseDownPos.x) > 4 || Math.abs(e.clientY - mouseDownPos.y) > 4);
+  if (!wasDrag) {
+    const node = getNodeAt(e.clientX, e.clientY);
+    if (node && node.type !== 'discipline' && node.type !== 'person-label') {
+      selectNode(node);
+    } else if (!node) {
+      closeDetail();
+    }
+  }
   draggedNode = null;
   isPanning = false;
   canvas.style.cursor = 'grab';
+  mouseDownPos = null;
 });
 
 canvas.addEventListener('mouseleave', () => {
@@ -1021,30 +1175,123 @@ canvas.addEventListener('mouseleave', () => {
   hoveredNode = null;
   hoveredEdge = null;
   tooltip.classList.remove('visible');
+  // Keep highlight if a node is selected
+  highlightSet = selectedNode ? getNeighborIds(selectedNode) : null;
 });
 
 // Touch
+let touchStartPos = null;
+let touchMoved = false;
 canvas.addEventListener('touchstart', (e) => {
   const t = e.touches[0];
+  touchStartPos = { x: t.clientX, y: t.clientY };
+  touchMoved = false;
   const node = getNodeAt(t.clientX, t.clientY);
   if (node) { draggedNode = node; e.preventDefault(); }
   else { isPanning = true; panStartX = t.clientX - panX; panStartY = t.clientY - panY; }
 }, { passive: false });
 
 canvas.addEventListener('touchmove', (e) => {
+  touchMoved = true;
   const t = e.touches[0];
   if (draggedNode) { draggedNode.x = t.clientX - panX; draggedNode.y = t.clientY - panY; draggedNode.vx = 0; draggedNode.vy = 0; e.preventDefault(); }
   else if (isPanning) { panX = t.clientX - panStartX; panY = t.clientY - panStartY; e.preventDefault(); }
 }, { passive: false });
 
-canvas.addEventListener('touchend', () => { draggedNode = null; isPanning = false; });
+canvas.addEventListener('touchend', (e) => {
+  if (!touchMoved && touchStartPos) {
+    const node = getNodeAt(touchStartPos.x, touchStartPos.y);
+    if (node && node.type !== 'discipline' && node.type !== 'person-label') {
+      selectNode(node);
+    } else if (!node) {
+      closeDetail();
+    }
+  }
+  draggedNode = null; isPanning = false;
+  touchStartPos = null; touchMoved = false;
+});
 
 // ============================================================
 // CONTROLS
 // ============================================================
 
+function selectNode(node) {
+  selectedNode = node;
+  highlightSet = getNeighborIds(node);
+  showDetailPanel(node);
+}
+
+function closeDetail() {
+  selectedNode = null;
+  highlightSet = null;
+  document.getElementById('detailPanel').classList.remove('open');
+}
+
+function showDetailPanel(node) {
+  const panel = document.getElementById('detailPanel');
+  const content = document.getElementById('detailContent');
+  let html = '';
+
+  if (node.type === 'vision') {
+    html += `<div class="detail-panel__name">${node.label}</div>`;
+    html += `<div class="detail-panel__type">Vision &middot; ${node.person || ''}</div>`;
+    html += `<div class="detail-panel__text">${node.fullText || ''}</div>`;
+    if (node.themes) html += `<div class="detail-panel__meta">${node.themes.join(' &middot; ')}</div>`;
+    if (node.link) html += `<a class="detail-panel__link" href="${node.link}" target="_blank">Visit &rarr;</a>`;
+  } else if (node.type === 'person') {
+    html += `<div class="detail-panel__name">${node.label}</div>`;
+    html += `<div class="detail-panel__type">Person</div>`;
+    if (node.vision) html += `<div class="detail-panel__text">${node.vision}</div>`;
+    if (node.disciplines) html += `<div class="detail-panel__meta">${node.disciplines.join(' &middot; ')}</div>`;
+    // Find person in PEOPLE_DATA for personUrl
+    const pd = PEOPLE_DATA.find(p => p.id === node.id);
+    if (pd) {
+      const v = VISIONS.find(v => v.personId === pd.id);
+      if (v && v.link) html += `<a class="detail-panel__link" href="${v.link}" target="_blank">Visit &rarr;</a>`;
+    }
+  } else if (node.type === 'project') {
+    html += `<div class="detail-panel__name">${node.label}</div>`;
+    html += `<div class="detail-panel__type">Project &middot; ${node.person || ''}</div>`;
+    if (node.desc) html += `<div class="detail-panel__text">${node.desc}</div>`;
+  }
+
+  // Connected nodes
+  const neighborIds = getNeighborIds(node);
+  neighborIds.delete(node.id);
+  if (neighborIds.size > 0) {
+    html += '<div class="detail-panel__neighbors">';
+    html += '<div class="detail-panel__neighbors-title">Connected</div>';
+    neighborIds.forEach(nid => {
+      const nb = nodeMap[nid];
+      if (!nb) return;
+      // Find the connecting edge for its theme
+      const connEdge = edges.find(e =>
+        (e.source === node.id && e.target === nid) || (e.target === node.id && e.source === nid)
+      );
+      const theme = connEdge && connEdge.theme ? connEdge.theme : '';
+      html += `<span class="detail-panel__neighbor" onclick="focusNode('${nid}')">${nb.label}`;
+      if (theme) html += `<span class="detail-panel__neighbor-theme">${theme}</span>`;
+      html += `</span>`;
+    });
+    html += '</div>';
+  }
+
+  content.innerHTML = html;
+  panel.classList.add('open');
+}
+
+function focusNode(id) {
+  const node = nodeMap[id];
+  if (!node) return;
+  selectNode(node);
+  // Pan to center on this node
+  panX = W / 2 - node.x;
+  panY = H / 2 - node.y;
+}
+
 function resetView() {
   panX = 0; panY = 0;
+  closeDetail();
   buildGraph();
 }
 

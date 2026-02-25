@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Feed &mdash; Renaissance.Engineer</title>
 <meta name="description" content="A curated feed of thoughtful writing from people who build across disciplines.">
+<link rel="alternate" type="application/rss+xml" title="Renaissance.Engineer Feed" href="feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -49,6 +50,20 @@
     margin-bottom: 1.8rem;
   }
   .page-header-left {}
+  .rss-link {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-30);
+    text-decoration: none;
+    border: 1px solid var(--ink-08);
+    padding: 0.2rem 0.45rem;
+    transition: all 0.15s;
+    align-self: flex-start;
+    margin-top: 0.3rem;
+  }
+  .rss-link:hover { color: var(--red); border-color: var(--red); }
   .page h1 {
     font-size: 1.6rem;
     font-weight: 300;
@@ -93,6 +108,59 @@
   .filter-pill:hover { color: var(--ink); }
   .filter-pill.active { color: var(--red); background: var(--red-light); }
 
+  /* ===== COMPOSE ===== */
+  .compose-toggle { margin-bottom: 0.8rem; }
+  .compose-btn {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-30);
+    background: none;
+    border: 1px solid var(--ink-08);
+    padding: 0.25rem 0.55rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .compose-btn:hover { color: var(--red); border-color: var(--red); }
+  .compose-form {
+    display: none;
+    margin-bottom: 1.2rem;
+    padding: 0.8rem;
+    border: 1px solid var(--ink-08);
+    background: var(--surface);
+  }
+  .compose-form.open { display: block; animation: fadeUp 0.2s ease; }
+  .compose-form__row { display: flex; gap: 0.4rem; margin-bottom: 0.35rem; }
+  .compose-input {
+    font-family: var(--serif);
+    font-size: 0.78rem;
+    color: var(--ink);
+    border: 1px solid var(--ink-08);
+    padding: 0.3rem 0.45rem;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s;
+    margin-bottom: 0.35rem;
+  }
+  .compose-input:focus { border-color: var(--red); }
+  .compose-input--half { flex: 1; margin-bottom: 0; }
+  .compose-input--quarter { flex: 0 0 auto; width: 5.5rem; margin-bottom: 0; font-family: var(--mono); font-size: 0.55rem; }
+  .compose-textarea { resize: none; line-height: 1.45; min-height: 2.5rem; }
+  .compose-submit {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    letter-spacing: 0.06em;
+    color: var(--surface);
+    background: var(--ink);
+    border: none;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .compose-submit:hover { background: var(--red); }
+
   /* ===== THE FEED: Newspaper/journal column ===== */
   .feed-stream {}
 
@@ -100,10 +168,6 @@
     padding: 1.1rem 0;
     opacity: 0;
     animation: fadeUp 0.3s ease forwards;
-    display: grid;
-    grid-template-columns: 1.5rem 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 0 0.35rem;
   }
   .entry + .entry {
     border-top: 1px solid var(--ink-08);
@@ -113,25 +177,17 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Left column: date badge */
+  /* Inline date in header */
   .entry__date {
-    grid-row: 1 / -1;
     font-family: var(--mono);
-    font-size: 0.48rem;
+    font-size: 0.42rem;
     color: var(--ink-15);
     letter-spacing: 0.02em;
-    text-align: right;
-    padding-top: 0.2rem;
-    line-height: 1.35;
-  }
-  .entry__date .date-year {
-    display: block;
-    font-size: 0.42rem;
-    color: var(--ink-08);
-    margin-top: -0.05rem;
+    white-space: nowrap;
+    margin-left: auto;
   }
 
-  /* Right column: content */
+  /* Content */
   .entry__head {
     display: flex;
     align-items: baseline;
@@ -180,9 +236,7 @@
   .entry__title a { text-decoration: none; }
   .entry__title a:hover { color: var(--red); }
 
-  .entry__body {
-    grid-column: 2;
-  }
+  .entry__body {}
   .entry__excerpt {
     font-size: 0.82rem;
     font-weight: 300;
@@ -192,7 +246,6 @@
   }
 
   .entry__foot {
-    grid-column: 2;
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
@@ -227,7 +280,6 @@
 
   /* Replies */
   .replies {
-    grid-column: 2;
     margin-top: 0.4rem;
     padding-left: 0.8rem;
     border-left: 1px solid var(--ink-08);
@@ -239,7 +291,6 @@
   .reply__text { font-size: 0.78rem; font-weight: 300; color: var(--ink-50); line-height: 1.45; }
 
   .reply-form {
-    grid-column: 2;
     margin-top: 0.35rem;
     display: none;
   }
@@ -380,9 +431,7 @@
     html { font-size: 16px; }
     .h-inner { flex-direction: column; gap: 0.4rem; }
     .page-header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
-    .entry { grid-template-columns: 1fr; gap: 0; }
-    .entry__date { grid-row: auto; text-align: left; margin-bottom: 0.15rem; }
-    .entry__body, .entry__foot, .replies, .reply-form { grid-column: 1; }
+    .entry__head { flex-wrap: wrap; }
     .f-inner { flex-direction: column; gap: 0.3rem; }
   }
 </style>
@@ -408,6 +457,30 @@
     <div class="page-header-left">
       <h1>Thoughtful <em>streams</em></h1>
       <p class="sub">Curated writing from minds that build across boundaries</p>
+    </div>
+    <a href="feed.xml" class="rss-link" title="Subscribe via RSS">RSS</a>
+  </div>
+
+  <div class="compose-toggle">
+    <button class="compose-btn" onclick="toggleCompose()">+ New post</button>
+  </div>
+
+  <div class="compose-form" id="composeForm">
+    <div class="compose-form__row">
+      <input type="text" id="composeAuthor" placeholder="Your name" class="compose-input compose-input--half">
+      <input type="url" id="composeUrl" placeholder="Link URL" class="compose-input compose-input--half">
+    </div>
+    <input type="text" id="composeTitle" placeholder="Title" class="compose-input">
+    <textarea id="composeExcerpt" placeholder="Brief excerpt or description&hellip;" class="compose-input compose-textarea" rows="2"></textarea>
+    <div class="compose-form__row">
+      <input type="text" id="composeTags" placeholder="Disciplines (comma-separated)" class="compose-input compose-input--half">
+      <select id="composeType" class="compose-input compose-input--quarter">
+        <option value="essay">Essay</option>
+        <option value="paper">Paper</option>
+        <option value="talk">Talk</option>
+        <option value="award">Award</option>
+      </select>
+      <button class="compose-submit" onclick="submitPost()">Post</button>
     </div>
   </div>
 
@@ -835,13 +908,11 @@ function renderFeed() {
     const typeClass = item.type ? ' entry__type--' + item.type : '';
     return `
     <article class="entry" style="animation-delay: ${i * 0.025}s">
-      <div class="entry__date">
-        ${dt.month}<span class="date-year">${dt.year}</span>
-      </div>
       <div class="entry__head">
         <span class="entry__author"><a href="${item.personUrl}" target="_blank">${item.person}</a></span>
         ${item.type ? `<span class="entry__type${typeClass}">${item.type}</span>` : ''}
         <span class="entry__via">via <a href="${item.sourceUrl}" target="_blank">${item.source}</a></span>
+        <span class="entry__date">${dt.month} ${dt.year}</span>
       </div>
       <div class="entry__body">
         <div class="entry__title"><a href="${item.url}" target="_blank" onclick="if(!isMobile){event.preventDefault();openPreview('${item.url}','${item.title.replace(/'/g,"\\'")}')}">${item.title}</a></div>
@@ -905,7 +976,49 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Load any locally saved posts
+const savedPosts = JSON.parse(localStorage.getItem('re-feed-posts') || '[]');
+savedPosts.forEach(p => FEED.unshift(p));
+
 renderFeed();
+
+function toggleCompose() {
+  document.getElementById('composeForm').classList.toggle('open');
+  const author = document.getElementById('composeAuthor');
+  if (document.getElementById('composeForm').classList.contains('open')) author.focus();
+}
+
+function submitPost() {
+  const author = document.getElementById('composeAuthor').value.trim();
+  const title = document.getElementById('composeTitle').value.trim();
+  const url = document.getElementById('composeUrl').value.trim();
+  const excerpt = document.getElementById('composeExcerpt').value.trim();
+  const tags = document.getElementById('composeTags').value.split(',').map(t => t.trim()).filter(Boolean);
+  const type = document.getElementById('composeType').value;
+
+  if (!author || !title) return;
+
+  const post = {
+    person: author, personUrl: '#', title, url: url || '#',
+    date: new Date().toISOString().slice(0, 10), type,
+    excerpt, source: 'Community', sourceUrl: '#',
+    disciplines: tags.length ? tags : ['General'], replies: []
+  };
+
+  FEED.unshift(post);
+  savedPosts.push(post);
+  localStorage.setItem('re-feed-posts', JSON.stringify(savedPosts));
+
+  // Clear form
+  document.getElementById('composeAuthor').value = '';
+  document.getElementById('composeTitle').value = '';
+  document.getElementById('composeUrl').value = '';
+  document.getElementById('composeExcerpt').value = '';
+  document.getElementById('composeTags').value = '';
+  document.getElementById('composeForm').classList.remove('open');
+
+  renderFeed();
+}
 </script>
 
 </body>
