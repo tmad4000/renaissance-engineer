@@ -2,11 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
   <title>Renaissance.Engineer Feed</title>
-  <link>https://renaissance.engineer/feed.html</link>
+  <link>https://renaissance.engineer/feed</link>
   <description>Curated writing from minds that build across disciplines.</description>
   <language>en</language>
-  <lastBuildDate>Sat, 01 Feb 2026 00:00:00 GMT</lastBuildDate>
+  <lastBuildDate>Mon, 24 Feb 2026 00:00:00 GMT</lastBuildDate>
   <atom:link href="https://renaissance.engineer/feed.xml" rel="self" type="application/rss+xml"/>
+
+  <item>
+    <title>Containers for Emergence &amp; Pluralism</title>
+    <link>https://wellnesswisdom.substack.com/p/containers-for-emergence-and-pluralism</link>
+    <guid>https://wellnesswisdom.substack.com/p/containers-for-emergence-and-pluralism</guid>
+    <pubDate>Sun, 01 Jun 2025 00:00:00 GMT</pubDate>
+    <author>Patricia Mou</author>
+    <description>Introduces "transubjectivity" — a shared field that flows through and beyond participants without flattening difference. Backed by two actual workshop experiments she designed and ran.</description>
+    <category>Community Design</category>
+    <category>Philosophy</category>
+    <category>Social Architecture</category>
+  </item>
+
+  <item>
+    <title>The Future Will Be Mystical</title>
+    <link>https://wellnesswisdom.substack.com/p/the-future-will-be-mystical</link>
+    <guid>https://wellnesswisdom.substack.com/p/the-future-will-be-mystical</guid>
+    <pubDate>Tue, 01 Apr 2025 00:00:00 GMT</pubDate>
+    <author>Patricia Mou</author>
+    <description>Proposes a "Mystical Commons" as new social infrastructure for post-religious spirituality. Four design elements: physical space, embodied pluralism, facilitators (not gurus), non-dogmatic ritual.</description>
+    <category>Community Design</category>
+    <category>Spirituality</category>
+    <category>Urban Design</category>
+  </item>
+
+  <item>
+    <title>Reclaiming the Utopian Vision</title>
+    <link>https://wellnesswisdom.substack.com/p/reclaiming-the-utopian-vision</link>
+    <guid>https://wellnesswisdom.substack.com/p/reclaiming-the-utopian-vision</guid>
+    <pubDate>Sun, 01 Dec 2024 00:00:00 GMT</pubDate>
+    <author>Patricia Mou</author>
+    <description>Argues for "prefigurative utopianism" — embodying future ideals through present experimentation rather than top-down blueprints. Case studies from Auroville to Bhutan.</description>
+    <category>Urban Design</category>
+    <category>Philosophy</category>
+    <category>Community Design</category>
+  </item>
+
+  <item>
+    <title>What is a Fourth Place?</title>
+    <link>https://wellnesswisdom.substack.com/p/what-is-a-forth-place</link>
+    <guid>https://wellnesswisdom.substack.com/p/what-is-a-forth-place</guid>
+    <pubDate>Tue, 01 Oct 2024 00:00:00 GMT</pubDate>
+    <author>Patricia Mou</author>
+    <description>Her signature concept: "fourth places" as spaces where the primary activity is meaning-making, distinct from Oldenburg's third places. Traces precedents from Athenian agoras to Viennese coffee houses.</description>
+    <category>Community Design</category>
+    <category>Philosophy</category>
+    <category>Urban Design</category>
+  </item>
 
   <item>
     <title>5000 Years of Compute &amp; Design Co-Evolution</title>
