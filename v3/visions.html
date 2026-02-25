@@ -112,6 +112,19 @@
     color: var(--ink-30);
     letter-spacing: 0.03em;
   }
+  .vision-entry .attr-link {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    letter-spacing: 0.03em;
+    padding-left: 1rem;
+    margin-top: 0.15rem;
+  }
+  .vision-entry .attr-link a {
+    color: var(--ink-15);
+    text-decoration: none;
+  }
+  .vision-entry .attr-link a:hover { color: var(--red); }
+  .vision-entry .attr-link a::after { content: ' \2192'; font-size: 0.8em; }
 
   footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
   .f-inner { max-width: var(--max-w); margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
@@ -216,6 +229,7 @@
       <span class="attr-name"><a href="index.html#directory">Jacob Cole</a></span>
       <span class="attr-disciplines">CS &middot; Philosophy &middot; English &middot; Knowledge Graphs</span>
     </div>
+    <div class="attr-link"><a href="https://ideaflow.io" target="_blank">IdeaFlow &mdash; the knowledge graph notebook</a></div>
   </div>
 
   <div class="vision-entry">
@@ -224,6 +238,7 @@
       <span class="attr-name"><a href="index.html#directory">Daanish Shabbir</a></span>
       <span class="attr-disciplines">EE &middot; Physics &middot; AI &middot; Fiction &middot; Optoelectronics</span>
     </div>
+    <div class="attr-link"><a href="https://equisystems.github.io" target="_blank">Equivariant Systems &mdash; Fermi</a></div>
   </div>
 
   <div class="vision-entry">
@@ -232,6 +247,7 @@
       <span class="attr-name"><a href="index.html#directory">Bret Victor</a></span>
       <span class="attr-disciplines">Interface Design &middot; EE &middot; CS &middot; Music</span>
     </div>
+    <div class="attr-link"><a href="https://dynamicland.org" target="_blank">Dynamicland &mdash; communal computing</a></div>
   </div>
 
   <div class="vision-entry">
@@ -240,6 +256,7 @@
       <span class="attr-name"><a href="index.html#directory">Neri Oxman</a></span>
       <span class="attr-disciplines">Architecture &middot; Biology &middot; Computing &middot; Materials</span>
     </div>
+    <div class="attr-link"><a href="https://oxman.com/projects/eden" target="_blank">Eden &mdash; ecological programming for architecture</a></div>
   </div>
 
   <div class="vision-entry">
@@ -248,6 +265,7 @@
       <span class="attr-name"><a href="index.html#directory">Saad Bhamla</a></span>
       <span class="attr-disciplines">Chemical Eng. &middot; Biophysics &middot; Frugal Science &middot; Global Health</span>
     </div>
+    <div class="attr-link"><a href="https://bhamla.gatech.edu" target="_blank">Bhamla Lab &mdash; frugal science at planetary scale</a></div>
   </div>
 
   <div class="vision-entry">
@@ -280,6 +298,7 @@
       <span class="attr-name"><a href="index.html#directory">Tom Currier</a></span>
       <span class="attr-disciplines">Engineering &middot; Robotics &middot; Design &middot; Sleep Science</span>
     </div>
+    <div class="attr-link"><a href="https://www.ridecabin.com" target="_blank">Cabin &mdash; the sleep bus</a></div>
   </div>
 
   <div class="vision-entry">
@@ -288,6 +307,7 @@
       <span class="attr-name"><a href="index.html#directory">Jacob Cole</a></span>
       <span class="attr-disciplines">Healing Arts &middot; Consciousness &middot; Well-being &middot; Grant-making</span>
     </div>
+    <div class="attr-link"><a href="http://healingartsgrant.jacobcole.net" target="_blank">Healing Arts Equal Access Grant</a></div>
   </div>
 
   <div class="vision-entry">
@@ -296,6 +316,7 @@
       <span class="attr-name">Kat Woods</span>
       <span class="attr-disciplines">AI Safety &middot; Effective Altruism</span>
     </div>
+    <div class="attr-link"><a href="https://www.facebook.com/share/p/KDovQexJJwFiBNgP/" target="_blank">Read more</a></div>
   </div>
 
   <div class="vision-entry">
@@ -321,6 +342,7 @@
       <input type="text" name="name" placeholder="Your name" required>
       <input type="text" name="disciplines" placeholder="Your disciplines (e.g. Biology &middot; Design &middot; CS)">
       <textarea name="vision" rows="4" placeholder="What do you want to see in the world?" required></textarea>
+      <input type="url" name="link" placeholder="Link to where you expound on this vision (optional)">
       <input type="email" name="email" placeholder="Email (so we can reach you)">
       <button type="submit">Submit vision</button>
       <p class="form-note">Submissions are reviewed before appearing on the page.</p>
@@ -345,7 +367,7 @@ function handleVisionSubmit(e) {
   // For now, mailto fallback — replace with real backend later
   const subject = encodeURIComponent('Renaissance Engineer — New Vision');
   const body = encodeURIComponent(
-    `Name: ${data.name}\nDisciplines: ${data.disciplines}\n\nVision:\n${data.vision}\n\nEmail: ${data.email}`
+    `Name: ${data.name}\nDisciplines: ${data.disciplines}\n\nVision:\n${data.vision}\n\nLink: ${data.link || '(none)'}\nEmail: ${data.email}`
   );
   window.location.href = `mailto:hello@renaissance.engineer?subject=${subject}&body=${body}`;
   form.style.display = 'none';
