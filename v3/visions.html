@@ -115,6 +115,72 @@
   .f-inner { max-width: var(--max-w); margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
   .f-inner span { font-family: var(--mono); font-size: 0.55rem; color: var(--ink-30); }
 
+  .submit-section { margin-top: 1rem; }
+  .submit-section h2 {
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.2rem;
+  }
+  .submit-section h2 em { font-weight: 500; font-style: italic; color: var(--red); }
+  .submit-sub {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--ink-30);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  .submit-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 480px;
+  }
+  .submit-section input,
+  .submit-section textarea {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--ink-08);
+    padding: 0.6rem 0.8rem;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .submit-section input:focus,
+  .submit-section textarea:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+  .submit-section textarea { resize: vertical; line-height: 1.6; }
+  .submit-section button {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--ink);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.15s;
+  }
+  .submit-section button:hover { background: var(--red); }
+  .form-note {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    color: var(--ink-30);
+    margin-top: -0.2rem;
+  }
+  .form-success {
+    font-size: 0.95rem;
+    color: var(--red);
+    font-style: italic;
+    margin-top: 1rem;
+  }
+
   @media (max-width: 600px) {
     html { font-size: 17px; }
     .h-inner { flex-direction: column; gap: 0.4rem; }
@@ -212,6 +278,22 @@
     </div>
   </div>
 
+  <div class="separator" style="margin-top: 3rem;"></div>
+
+  <div class="submit-section">
+    <h2>Share your <em>vision</em></h2>
+    <p class="submit-sub">What future are you working toward?</p>
+    <form id="visionForm" onsubmit="handleVisionSubmit(event)">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="text" name="disciplines" placeholder="Your disciplines (e.g. Biology &middot; Design &middot; CS)">
+      <textarea name="vision" rows="4" placeholder="What do you want to see in the world?" required></textarea>
+      <input type="email" name="email" placeholder="Email (so we can reach you)">
+      <button type="submit">Submit vision</button>
+      <p class="form-note">Submissions are reviewed before appearing on the page.</p>
+    </form>
+    <p class="form-success" id="formSuccess" style="display:none;">Thank you. Your vision has been received.</p>
+  </div>
+
 </article>
 
 <footer>
@@ -220,6 +302,22 @@
     <span>2026</span>
   </div>
 </footer>
+
+<script>
+function handleVisionSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = Object.fromEntries(new FormData(form));
+  // For now, mailto fallback — replace with real backend later
+  const subject = encodeURIComponent('Renaissance Engineer — New Vision');
+  const body = encodeURIComponent(
+    `Name: ${data.name}\nDisciplines: ${data.disciplines}\n\nVision:\n${data.vision}\n\nEmail: ${data.email}`
+  );
+  window.location.href = `mailto:hello@renaissance.engineer?subject=${subject}&body=${body}`;
+  form.style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
 
 </body>
 </html>

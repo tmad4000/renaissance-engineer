@@ -57,43 +57,20 @@
     letter-spacing: 0.03em;
   }
 
-  /* View controls */
+  /* Controls bar — single line */
   .controls {
     display: flex;
-    gap: 1.5rem;
-    align-items: baseline;
+    align-items: center;
+    gap: 0.8rem;
     margin-bottom: 2rem;
     padding-bottom: 0.6rem;
     border-bottom: 1px solid var(--ink-08);
-    flex-wrap: wrap;
   }
-  .controls .label {
-    font-family: var(--mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-30);
-  }
-  .view-btns { display: flex; gap: 0.5rem; }
+  .view-btns { display: flex; gap: 0.3rem; flex-shrink: 0; }
   .view-btn {
     font-family: var(--mono);
-    font-size: 0.58rem;
+    font-size: 0.55rem;
     letter-spacing: 0.04em;
-    color: var(--ink-30);
-    background: none;
-    border: 1px solid var(--ink-08);
-    padding: 0.25rem 0.6rem;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .view-btn:hover { color: var(--ink); border-color: var(--ink-15); }
-  .view-btn.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
-
-  .filter-btns { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-  .filter-btn {
-    font-family: var(--mono);
-    font-size: 0.52rem;
-    letter-spacing: 0.03em;
     color: var(--ink-30);
     background: none;
     border: 1px solid var(--ink-08);
@@ -101,55 +78,112 @@
     cursor: pointer;
     transition: all 0.15s;
   }
+  .view-btn:hover { color: var(--ink); border-color: var(--ink-15); }
+  .view-btn.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
+
+  .controls .divider {
+    width: 1px;
+    height: 1rem;
+    background: var(--ink-08);
+    flex-shrink: 0;
+  }
+
+  .filter-btns { display: flex; gap: 0.25rem; flex-wrap: wrap; align-items: center; }
+  .filter-btn {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-30);
+    background: none;
+    border: 1px solid var(--ink-08);
+    padding: 0.15rem 0.4rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
   .filter-btn:hover { color: var(--ink); border-color: var(--ink-15); }
   .filter-btn.active { color: var(--red); border-color: var(--red); background: var(--red-light); }
 
-  /* Project list */
-  .project-list { }
+  /* Project cards with thumbnails */
+  .project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.2rem;
+  }
 
   .project {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1rem;
-    align-items: start;
-    padding: 1.2rem 0;
-    border-bottom: 1px solid var(--ink-08);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--ink-08);
+    background: var(--surface);
     opacity: 0;
     animation: fadeIn 0.3s ease forwards;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, border-color 0.2s;
   }
+  .project:hover { border-color: var(--ink-15); }
   @keyframes fadeIn { to { opacity: 1; } }
 
   .project.hidden { display: none; }
 
+  .project__thumb {
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .project__thumb-inner {
+    position: absolute;
+    inset: 0;
+  }
+
+  .project__body {
+    padding: 0.8rem 0.9rem 0.9rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
   .project__name {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: 400;
     letter-spacing: -0.01em;
     line-height: 1.3;
   }
   .project__name a { text-decoration: none; color: var(--ink); transition: color 0.15s; }
   .project__name a:hover { color: var(--red); }
-  .project__name a::after { content: ' \2192'; color: var(--ink-15); font-size: 0.85em; }
+
+  .project__date {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    color: var(--ink-15);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 
   .project__desc {
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     font-weight: 300;
     color: var(--ink-50);
-    line-height: 1.55;
-    margin-top: 0.15rem;
+    line-height: 1.5;
+    margin-top: 0.3rem;
+    flex: 1;
   }
 
   .project__meta {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.5rem;
     align-items: baseline;
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
     flex-wrap: wrap;
   }
   .project__by {
     font-family: var(--mono);
-    font-size: 0.58rem;
+    font-size: 0.52rem;
     color: var(--ink-30);
   }
   .project__by a { color: var(--ink-50); text-decoration: none; }
@@ -157,26 +191,18 @@
 
   .project__crosses {
     display: flex;
-    gap: 0.25rem;
+    gap: 0.2rem;
+    flex-wrap: wrap;
   }
   .cross-tag {
     font-family: var(--mono);
-    font-size: 0.5rem;
+    font-size: 0.45rem;
     letter-spacing: 0.03em;
     color: var(--red);
     border: 1px solid rgba(179, 58, 43, 0.2);
-    padding: 0.1rem 0.35rem;
+    padding: 0.08rem 0.3rem;
     background: var(--red-light);
     cursor: pointer;
-  }
-
-  .project__date {
-    font-family: var(--mono);
-    font-size: 0.55rem;
-    color: var(--ink-15);
-    white-space: nowrap;
-    align-self: start;
-    margin-top: 0.15rem;
   }
 
   /* Person grouping view */
@@ -187,11 +213,10 @@
     letter-spacing: -0.01em;
     padding-bottom: 0.3rem;
     border-bottom: 1px solid var(--ink-08);
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
   .person-group__name a { text-decoration: none; color: var(--ink); }
   .person-group__name a:hover { color: var(--red); }
-  .person-group .project { padding-left: 0; }
 
   .empty-state {
     font-size: 0.9rem;
@@ -200,6 +225,7 @@
     padding: 2rem 0;
     text-align: center;
     display: none;
+    grid-column: 1 / -1;
   }
 
   footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
@@ -209,9 +235,9 @@
   @media (max-width: 600px) {
     html { font-size: 16px; }
     .h-inner { flex-direction: column; gap: 0.4rem; }
-    .controls { flex-direction: column; gap: 0.8rem; }
-    .project { grid-template-columns: 1fr; }
-    .project__date { margin-top: 0; }
+    .controls { flex-wrap: wrap; gap: 0.5rem; }
+    .controls .divider { display: none; }
+    .project-list { grid-template-columns: 1fr; }
     .f-inner { flex-direction: column; gap: 0.3rem; }
   }
 </style>
@@ -235,19 +261,14 @@
   <p class="sub">Cross-disciplinary work by directory members</p>
 
   <div class="controls">
-    <div>
-      <span class="label">View</span>
-      <div class="view-btns">
-        <button class="view-btn active" data-view="recency">Recent</button>
-        <button class="view-btn" data-view="intersection">By intersection</button>
-        <button class="view-btn" data-view="person">By person</button>
-      </div>
+    <div class="view-btns">
+      <button class="view-btn active" data-view="recency">Recent</button>
+      <button class="view-btn" data-view="intersection">By intersection</button>
+      <button class="view-btn" data-view="person">By person</button>
     </div>
-    <div>
-      <span class="label">Filter</span>
-      <div class="filter-btns" id="filterBtns">
-        <button class="filter-btn active" data-filter="all">All</button>
-      </div>
+    <div class="divider"></div>
+    <div class="filter-btns" id="filterBtns">
+      <button class="filter-btn active" data-filter="all">All</button>
     </div>
   </div>
 
@@ -456,20 +477,61 @@ allCrosses.forEach(c => {
 let currentView = 'recency';
 let currentFilter = 'all';
 
+// Generate unique abstract thumbnail per project based on name hash
+const PALETTES = [
+  ['#b33a2b', '#d4725c', '#f5e6e2'],  // warm red
+  ['#1a3a4a', '#3d7a8a', '#c8e0e6'],  // ocean
+  ['#2d4a22', '#6b8c5a', '#dce8d4'],  // forest
+  ['#4a2d6b', '#8a6aad', '#e4d8f0'],  // violet
+  ['#6b4a2d', '#ad8a6a', '#f0e4d8'],  // earth
+  ['#1a1a3a', '#4a4a8a', '#d8d8f0'],  // night
+  ['#3a2d1a', '#8a7a5a', '#f0ead8'],  // sand
+  ['#2d1a3a', '#6a4a7a', '#e0d4e8'],  // plum
+];
+
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function generateThumbCSS(name, crosses) {
+  const h = hashStr(name);
+  const pal = PALETTES[h % PALETTES.length];
+  const angle = (h % 360);
+  const shapes = [];
+  // Layered abstract shapes
+  shapes.push(`linear-gradient(${angle}deg, ${pal[0]}22, ${pal[1]}44, ${pal[2]}66)`);
+  // Geometric circles
+  const cx1 = 20 + (h % 60), cy1 = 20 + ((h >> 3) % 60);
+  const cx2 = 40 + ((h >> 5) % 50), cy2 = 30 + ((h >> 7) % 50);
+  shapes.push(`radial-gradient(circle at ${cx1}% ${cy1}%, ${pal[0]}30 0%, transparent 50%)`);
+  shapes.push(`radial-gradient(circle at ${cx2}% ${cy2}%, ${pal[1]}40 0%, transparent 40%)`);
+  // Diagonal stripe accent
+  shapes.push(`repeating-linear-gradient(${angle + 45}deg, transparent, transparent 12px, ${pal[0]}08 12px, ${pal[0]}08 13px)`);
+  return `background: ${shapes.reverse().join(', ')}; background-color: ${pal[2]};`;
+}
+
 function renderProjectHTML(p, showPerson = true) {
+  const thumbStyle = generateThumbCSS(p.name, p.crosses);
   return `
-    <div class="project" data-crosses="${p.crosses.join(',')}" data-person="${p.person}" data-sort="${p.sortDate}" style="animation-delay: 0s;">
-      <div>
-        <div class="project__name"><a href="${p.url}" target="_blank">${p.name}</a></div>
+    <div class="project" data-crosses="${p.crosses.join(',')}" data-person="${p.person}" data-sort="${p.sortDate}">
+      <div class="project__thumb">
+        <div class="project__thumb-inner" style="${thumbStyle}"></div>
+      </div>
+      <div class="project__body">
+        <div class="project__header">
+          <div class="project__name"><a href="${p.url}" target="_blank">${p.name}</a></div>
+          <span class="project__date">${p.date}</span>
+        </div>
         <div class="project__desc">${p.desc}</div>
         <div class="project__meta">
-          ${showPerson ? `<span class="project__by">by <a href="${p.personUrl}" target="_blank">${p.person}</a></span>` : ''}
+          ${showPerson ? `<span class="project__by"><a href="${p.personUrl}" target="_blank">${p.person}</a></span>` : ''}
           <div class="project__crosses">
             ${p.crosses.map(c => `<span class="cross-tag" data-cross="${c}">${c}</span>`).join('')}
           </div>
         </div>
       </div>
-      <span class="project__date">${p.date}</span>
     </div>
   `;
 }
@@ -503,9 +565,11 @@ function render() {
     });
     const sortedKeys = Object.keys(groups).sort();
     listView.innerHTML = sortedKeys.map(key => `
-      <div class="person-group">
+      <div class="person-group" style="grid-column: 1 / -1;">
         <h3 class="person-group__name">${key}</h3>
-        ${groups[key].map(p => renderProjectHTML(p)).join('')}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.2rem;">
+          ${groups[key].map(p => renderProjectHTML(p)).join('')}
+        </div>
       </div>
     `).join('');
   } else if (currentView === 'person') {
@@ -519,7 +583,9 @@ function render() {
     personView.innerHTML = Object.keys(groups).map(name => `
       <div class="person-group">
         <h3 class="person-group__name"><a href="${groups[name][0].personUrl}" target="_blank">${name}</a></h3>
-        ${groups[name].sort((a, b) => b.sortDate - a.sortDate).map(p => renderProjectHTML(p, false)).join('')}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.2rem;">
+          ${groups[name].sort((a, b) => b.sortDate - a.sortDate).map(p => renderProjectHTML(p, false)).join('')}
+        </div>
       </div>
     `).join('');
   }
