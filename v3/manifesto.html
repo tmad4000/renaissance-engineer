@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manifesto &mdash; Renaissance Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --ink-70: #3a3a3a;
+    --ink-50: #666;
+    --ink-30: #999;
+    --ink-15: #ccc;
+    --ink-08: #e4e4e4;
+    --bg: #fafafa;
+    --surface: #fff;
+    --red: #b33a2b;
+    --serif: 'Newsreader', 'Georgia', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --max-w: 640px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 18px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  body {
+    font-family: var(--serif);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.75;
+  }
+
+  ::selection { background: var(--red); color: #fff; }
+  a { color: var(--ink); }
+  a:hover { color: var(--red); }
+
+  header {
+    border-bottom: 1px solid var(--ink-08);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .h-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0.85rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .wm {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .wm:hover { color: var(--red); }
+  nav { display: flex; gap: 1.6rem; }
+  nav a {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--ink-50);
+  }
+  nav a:hover { color: var(--red); }
+
+  .manifesto {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 3.5rem 2rem 4rem;
+  }
+
+  .manifesto h1 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 2.5rem;
+  }
+  .manifesto h1 em { font-weight: 500; font-style: italic; color: var(--red); }
+
+  .manifesto p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--ink-70);
+    margin-bottom: 1.5rem;
+    max-width: 36rem;
+  }
+
+  .manifesto p.lead {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .manifesto blockquote {
+    border-left: 2px solid var(--red);
+    padding-left: 1.2rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--ink-50);
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+  .manifesto blockquote cite {
+    display: block;
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--ink-30);
+    margin-top: 0.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .manifesto h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-top: 2.5rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .manifesto .separator {
+    width: 2rem;
+    height: 1px;
+    background: var(--ink-15);
+    margin: 2.5rem 0;
+  }
+
+  .manifesto .cta {
+    margin-top: 2.5rem;
+  }
+  .manifesto .cta a {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-50);
+    text-decoration: none;
+    padding-bottom: 0.15rem;
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .manifesto .cta a:hover {
+    color: var(--red);
+    border-bottom-color: var(--red);
+  }
+
+  footer {
+    border-top: 1px solid var(--ink-08);
+    background: var(--surface);
+  }
+  .f-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .f-inner span {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--ink-30);
+  }
+
+  @media (max-width: 600px) {
+    html { font-size: 17px; }
+    .h-inner { flex-direction: column; gap: 0.4rem; }
+    .manifesto { padding: 2.5rem 1.5rem 3rem; }
+    .manifesto h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="index.html" class="wm">Renaissance Engineer</a>
+    <nav>
+      <a href="index.html#directory">Directory</a>
+      <a href="index.html#join">Join</a>
+      <a href="manifesto.html">Manifesto</a>
+    </nav>
+  </div>
+</header>
+
+<article class="manifesto">
+
+  <h1>The case for building across <em>boundaries</em></h1>
+
+  <p class="lead">
+    The most interesting problems live at the intersections. The most
+    interesting people refuse to pick one lane.
+  </p>
+
+  <p>
+    Somewhere along the way, we decided that serious work means specialization.
+    Pick a field. Go deep. Stay in your lane. This made sense when knowledge
+    was scarce and coordination was expensive.
+  </p>
+
+  <p>
+    That world is gone.
+  </p>
+
+  <p>
+    The problems worth solving now are irreducibly cross-disciplinary. Climate
+    change is not a physics problem or a policy problem or a design problem
+    &mdash; it is all three at once, and more. The future of computing is not
+    about better algorithms alone; it&rsquo;s about understanding how humans
+    think, how materials behave, how communities organize.
+  </p>
+
+  <blockquote>
+    Realize that everything connects to everything else.
+    <cite>&mdash; Leonardo da Vinci</cite>
+  </blockquote>
+
+  <h2>What we mean by &ldquo;Renaissance Engineer&rdquo;</h2>
+
+  <p>
+    Not a dilettante. Not someone who dabbles. A Renaissance Engineer has
+    genuine depth in multiple disciplines and uses the connections between
+    them to build things that specialists alone cannot.
+  </p>
+
+  <p>
+    They write code and write prose. They study physics and study philosophy.
+    They design buildings and design experiments. The combination is not a
+    weakness &mdash; it is their superpower.
+  </p>
+
+  <p>
+    The term &ldquo;engineer&rdquo; is deliberate. This is not about knowing
+    things. It is about building things. Renaissance Engineers ship: products,
+    papers, art, institutions, tools. They work at the intersection, and they
+    produce.
+  </p>
+
+  <div class="separator"></div>
+
+  <h2>Why a directory</h2>
+
+  <p>
+    People who build across boundaries are often invisible to each other. The
+    physicist who writes fiction doesn&rsquo;t know the architect who codes.
+    The designer who does materials science doesn&rsquo;t know the engineer
+    who does policy.
+  </p>
+
+  <p>
+    This directory exists to make them visible. Not to build another social
+    network, but to create a simple, legible record: these people exist, this
+    is what they see, this is what they build.
+  </p>
+
+  <p>
+    A guild registry for the modern polymath.
+  </p>
+
+  <blockquote>
+    As a technologist, you can recognize the wrong in the world, you can have
+    a vision for what a better world could be, and you can dedicate yourself
+    to fighting for a principle &mdash; but you can fight by inventing.
+    <cite>&mdash; Bret Victor, &ldquo;Inventing on Principle&rdquo;</cite>
+  </blockquote>
+
+  <h2>What we believe</h2>
+
+  <p>
+    That the best work happens when people bring their full range of knowledge
+    to bear. That depth in multiple fields produces insight that depth in one
+    field cannot. That the artificial boundaries between &ldquo;art&rdquo; and
+    &ldquo;science&rdquo; and &ldquo;engineering&rdquo; serve institutions,
+    not people.
+  </p>
+
+  <p>
+    That the world needs more people who refuse to choose &mdash; and who
+    build at the intersections instead.
+  </p>
+
+  <div class="cta">
+    <a href="index.html#directory">View the directory</a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="index.html#join">Add yourself</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="f-inner">
+    <span>renaissance.engineer</span>
+    <span>2026</span>
+  </div>
+</footer>
+
+</body>
+</html>

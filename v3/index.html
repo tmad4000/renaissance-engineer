@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renaissance Engineer</title>
+<meta name="description" content="A directory of people who build across disciplines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --ink-70: #3a3a3a;
+    --ink-50: #666;
+    --ink-30: #999;
+    --ink-15: #ccc;
+    --ink-08: #e4e4e4;
+    --bg: #fafafa;
+    --surface: #fff;
+    --red: #b33a2b;
+    --red-light: rgba(179, 58, 43, 0.06);
+    --serif: 'Newsreader', 'Georgia', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --max-w: 860px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  body {
+    font-family: var(--serif);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.65;
+  }
+
+  ::selection { background: var(--red); color: #fff; }
+  a { color: var(--ink); }
+  a:hover { color: var(--red); }
+
+  /* ===== HEADER ===== */
+  header {
+    border-bottom: 1px solid var(--ink-08);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .h-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0.85rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .wm {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .wm:hover { color: var(--red); }
+  nav { display: flex; gap: 1.6rem; }
+  nav a {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--ink-50);
+  }
+  nav a:hover { color: var(--red); }
+
+  /* ===== INTRO ===== */
+  .intro {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 2.8rem 2rem 1.8rem;
+  }
+  .intro h1 {
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+  .intro h1 em { font-weight: 500; font-style: italic; color: var(--red); }
+  .intro .sub {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--ink-30);
+    letter-spacing: 0.03em;
+    margin-top: 0.35rem;
+  }
+
+  /* ===== DIRECTORY LIST ===== */
+  .directory {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+  }
+
+  .person {
+    border-bottom: 1px solid var(--ink-08);
+  }
+
+  /* Row (always visible) */
+  .person__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 1.15rem 0;
+    cursor: pointer;
+    transition: padding-left 0.2s, background 0.15s;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .person__row:hover {
+    padding-left: 0.4rem;
+  }
+  .person__row:hover .person__name { color: var(--red); }
+
+  .person__name {
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    transition: color 0.15s;
+    line-height: 1.3;
+  }
+  .person__disciplines {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--ink-30);
+    letter-spacing: 0.03em;
+    margin-top: 0.1rem;
+  }
+  .person__toggle {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-15);
+    transition: color 0.15s, transform 0.25s;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .person__row:hover .person__toggle { color: var(--red); }
+  .person.open .person__toggle { transform: rotate(45deg); }
+
+  /* Expanded panel */
+  .person__detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 0 0 0;
+  }
+  .person.open .person__detail {
+    max-height: 600px;
+    padding: 0 0 1.5rem 0;
+  }
+
+  .detail__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--ink-08);
+  }
+
+  /* Vision */
+  .detail__vision {
+    grid-column: 1 / -1;
+  }
+  .detail__vision-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-30);
+    margin-bottom: 0.35rem;
+  }
+  .detail__vision-text {
+    font-size: 1.05rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-70);
+    line-height: 1.6;
+    max-width: 42rem;
+    border-left: 2px solid var(--red);
+    padding-left: 1rem;
+  }
+
+  /* Projects */
+  .detail__section-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-30);
+    margin-bottom: 0.35rem;
+  }
+  .detail__projects {
+    list-style: none;
+  }
+  .detail__projects li {
+    margin-bottom: 0.5rem;
+  }
+  .detail__projects a {
+    font-size: 0.92rem;
+    font-weight: 400;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .detail__projects a:hover { color: var(--red); }
+  .detail__projects a::after { content: ' \2192'; color: var(--ink-15); font-size: 0.8em; }
+  .detail__projects .proj-desc {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--ink-30);
+    margin-top: 0.05rem;
+  }
+
+  /* Links */
+  .detail__links a {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--ink-50);
+    text-decoration: none;
+    margin-right: 1.2rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.02em;
+  }
+  .detail__links a:hover { color: var(--red); }
+
+  /* ===== JOIN ===== */
+  .join {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 2.5rem 2rem 3.5rem;
+    border-top: 1px solid var(--ink-08);
+  }
+  .join h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.25rem;
+  }
+  .join h2 em { font-weight: 500; font-style: italic; }
+  .join > p {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ink-50);
+    margin-bottom: 1.8rem;
+    max-width: 36rem;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem 2rem;
+    max-width: 580px;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .fg label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-30);
+    margin-bottom: 0.25rem;
+  }
+  .fg input, .fg textarea {
+    width: 100%;
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    color: var(--ink);
+    border: none;
+    border-bottom: 1px solid var(--ink-15);
+    padding: 0.4rem 0;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .fg input:focus, .fg textarea:focus { border-bottom-color: var(--red); }
+  .fg input::placeholder, .fg textarea::placeholder { color: #ccc; font-style: italic; }
+  .fg textarea {
+    border: 1px solid var(--ink-15);
+    padding: 0.45rem;
+    resize: vertical;
+    min-height: 4.5rem;
+    line-height: 1.6;
+  }
+  .fg textarea:focus { border-color: var(--red); }
+  .fg .hint {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    color: var(--ink-15);
+    margin-top: 0.15rem;
+  }
+  .submit-btn {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--ink);
+    border: none;
+    padding: 0.85rem 2.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.3rem;
+  }
+  .submit-btn:hover { background: var(--red); }
+  .form-msg {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--red);
+    margin-top: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .form-msg.show { opacity: 1; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--ink-08);
+    background: var(--surface);
+  }
+  .f-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .f-inner span {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--ink-30);
+  }
+
+  /* ===== ANIMATION ===== */
+  .person {
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .person:nth-child(1) { animation-delay: 0.03s; }
+  .person:nth-child(2) { animation-delay: 0.06s; }
+  .person:nth-child(3) { animation-delay: 0.09s; }
+  .person:nth-child(4) { animation-delay: 0.12s; }
+  .person:nth-child(5) { animation-delay: 0.15s; }
+  .person:nth-child(6) { animation-delay: 0.18s; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    html { font-size: 16px; }
+    .h-inner { flex-direction: column; gap: 0.4rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .detail__inner { grid-template-columns: 1fr; }
+    .f-inner { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="#" class="wm">Renaissance Engineer</a>
+    <nav>
+      <a href="#directory">Directory</a>
+      <a href="#join">Join</a>
+      <a href="manifesto.html">Manifesto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="intro">
+  <h1>People who build across <em>boundaries</em></h1>
+  <p class="sub">An open directory &middot; Est. 2026</p>
+</section>
+
+<section class="directory" id="directory">
+
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <div>
+        <div class="person__name">Jacob Cole</div>
+        <div class="person__disciplines">Computer Science &middot; Philosophy &middot; English Literature &middot; Knowledge Graphs</div>
+      </div>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">
+          <div class="detail__vision-label">Vision</div>
+          <p class="detail__vision-text">A world where knowledge tools augment intelligence as you think &mdash; where notebooks become thinking partners and the connections between ideas are as tangible as the ideas themselves.</p>
+        </div>
+        <div>
+          <div class="detail__section-label">Projects</div>
+          <ul class="detail__projects">
+            <li>
+              <a href="https://ideaflow.io" target="_blank">IdeaFlow</a>
+              <div class="proj-desc">A notebook that augments your intelligence as you type</div>
+            </li>
+            <li>
+              <a href="https://globalbr.ai" target="_blank">Noos</a>
+              <div class="proj-desc">Open knowledge graph for connected thinking</div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="detail__section-label">Links</div>
+          <div class="detail__links">
+            <a href="https://jacobcole.net" target="_blank">jacobcole.net</a>
+            <a href="https://x.com/jacobcole4000" target="_blank">@jacobcole4000</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <div>
+        <div class="person__name">Daanish Shabbir</div>
+        <div class="person__disciplines">Electrical Engineering &middot; Physics &middot; AI &middot; Fiction &middot; Optoelectronics</div>
+      </div>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">
+          <div class="detail__vision-label">Vision</div>
+          <p class="detail__vision-text">A general gateway to all known physics for autonomous agents &mdash; where form and content are inextricably tied, and software enacts critique rather than merely stating it.</p>
+        </div>
+        <div>
+          <div class="detail__section-label">Projects</div>
+          <ul class="detail__projects">
+            <li>
+              <a href="https://equisystems.github.io" target="_blank">Equivariant Systems / Fermi</a>
+              <div class="proj-desc">Physics runtime for autonomous agents</div>
+            </li>
+            <li>
+              <a href="https://www.interdependence.online/about" target="_blank">Verses &amp; Declaration of Interdependence</a>
+              <div class="proj-desc">Literary-hacker collective reimagining digital futures</div>
+            </li>
+            <li>
+              <a href="https://www.daanish.life" target="_blank">Fiction: Kashmir Point, Ruins at the End</a>
+              <div class="proj-desc">Speculative fiction exploring physics and culture</div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="detail__section-label">Links</div>
+          <div class="detail__links">
+            <a href="https://www.daanish.life" target="_blank">daanish.life</a>
+            <a href="https://x.com/danishabbir" target="_blank">@danishabbir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <div>
+        <div class="person__name">Bret Victor</div>
+        <div class="person__disciplines">Interface Design &middot; Electrical Engineering &middot; Computer Science &middot; Music</div>
+      </div>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">
+          <div class="detail__vision-label">Vision</div>
+          <p class="detail__vision-text">If there is any delay in the feedback loop between thinking something and seeing it, there is a whole world of ideas which will never be. You can fight for a principle by inventing.</p>
+        </div>
+        <div>
+          <div class="detail__section-label">Projects</div>
+          <ul class="detail__projects">
+            <li>
+              <a href="https://dynamicland.org" target="_blank">Dynamicland / Realtalk</a>
+              <div class="proj-desc">The world's only self-hosted spatial computing system</div>
+            </li>
+            <li>
+              <a href="https://worrydream.com/#!/InventingOnPrinciple" target="_blank">Inventing on Principle</a>
+              <div class="proj-desc">Talk on principle-driven invention that launched a movement</div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="detail__section-label">Links</div>
+          <div class="detail__links">
+            <a href="https://worrydream.com" target="_blank">worrydream.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <div>
+        <div class="person__name">Neri Oxman</div>
+        <div class="person__disciplines">Architecture &middot; Biology &middot; Computing &middot; Materials Science &middot; Design</div>
+      </div>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">
+          <div class="detail__vision-label">Vision</div>
+          <p class="detail__vision-text">A future where one cannot differentiate between the natural and the artificial &mdash; a radical shift from human-centric design to Nature-centric design, where buildings age, decay, and return to nature.</p>
+        </div>
+        <div>
+          <div class="detail__section-label">Projects</div>
+          <ul class="detail__projects">
+            <li>
+              <a href="https://oxman.com" target="_blank">OXMAN</a>
+              <div class="proj-desc">Fusing design, technology, and biology at systems scale</div>
+            </li>
+            <li>
+              <a href="https://www.moma.org/calendar/exhibitions/5090" target="_blank">Material Ecology (MoMA)</a>
+              <div class="proj-desc">Silk Pavilion, Aguahoja, and optically transparent 3D-printed glass</div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="detail__section-label">Links</div>
+          <div class="detail__links">
+            <a href="https://oxman.com" target="_blank">oxman.com</a>
+            <a href="https://neri.media.mit.edu" target="_blank">MIT Media Lab</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <div>
+        <div class="person__name">Saad Bhamla</div>
+        <div class="person__disciplines">Chemical Engineering &middot; Biophysics &middot; Frugal Science &middot; Global Health &middot; Invention</div>
+      </div>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">
+          <div class="detail__vision-label">Vision</div>
+          <p class="detail__vision-text">I want to democratize not just the tools we create but the knowledge we use to identify a problem and come up with clear and clever solutions &mdash; for billions of people, at planetary scale.</p>
+        </div>
+        <div>
+          <div class="detail__section-label">Projects</div>
+          <ul class="detail__projects">
+            <li>
+              <a href="https://bhamla.gatech.edu/research" target="_blank">Paperfuge</a>
+              <div class="proj-desc">A 20-cent paper centrifuge for diagnostics without electricity</div>
+            </li>
+            <li>
+              <a href="https://bhamla.gatech.edu" target="_blank">The Bhamla Lab</a>
+              <div class="proj-desc">$1 hearing aids, 23-cent electroporators, and insect biophysics</div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="detail__section-label">Links</div>
+          <div class="detail__links">
+            <a href="https://bhamla.gatech.edu" target="_blank">bhamla.gatech.edu</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person">
+    <div class="person__row" onclick="toggle(this)">
+      <div>
+        <div class="person__name">Renaise Kim</div>
+        <div class="person__disciplines">Product Design &middot; Visual Identity &middot; Creative Direction &middot; Sci-Fi &middot; Technology</div>
+      </div>
+      <span class="person__toggle">+</span>
+    </div>
+    <div class="person__detail">
+      <div class="detail__inner">
+        <div class="detail__vision">
+          <div class="detail__vision-label">Vision</div>
+          <p class="detail__vision-text">A world where art and technology converge through speculative thinking &mdash; where design shapes culture and the studio is a hybrid conceptual space built on science fiction.</p>
+        </div>
+        <div>
+          <div class="detail__section-label">Projects</div>
+          <ul class="detail__projects">
+            <li>
+              <a href="https://renaise.com" target="_blank">Renaise Studio</a>
+              <div class="proj-desc">Visual identity and product design for consumer tech and media</div>
+            </li>
+            <li>
+              <a href="https://luma.com/005" target="_blank">ARTIFICE</a>
+              <div class="proj-desc">Multi-disciplinary studio merging art, tech, and immersive experience</div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="detail__section-label">Links</div>
+          <div class="detail__links">
+            <a href="https://renaise.com" target="_blank">renaise.com</a>
+            <a href="https://x.com/reallynaise" target="_blank">@reallynaise</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="join" id="join">
+  <h2>Add yourself to the <em>directory</em></h2>
+  <p>If you work seriously across multiple disciplines and want to be visible to others who do the same, you belong here.</p>
+
+  <form class="form-grid" id="joinForm" onsubmit="return handleSubmit(event)">
+    <div class="fg">
+      <label for="f-name">Name</label>
+      <input type="text" id="f-name" name="name" required placeholder="Your name">
+    </div>
+    <div class="fg">
+      <label for="f-url">Website</label>
+      <input type="url" id="f-url" name="url" placeholder="https://...">
+    </div>
+    <div class="fg full">
+      <label for="f-disciplines">Disciplines</label>
+      <input type="text" id="f-disciplines" name="disciplines" required placeholder="e.g. Robotics, Philosophy, Music">
+    </div>
+    <div class="fg full">
+      <label for="f-vision">What do you want to see in the world?</label>
+      <textarea id="f-vision" name="vision" required placeholder="The future you are building toward..."></textarea>
+      <p class="hint">This becomes your vision statement in the directory</p>
+    </div>
+    <div class="fg full">
+      <label for="f-project">Your most cross-disciplinary project</label>
+      <input type="text" id="f-project" name="project" placeholder="Name and link to the work that best represents you">
+    </div>
+    <div class="fg full">
+      <label for="f-email">Email</label>
+      <input type="email" id="f-email" name="email" required placeholder="For verification only &mdash; never displayed">
+    </div>
+    <div class="fg full">
+      <button type="submit" class="submit-btn">Submit</button>
+      <p class="form-msg" id="formMsg">Submitted. We&rsquo;ll review and add you to the directory.</p>
+    </div>
+  </form>
+</section>
+
+<footer>
+  <div class="f-inner">
+    <span>renaissance.engineer</span>
+    <span>2026</span>
+  </div>
+</footer>
+
+<script>
+function toggle(row) {
+  const person = row.closest('.person');
+  person.classList.toggle('open');
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formMsg').classList.add('show');
+  setTimeout(() => e.target.reset(), 300);
+  setTimeout(() => document.getElementById('formMsg').classList.remove('show'), 5000);
+  return false;
+}
+</script>
+
+</body>
+</html>
