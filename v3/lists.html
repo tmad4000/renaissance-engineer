@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lists &mdash; Renaissance.Engineer</title>
+<meta name="description" content="Curated lists of tools, readings, blogs, and communities from people who build across disciplines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --ink-70: #3a3a3a;
+    --ink-50: #666;
+    --ink-30: #999;
+    --ink-15: #ccc;
+    --ink-08: #e4e4e4;
+    --bg: #fafafa;
+    --surface: #fff;
+    --red: #b33a2b;
+    --red-light: rgba(179, 58, 43, 0.06);
+    --serif: 'Newsreader', 'Georgia', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --max-w: 700px;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--serif); color: var(--ink); background: var(--bg); line-height: 1.65; }
+  ::selection { background: var(--red); color: #fff; }
+  a { color: var(--ink); }
+  a:hover { color: var(--red); }
+
+  header { border-bottom: 1px solid var(--ink-08); background: var(--surface); position: sticky; top: 0; z-index: 100; }
+  .h-inner { max-width: var(--max-w); margin: 0 auto; padding: 0.85rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .wm { font-size: 1.05rem; font-weight: 500; text-decoration: none; color: var(--ink); letter-spacing: -0.02em; }
+  .wm:hover { color: var(--red); }
+  nav { display: flex; gap: 1.4rem; }
+  nav a { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-decoration: none; color: var(--ink-50); }
+  nav a:hover { color: var(--red); }
+  nav a.active { color: var(--red); }
+
+  .page { max-width: var(--max-w); margin: 0 auto; padding: 2rem 2rem 4rem; }
+
+  .page h1 {
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.15rem;
+  }
+  .page h1 em { font-weight: 500; font-style: italic; color: var(--red); }
+  .page .sub {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--ink-30);
+    letter-spacing: 0.03em;
+    margin-bottom: 2rem;
+  }
+
+  /* Section headers */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+  .section__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--ink-08);
+  }
+  .section__title {
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .section__count {
+    font-family: var(--mono);
+    font-size: 0.42rem;
+    color: var(--ink-15);
+    letter-spacing: 0.04em;
+  }
+  .section__desc {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--ink-50);
+    margin-bottom: 0.8rem;
+    max-width: 32rem;
+    line-height: 1.55;
+  }
+
+  /* List items */
+  .list-item {
+    padding: 0.55rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .list-item + .list-item {
+    border-top: 1px solid var(--ink-08);
+  }
+  .list-item__name {
+    font-size: 0.92rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    flex-shrink: 0;
+  }
+  .list-item__name a { text-decoration: none; }
+  .list-item__name a:hover { color: var(--red); }
+  .list-item__dash {
+    color: var(--ink-08);
+    flex-shrink: 0;
+    font-size: 0.7rem;
+  }
+  .list-item__desc {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--ink-50);
+    line-height: 1.45;
+  }
+  .list-item__tag {
+    font-family: var(--mono);
+    font-size: 0.38rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-15);
+    margin-left: auto;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Blog/source items (richer) */
+  .source-item {
+    padding: 0.65rem 0;
+  }
+  .source-item + .source-item {
+    border-top: 1px solid var(--ink-08);
+  }
+  .source-item__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-bottom: 0.1rem;
+  }
+  .source-item__person {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .source-item__person a { text-decoration: none; }
+  .source-item__person a:hover { color: var(--red); }
+  .source-item__links {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.15rem;
+  }
+  .source-item__link {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-30);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .source-item__link:hover { color: var(--red); }
+  .source-item__link::before {
+    content: '\2192\00a0';
+    color: var(--ink-08);
+  }
+
+  /* Separator */
+  .sep {
+    width: 2rem;
+    height: 1px;
+    background: var(--ink-15);
+    margin: 2rem 0;
+  }
+
+  /* Suggest form */
+  .suggest {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ink-08);
+  }
+  .suggest__text {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--ink-50);
+    margin-bottom: 0.5rem;
+  }
+  .suggest__link {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-50);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-08);
+    padding-bottom: 0.1rem;
+  }
+  .suggest__link:hover { color: var(--red); border-bottom-color: var(--red); }
+
+  footer { border-top: 1px solid var(--ink-08); background: var(--surface); }
+  .f-inner { max-width: var(--max-w); margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .f-inner span { font-family: var(--mono); font-size: 0.55rem; color: var(--ink-30); }
+
+  @media (max-width: 600px) {
+    html { font-size: 16px; }
+    .h-inner { flex-direction: column; gap: 0.4rem; }
+    .page { padding: 1.5rem 1.5rem 3rem; }
+    .list-item { flex-wrap: wrap; gap: 0.2rem; }
+    .list-item__tag { margin-left: 0; }
+    .f-inner { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <a href="index.html" class="wm">Renaissance.Engineer</a>
+    <nav>
+      <a href="index.html#directory">Directory</a>
+      <a href="visions.html">Visions</a>
+      <a href="showcase.html">Showcase</a>
+      <a href="feed.html">Feed</a>
+      <a href="lists.html" class="active">Lists</a>
+      <a href="graph.html">Graph</a>
+      <a href="manifesto.html">Manifesto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page">
+
+  <h1>Curated <em>lists</em></h1>
+  <p class="sub">Tools, readings, blogs, and communities from people who build across boundaries</p>
+
+  <!-- ===== BLOGS & SOURCES ===== -->
+  <div class="section" id="sources">
+    <div class="section__head">
+      <span class="section__title">Blogs &amp; sources</span>
+      <span class="section__count">Where to follow</span>
+    </div>
+    <p class="section__desc">
+      The publications, blogs, and labs where directory members share their work.
+      A curated set of feeds worth subscribing to.
+    </p>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://jacobcole.net" target="_blank">Jacob Cole</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://jacobcole.net" target="_blank">jacobcole.net</a>
+        <a class="source-item__link" href="https://ideaflow.io" target="_blank">IdeaFlow</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://www.daanish.life" target="_blank">Daanish Shabbir</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://www.daanish.life" target="_blank">daanish.life</a>
+        <a class="source-item__link" href="https://nimbus-online.netlify.app" target="_blank">Nimbus Online</a>
+        <a class="source-item__link" href="https://www.interdependence.online" target="_blank">Interdependence</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://worrydream.com" target="_blank">Bret Victor</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://worrydream.com" target="_blank">worrydream.com</a>
+        <a class="source-item__link" href="https://dynamicland.org" target="_blank">Dynamicland</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://oxman.com" target="_blank">Neri Oxman</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://oxman.com" target="_blank">OXMAN</a>
+        <a class="source-item__link" href="https://jods.mitpress.mit.edu" target="_blank">MIT Press JoDS</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://bhamla.gatech.edu" target="_blank">Saad Bhamla</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://bhamla.gatech.edu" target="_blank">Bhamla Lab</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://patriciamou.com" target="_blank">Patricia Mou</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://wellnesswisdom.substack.com" target="_blank">Wellness Wisdom</a>
+        <a class="source-item__link" href="https://curatedrabbitholes.substack.com" target="_blank">Curated Rabbit Holes</a>
+        <a class="source-item__link" href="https://www.thesfcommons.com" target="_blank">The Commons</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://thesephist.com" target="_blank">Linus Lee</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://thesephist.com" target="_blank">thesephist.com</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://nicolehsing.com" target="_blank">Nicole Hsing</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://nicolehsing.com" target="_blank">nicolehsing.com</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://renaise.com" target="_blank">Renaise Kim</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://renaise.com" target="_blank">renaise.com / ARTIFICE</a>
+      </div>
+    </div>
+
+    <div class="source-item">
+      <div class="source-item__head">
+        <span class="source-item__person"><a href="https://s-z.carrd.co" target="_blank">Stephanie Zhang</a></span>
+      </div>
+      <div class="source-item__links">
+        <a class="source-item__link" href="https://s-z.carrd.co" target="_blank">s-z.carrd.co</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ===== TOOLS ===== -->
+  <div class="section" id="tools">
+    <div class="section__head">
+      <span class="section__title">Tools</span>
+    </div>
+    <p class="section__desc">
+      Tools for thinking, building, and creating across disciplines.
+    </p>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://flowtools.directory" target="_blank">FlowTools.directory</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">A meta-list of tools for thought, knowledge management, and creative workflows. Maintained collaboratively.</span>
+      <span class="list-item__tag">META-LIST</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://dynamicland.org" target="_blank">Dynamicland</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Bret Victor&rsquo;s communal computing lab. Computation leaves screens and enters physical, shared space.</span>
+      <span class="list-item__tag">COMPUTING</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://ideaflow.io" target="_blank">IdeaFlow</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Knowledge graph notebook that augments intelligence as you think. Notes that become thinking partners.</span>
+      <span class="list-item__tag">KNOWLEDGE</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://www.are.na" target="_blank">Are.na</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Visual bookmarking and research tool for connecting ideas. The thinking person&rsquo;s Pinterest.</span>
+      <span class="list-item__tag">RESEARCH</span>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ===== READINGS ===== -->
+  <div class="section" id="readings">
+    <div class="section__head">
+      <span class="section__title">Readings</span>
+    </div>
+    <p class="section__desc">
+      Essays, books, and deep dives that shaped how we think about building across boundaries.
+    </p>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://ideaflowbackground.jacobcole.net" target="_blank">IdeaFlow Background</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Jacob Cole&rsquo;s curated reading list on knowledge tools, augmenting intelligence, and the history of tools for thought.</span>
+      <span class="list-item__tag">GUIDE</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://worrydream.com/#!/InventingOnPrinciple" target="_blank">Inventing on Principle</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Bret Victor&rsquo;s foundational talk. Creators need an immediate connection to what they create.</span>
+      <span class="list-item__tag">TALK</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://jods.mitpress.mit.edu/pub/ageofentanglement/release/1" target="_blank">Age of Entanglement</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Neri Oxman&rsquo;s Krebs Cycle of Creativity &mdash; mapping the four domains (Science, Engineering, Design, Art) and the flows between them.</span>
+      <span class="list-item__tag">ESSAY</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://numinous.productions/ttft/" target="_blank">Transformative Tools for Thought</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Andy Matuschak &amp; Michael Nielsen on what it would take to build media as transformative as the Hindu-Arabic numeral system.</span>
+      <span class="list-item__tag">ESSAY</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://andymatuschak.org/books" target="_blank">Why Books Don&rsquo;t Work</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Andy Matuschak on why transmissionist media fails and what might replace it.</span>
+      <span class="list-item__tag">ESSAY</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://maggieappleton.com/home-cooked-software" target="_blank">Home-Cooked Software</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Maggie Appleton on the coming golden age of personal software by non-professional engineers.</span>
+      <span class="list-item__tag">ESSAY</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://jods.mitpress.mit.edu/pub/issue3-brand" target="_blank">Pace Layering</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Stewart Brand on how complex systems learn. Fashion moves fast, nature moves slow. One of the most cited frameworks in systems thinking.</span>
+      <span class="list-item__tag">ESSAY</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://www.henrikkarlsson.xyz/p/childhoods" target="_blank">Childhoods of Exceptional People</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Henrik Karlsson on the environments that produced original thinkers. Tutored 1-on-1, surrounded by talented adults, enormous unstructured time.</span>
+      <span class="list-item__tag">ESSAY</span>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ===== COMMUNITIES ===== -->
+  <div class="section" id="communities">
+    <div class="section__head">
+      <span class="section__title">Adjacent communities</span>
+    </div>
+    <p class="section__desc">
+      Other spaces where cross-disciplinary builders gather.
+    </p>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://www.thesfcommons.com" target="_blank">The SF Commons</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Patricia Mou&rsquo;s &ldquo;fourth place&rdquo; in Hayes Valley, SF. A space for meaning-making, embodied pluralism, and non-dogmatic ritual.</span>
+      <span class="list-item__tag">SPACE</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://longnow.org" target="_blank">Long Now Foundation</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">Fostering long-term thinking. The 10,000-year clock, the Rosetta Project, and seminars about long-term responsibility.</span>
+      <span class="list-item__tag">FOUNDATION</span>
+    </div>
+
+    <div class="list-item">
+      <span class="list-item__name"><a href="https://www.interdependence.online" target="_blank">Interdependence</a></span>
+      <span class="list-item__dash">&mdash;</span>
+      <span class="list-item__desc">A literary-hacker community reimagining digital futures through collective authorship. Co-signed by Daanish Shabbir and others.</span>
+      <span class="list-item__tag">COLLECTIVE</span>
+    </div>
+  </div>
+
+  <div class="suggest">
+    <p class="suggest__text">
+      Know a tool, reading, or community that belongs here?
+    </p>
+    <a class="suggest__link" href="mailto:jacob+renaissance@ideaflow.io?subject=List%20suggestion%20for%20Renaissance.Engineer&body=I'd%20like%20to%20suggest%20adding%20the%20following%20to%20the%20lists%20page%3A%0A%0AName%3A%0AURL%3A%0ACategory%3A%20(tools%20%2F%20readings%20%2F%20blogs%20%2F%20communities)%0AWhy%20it%20belongs%3A">Suggest an addition &rarr;</a>
+  </div>
+
+</section>
+
+<footer>
+  <div class="f-inner">
+    <span>renaissance.engineer</span>
+    <span><a href="mailto:jacob+renaissance@ideaflow.io" style="color:var(--ink-30);text-decoration:none">Contact</a></span>
+    <span>2026</span>
+  </div>
+</footer>
+
+</body>
+</html>

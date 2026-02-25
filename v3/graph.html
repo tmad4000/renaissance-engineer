@@ -284,6 +284,7 @@
       <a href="visions.html">Visions</a>
       <a href="showcase.html">Showcase</a>
       <a href="feed.html">Feed</a>
+      <a href="lists.html">Lists</a>
       <a href="graph.html" class="active">Graph</a>
       <a href="manifesto.html">Manifesto</a>
     </nav>
@@ -478,7 +479,7 @@ let nodeMap = {};
 let showLabels = true;
 let filtersOpen = false;
 let repulsionForce = 800;
-let visibleTypes = { person: true, vision: true, project: true, discipline: true, 'person-label': true };
+let visibleTypes = { person: true, vision: true, project: true, discipline: true, 'person-label': false };
 let filters = {
   showPeople: true,
   showVisions: true,
@@ -550,7 +551,7 @@ function buildVisionsView(cx, cy) {
   });
 
   // Person labels as small satellite nodes
-  if (filters.showPeople) {
+  if (filters.showPeople && visibleTypes['person-label']) {
     const personVisions = {};
     visibleVisions.forEach(v => {
       if (!personVisions[v.personId]) personVisions[v.personId] = [];
@@ -790,7 +791,7 @@ function setView(view) {
   currentView = view;
   document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
   // Reset type visibility for the new view
-  visibleTypes = { person: true, vision: true, project: true, discipline: true, 'person-label': true };
+  visibleTypes = { person: true, vision: true, project: true, discipline: true, 'person-label': view !== 'visions' };
   buildGraph();
 }
 
